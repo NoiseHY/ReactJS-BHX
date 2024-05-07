@@ -84,7 +84,7 @@ if (app.Environment.IsDevelopment())
 // Cấu hình CORS
 app.UseCors(builder =>
 {
-    builder.WithOrigins("http://127.0.0.1:5501") // Thay đổi domain của frontend 
+    builder.WithOrigins("http://localhost:3000") // Thay đổi domain của frontend 
         .AllowAnyHeader()
         .AllowAnyMethod();
 });
