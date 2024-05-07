@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <title>Trang cá nhân</title>
+  <link rel="stylesheet" href="/Trang cá nhân/Trang cá nhân.css">
+  <link rel="stylesheet" href="/Trang chủ/TrangChu.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;1,100;1,200;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
+
+  <link rel="icon" type="image/x-icon" href="/Trang chủ/Anh/Icon/Icon-Bach-Hoa-Xanh.png">
+
+  <script src="/Angular JS/angular-1.8.2/angular.js"></script>
+  <script src="/Angular JS/angular-1.8.2/angular-route.js"></script>
+
+  <script src="Trang cá nhân.js"></script>
+  <script src="/Trang cá nhân/Bình luận/Bình luận.js"></script>
+  <script src="/Trang cá nhân/Hóa đơn/Hóa đơn.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="menuHead">
+        <div class="logo" ng-controller="home">
+          <a ng-click="viewHome()">Bách hóa xanh</a>
+        </div>
+        <div class="search-text">
+          <input type="search" ng-model="productName" name="Tìm kiếm" placeholder="Tìm kiếm của bạn ..." />
+          <img class="icon-search" src="/Trang chủ/Anh/header/search-interface-symbol.png" ng-click="searchProduct()" />
+
+        </div>
+        <ul>
+          <li>
+            <img src="/Trang chủ/Anh/header/home.png" id="imgHome">
+            <!-- <a class="txtTT">Trang chủ</a> -->
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/category.png" id="imgDanhMuc" />
+            <!-- <a class="txtDM">Danh mục</a> -->
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/user.png" />
+            <!-- <a class="txtDN">Đăng nhập</a> -->
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/bell.png" />
+            <!-- <a class="txtTB">Thông báo</a> -->
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/shopping-cart.png" id="imgCart" onclick="convertToJSON()" />
+            <!-- <a class="txtGH">Giỏ hàng</a> -->
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main ng-controller="CustomerController">
+    <div class="profile">
+      <div class="profile-picture">
+        <div class="profile-image" ng-click="imgProduct()">
+          <img ng-src="data:image/jpeg;base64,{{ customer.img }}" />
+        </div>
+
+        <div>
+          <input type="file" id="imageFile" accept="image/*"
+            onchange="angular.element(this).scope().setImageFile(event)">
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <h1 class="name">{{ customer.tenKH }}</h1>
+        <p class="location">{{ customer.diachiKH }}</p>
+        <p class="occupation">Web Developer</p>
+        <div class="bio">
+          <p>Lập trình API </p>
+        </div>
+        <ul class="social-links">
+          <li><a href="#" class="social-link">Twitter</a></li>
+          <li><a href="#" class="social-link">Facebook</a></li>
+          <li><a href="#" class="social-link">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="input-section" ng-controller="updateCustomer">
+      <h2>Thông tin cơ bản</h2>
+      <form id="basic-info-form">
+        <div class="form-group">
+          <label for="input-name">Họ và tên</label>
+          <input type="text" id="input-name" ng-model="nameCustomer" placeholder="Nhập họ và tên của bạn">
+        </div>
+        <div class="form-group">
+          <label for="input-address">Địa chỉ</label>
+          <input type="text" id="input-address" ng-model="address" placeholder="Nhập địa chỉ của bạn">
+        </div>
+        <div class="form-group">
+          <label for="input-phone">Số điện thoại</label>
+          <input type="text" id="input-phone" ng-model="phone" placeholder="Nhập số điện thoại của bạn">
+        </div>
+        <div class="form-group">
+          <label for="input-birthday">Ngày sinh</label>
+          <input type="date" id="input-birthday" ng-model="birthday">
+        </div>
+        <button type="button" class="btn-update" ng-click="updateCustomer()">Cập nhật</button>
+      </form>
+
+    </div>
+
+    <div class="user-us">
+      <div class="user-us-container">
+        <div class="user-us-cmt" ng-click="navigateToCmt()" ng-controller="cmtController">
+          
+          <a>Bình luận</a>
+          <img src="Anh/comment.png">
+        </div>
+
+        <div class="user-us-cmt" ng-click="navigateToBill()" ng-controller="BillController">
+          
+          <a>Hàng hóa đã mua </a>
+          <img src="Anh/notes.png">
+        </div>
+      </div>
+      <div class="user-us-show" ng-view="">
+
+      </div>
+    </div>
+
+  </main>
+</body>
+
+</html>

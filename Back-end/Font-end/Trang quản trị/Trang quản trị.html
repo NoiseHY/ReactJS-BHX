@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <title>Trang quản trị</title>
+  <link rel="stylesheet" href="/Trang quản trị/Trang quản trị.css">
+ 
+  <link rel="icon" type="image/x-icon" href="/Trang chủ/Anh/Icon/Icon-Bach-Hoa-Xanh.png">
+
+  <!-- <link href="/Trang đăng nhập/Đăng nhập.html" >  -->
+  <script src="/Angular JS/angular-1.8.2/angular.js"></script>
+  <script src="/Angular JS/angular-1.8.2/angular-route.js"></script>
+
+  <script src="/Trang quản trị/Trang quản trị.js"></script>
+  <script src="/Trang quản trị/Quản trị/Home/Home.js"></script>
+  <script src="/Trang quản trị/Quản trị/Product/Product.js"></script>
+  <script src="/Trang quản trị/Quản trị/Customer/Customer.js"></script>
+  <script src="/Trang quản trị/Quản trị/Account/Account.js"></script>
+</head>
+
+<body >
+  <header>
+    <nav>
+      <div class="menuHead">
+        <div class="logo">
+          <a>Bách hóa xanh</a>
+        </div>
+        <div class="search-text">
+          <input type="search" name="Tìm kiếm" placeholder="Tìm kiếm của bạn ..." />
+          <img class="icon-search" src="/Trang chủ/Anh/header/search-interface-symbol.png" />
+        </div>
+        <ul>
+          <li>
+            <img src="/Trang chủ/Anh/header/home.png" />
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/category.png" />
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/user.png" />
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/bell.png" />
+          </li>
+          <li>
+            <img src="/Trang chủ/Anh/header/shopping-cart.png" />
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="side-bar">
+      <div class="close-bt">
+        <img src="Anh/side-bar/close.png">
+      </div>
+      <div class="anh_nd">
+        <img src="Anh/side-bar/384568330_702792258549735_5005728337612389412_n.jpg">
+      </div>
+      <h1>Trang quản lý</h1>
+      <!--  Chức năng-->
+      
+      <div class="menuND">
+        <div class="menuND-nd" ng-click="navigateToAdmin()" ng-controller="QuanLyAdminController" >
+          <img src="Anh/side-bar/user.png">
+          Trang chủ
+
+        </div>
+        <div class="menuND-ql">
+          <div class="menuND-ql-txt">
+            <img src="Anh/side-bar/manager.png">
+            Quản lý
+            <span class="more-icon">&#8942;</span>
+
+          </div>
+
+          <div class="submenu-ql">
+            <div class="submenu-dropdown">
+
+              <div class="submenu-ql-sp" ng-click="navigateToPageSP()" ng-controller="QuanLySanPhamController">Quản lý
+                Sản phẩm</div>
+              <div class="submenu-ql-dh">Quản lý Đơn hàng</div>
+
+              <div class="submenu-ql-kh" ng-click="navigateToPageKH()" ng-controller="QuanLyKhachHangController">Quản lý
+                Khách hàng</div>
+
+              <div class="submenu-ql-tt">Quản lý Thanh toán</div>
+              <div class="submenu-ql-nd" ng-click="navigateToPageTK()" ng-controller="QuanLyTaiKhoanController">Tài khoản</div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="menuND-tkiem">
+          <img src="Anh/side-bar/find.png">
+          Tìm kiếm
+
+        </div>
+        <div class="menuND-thongke">
+          <img src="Anh/side-bar/project-management.png">
+          Thống kê
+
+        </div>
+      </div>
+    </div>
+    <!-- ng-view -->
+    <div class="admin-content" >
+      <div ng-view=""></div>
+    </div>
+
+  </main>
+</body>
+
+
+</html>
