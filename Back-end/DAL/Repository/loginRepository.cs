@@ -31,44 +31,44 @@ namespace DAL.Repository
             account accountInfo = new account();
             string msg = "";
 
-            try
-            {
-                var login = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetTaiKhoanInfo",
-                    "@TenTK", username,
-                    "@MkTK", password);
+            //try
+            //{
+            //    var login = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetTaiKhoanInfo",
+            //        "@TenTK", username,
+            //        "@MkTK", password);
 
-                if (login != null && login.Rows.Count > 0 && string.IsNullOrEmpty(msg))
-                {
-                    var user = login.Rows[0];
+            //    if (login != null && login.Rows.Count > 0 && string.IsNullOrEmpty(msg))
+            //    {
+            //        var user = login.Rows[0];
 
-                    accountInfo.MaTK = (int)user["MaTK"];
-                    accountInfo.TenTK = user["TenTK"].ToString();
-                    accountInfo.MkTK = user["MkTK"].ToString();
-                    accountInfo.MaPQ = Convert.ToInt32(user["MaPQ"].ToString());
-                    if (string.IsNullOrEmpty(user["MaKH"].ToString()))
-                    {
-                        // Xử lý khi MaKH rỗng
-                    }
-                    else
-                    {
-                        accountInfo.MaKH = Convert.ToInt32(user["MaKH"].ToString());
-                    }
+            //        accountInfo.MaTK = (int)user["MaTK"];
+            //        accountInfo.TenTK = user["TenTK"].ToString();
+            //        accountInfo.MkTK = user["MkTK"].ToString();
+            //        accountInfo.MaPQ = Convert.ToInt32(user["MaPQ"].ToString());
+            //        if (string.IsNullOrEmpty(user["MaKH"].ToString()))
+            //        {
+            //            // Xử lý khi MaKH rỗng
+            //        }
+            //        else
+            //        {
+            //            accountInfo.MaKH = Convert.ToInt32(user["MaKH"].ToString());
+            //        }
 
 
-                }
+            //    }
 
-                else
-                {
+            //    else
+            //    {
                     
-                    accountInfo = null;
-                }
-            }
-            catch (Exception e)
-            {
-                // Xử lý ngoại lệ nếu cần
-                msg = e.Message;
-                accountInfo = null;
-            }
+            //        accountInfo = null;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    // Xử lý ngoại lệ nếu cần
+            //    msg = e.Message;
+            //    accountInfo = null;
+            //}
 
             return accountInfo;
         }

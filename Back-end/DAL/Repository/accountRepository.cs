@@ -22,7 +22,7 @@ namespace DAL.Repository
             string msgError = "";
             try
             {
-                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetAccountsPaged",
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetAllAccounts",
                     "@PageNumber", pageNumber,
                     "@PageSize", pageSize);
                 if (!string.IsNullOrEmpty(msgError))
@@ -41,11 +41,8 @@ namespace DAL.Repository
             try
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
-                    out msgError, "AddAccount",
-                    "@TenTK", account.TenTK,
-                    "@MkTK", account.MkTK,
-                    "@Email", account.Email,
-                    "@MaPQ", account.MaPQ);
+                    out msgError, "AddAccount"
+                    );
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {
@@ -66,12 +63,8 @@ namespace DAL.Repository
             string msgError = "";
             try
             {
-                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateAccount",
-                 "@MaTK", account.MaTK,
-                 "@TenTK", account.TenTK,
-                 "@MkTK", account.MkTK,
-                 "@Email", account.Email,
-                 "@MaPQ", account.MaPQ);
+                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateAccount"
+                 );
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {

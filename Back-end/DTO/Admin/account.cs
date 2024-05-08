@@ -8,12 +8,14 @@ namespace DTO.Admin
 {
     public class account
     {
-        public int MaTK { get; set; }
-        public string TenTK { get; set; } = null!;
-        public string MkTK { get; set; } = null!;
-        public string? Email { get; set; }
-        public int? MaPQ { get; set; }
-        public int? MaKH { get; set; }
-        public int? MaNV { get; set; }
+        public int id { get; set; }
+        public string nameAcc { get; set; } 
+        public string pasAcc { get; set; }
+        public string? email { get; set; }
+        public int? idAuth { get; set; }
+        public int? idCuts { get; set; }
+        public DateTime dateBegin { get; set; }
+        public DateTime? dateEnd { get; set; }
+
     }
 }

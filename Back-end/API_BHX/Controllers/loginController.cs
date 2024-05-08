@@ -33,50 +33,51 @@ namespace API_BHX.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] account loginRequest)
         {
-            if (loginRequest == null || string.IsNullOrEmpty(loginRequest.TenTK) || string.IsNullOrEmpty(loginRequest.MkTK))
-            {
-                return BadRequest(new { error = "Vui lòng cung cấp tên đăng nhập và mật khẩu." });
-            }
+            //if (loginRequest == null || string.IsNullOrEmpty(loginRequest.TenTK) || string.IsNullOrEmpty(loginRequest.MkTK))
+            //{
+            //    return BadRequest(new { error = "Vui lòng cung cấp tên đăng nhập và mật khẩu." });
+            //}
 
-            var accountInfo = _loginBusiness.Login(loginRequest.TenTK, loginRequest.MkTK);
+            //var accountInfo = _loginBusiness.Login(loginRequest.TenTK, loginRequest.MkTK);
 
-            if (accountInfo != null)
-            {
-                if (accountInfo.MaPQ == 1)
-                {
-                    var token = GenerateJwtToken(accountInfo);
-                    return Ok(new { MaTK = accountInfo.MaTK, TenTK = accountInfo.TenTK, Token = token, MaPQ = accountInfo.MaPQ  });
-                }
-                else
-                {
-                    return Ok(new { MaTK = accountInfo.MaTK, TenTK = accountInfo.TenTK ,MaKH = accountInfo.MaKH });
-                }
-            }
-            else
-            {
-                return BadRequest(new { error = "Tài khoản hoặc mật khẩu không đúng." });
-            }
+            //if (accountInfo != null)
+            //{
+            //    if (accountInfo.MaPQ == 1)
+            //    {
+            //        var token = GenerateJwtToken(accountInfo);
+            //        return Ok(new { MaTK = accountInfo.MaTK, TenTK = accountInfo.TenTK, Token = token, MaPQ = accountInfo.MaPQ  });
+            //    }
+            //    else
+            //    {
+            //        return Ok(new { MaTK = accountInfo.MaTK, TenTK = accountInfo.TenTK ,MaKH = accountInfo.MaKH });
+            //    }
+            //}
+            //else
+            //{
+            //    return BadRequest(new { error = "Tài khoản hoặc mật khẩu không đúng." });
+            //}
+            return BadRequest(loginRequest);
         }
 
-        private string GenerateJwtToken(account account)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Key);
+        //private string GenerateJwtToken(account account)
+        //{
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_appSettings.Key);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, account.TenTK),
-                    new Claim(ClaimTypes.Role, account.MaPQ.ToString())
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new Claim[]
+        //        {
+        //            new Claim(ClaimTypes.Name, account.TenTK),
+        //            new Claim(ClaimTypes.Role, account.MaPQ.ToString())
 
-                }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+        //        }),
+        //        Expires = DateTime.UtcNow.AddHours(1),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.WriteToken(token);
+        //}
     }
 }

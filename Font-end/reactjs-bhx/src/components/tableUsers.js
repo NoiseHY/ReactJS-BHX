@@ -1,51 +1,52 @@
-import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
 import { fetchAllUser } from '../services/usersServices';
 
-const TableUsers = (props) => {
+const TableUsers = () => {
+  const [listUsers, setListUsers] = useState([]);
 
   useEffect(() => {
     getUsers();
-  }, [])
+  }, []);
 
   const getUsers = async () => {
-    let res = await fetchAllUser();
-    console.log('data : ', res)
+    try {
+      const res = await fetchAllUser();
+      if (res && res.data) {
+        setListUsers(res.data);
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
-  }
+  console.log(listUsers);
+
   return (
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>id</th>
+          <th>Tên tài khoản</th>
+          <th>Mật khẩu</th>
+          <th>Email</th>
+          <th>Ngày tạo</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {listUsers && listUsers.length > 0 && listUsers.map((item, index) => (
+          <tr key={`users-${index}`}>
+            <td>{item.id}</td>
+            <td>{item.nameAcc}</td>
+            <td>{item.pasAcc}</td>
+            <td>{item.email}</td>
+            <td>{item.dateBegin}</td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );
-}
+};
 
 export default TableUsers;

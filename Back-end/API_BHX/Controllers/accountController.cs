@@ -50,7 +50,7 @@ namespace API_BHX.Controllers
 
             if (isSuccess)
             {
-                return Ok("Sửa tài khoản  mã  " + account.MaTK + " thành công !");
+                return Ok("Sửa tài khoản  mã  " + account.pasAcc + " thành công !");
             }
             else
             {
