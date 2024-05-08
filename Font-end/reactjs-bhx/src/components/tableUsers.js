@@ -13,8 +13,8 @@ const TableUsers = () => {
   const getUsers = async () => {
     try {
       const res = await fetchAllUser();
-      if (res && res.data) {
-        setListUsers(res.data);
+      if (res) {
+        setListUsers(res);
       }
     } catch (error) {
       console.error('Error fetching users:', error);

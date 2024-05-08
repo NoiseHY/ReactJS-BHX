@@ -1,7 +1,8 @@
-import axios from "axios"
+import axios from "./cust_axios"
 
 const fetchAllUser = () => {
-  return axios.get("https://localhost:7117/api/account/GetAll?pageNumber=1&pageSize=10")
+  return axios.get("/api/account/GetAll?pageNumber=1&pageSize=10")
 }
+
 
 export { fetchAllUser }
