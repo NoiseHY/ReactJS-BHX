@@ -5,8 +5,10 @@ using DTO.Admin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DAL.Repository
 {
@@ -41,8 +43,13 @@ namespace DAL.Repository
             try
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
-                    out msgError, "AddAccount"
-                    );
+                out msgError, "CreateAccount",
+                "@Name", account.nameAcc, 
+                "@Password", account.pasAcc, 
+                "@Email", account.email, 
+                "@AuthorizationID", account.idAuth, 
+                "@CustomerID", account.idCuts
+                );
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {
@@ -63,7 +70,13 @@ namespace DAL.Repository
             string msgError = "";
             try
             {
-                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateAccount"
+                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateAccount",
+                    "@AccountID", account.id,
+                    "@Name", account.nameAcc,
+                    "@Password", account.pasAcc,
+                    "@Email", account.email,
+                    "@AuthorizationID", account.idAuth,
+                    "@CustomerID", account.idCuts
                  );
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
@@ -84,7 +97,7 @@ namespace DAL.Repository
             try
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msgError, "DeleteAccount",
-                    "@MaTK", id);
+                    "@AccountID", id);
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {
