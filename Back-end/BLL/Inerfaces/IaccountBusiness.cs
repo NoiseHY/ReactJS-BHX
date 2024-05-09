@@ -9,7 +9,7 @@ namespace BLL.Inerfaces
 {
     public partial interface IaccountBusiness
     {
-        List<account> GetAll(int pageNumber, int pageSize);
+        List<account> GetAll();
         bool Create(account account);
         bool Update(account account);
         bool Delete(int id);

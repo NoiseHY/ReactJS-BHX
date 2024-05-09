@@ -20,9 +20,9 @@ namespace API_BHX.Controllers
 
         [Route("GetAll")]
         [HttpGet]
-        public List<account> GetAll(int pageNumber, int pageSize)
+        public List<account> GetAll()
         {
-            return _accountBusiness.GetAll(pageNumber, pageSize);
+            return _accountBusiness.GetAll();
         }
 
         [Route("Create")]

@@ -17,9 +17,9 @@ namespace BLL.Bussiness
             _accountRepository = accountRepository;
         }
 
-        public List<account> GetAll(int pageNumber, int pageSize)
+        public List<account> GetAll()
         {
-            return _accountRepository.GetAll(pageNumber, pageSize);
+            return _accountRepository.GetAll();
         }
         public bool Create(account account)
         {

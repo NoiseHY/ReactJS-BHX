@@ -19,14 +19,13 @@ namespace DAL.Repository
         {
             _excuteProcedure = excuteProcedure;
         }
-        public List<account> GetAll(int pageNumber, int pageSize)
+        public List<account> GetAll()
         {
             string msgError = "";
             try
             {
-                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetAllAccounts",
-                    "@PageNumber", pageNumber,
-                    "@PageSize", pageSize);
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetAllAccounts");
+                   
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<account>().ToList();

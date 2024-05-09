@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
 import { postCreateUser } from "../services/usersServices";
+import { toast } from "react-toastify";
 
 const Modal_addnew = (props) => {
   const { show, handleClose } = props;
@@ -8,7 +9,6 @@ const Modal_addnew = (props) => {
   const [pasAcc, setPasAcc] = useState("");
   const [email, setEmail] = useState("");
   const [idAuth, setIDAuth] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleNameAccChange = (event) => {
     setNameAcc(event.target.value);
@@ -29,15 +29,17 @@ const Modal_addnew = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await postCreateUser({ nameAcc, pasAcc, email, idAuth }); // Gọi hàm postCreateUser với thông tin người dùng
-      setShowSuccessMessage(true);
-      setTimeout(() => {
-        setShowSuccessMessage(false); // Ẩn thông báo sau 1 giây
-        handleClose(); // Đóng modal sau khi tạo người dùng thành công
-        window.location.reload(); // Làm mới trang sau khi tạo người dùng thành công
-      }, 1000);
+      let res = await postCreateUser({ nameAcc, pasAcc, email, idAuth });
+      if (res) {
+        toast.success("Người dùng đã được tạo thành công!", {
+          onClose: handleClose,
+        });
+      } else {
+        toast.error("Đã xảy ra lỗi khi tạo người dùng.");
+      }
     } catch (error) {
-      console.error("Đã xảy ra lỗi khi tạo người dùng:", error);
+      const errorMessage = error.message || "Đã xảy ra lỗi khi tạo người dùng.";
+      toast.error(errorMessage);
     }
   };
 
@@ -96,12 +98,7 @@ const Modal_addnew = (props) => {
         </Button>
         <Button variant="primary" onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
-      {/* Hiển thị thông báo thành công */}
-      {showSuccessMessage && (
-        <Alert variant="success" onClose={() => setShowSuccessMessage(false)} dismissible>
-          Người dùng đã được tạo thành công!
-        </Alert>
-      )}
+
     </Modal>
   );
 };

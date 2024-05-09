@@ -1,23 +1,22 @@
 import './App.scss';
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast styles
 
 import Header from './components/header';
 import TableUsers from './components/tableUsers';
 import Modal_addnew from './components/modal_addnewUser';
-import Modal_editUser from './components/modal_editUser'; // Import Modal_editUser component
-
+import Modal_editUser from './components/modal_editUser';
 import { useState } from 'react';
 
 function App() {
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
-  const [isShowModalEdit, setIsShowModalEdit] = useState(false); // Thêm trạng thái để hiển thị modal chỉnh sửa
+  const [isShowModalEdit, setIsShowModalEdit] = useState(false);
 
   const handleClose = () => {
     setIsShowModalAddNew(false);
-    setIsShowModalEdit(false); // Đóng cả modal chỉnh sửa khi đóng app
+    setIsShowModalEdit(false);
   };
 
   return (
@@ -34,10 +33,10 @@ function App() {
           </button>
         </div>
         <TableUsers />
-        {/* Hiển thị modal thêm mới */}
-        <Modal_addnew show={isShowModalAddNew} handleClose={handleClose} /> 
-        {/* Hiển thị modal chỉnh sửa */}
-        <Modal_editUser show={isShowModalEdit} handleClose={handleClose} /> 
+        {/* ToastContainer để hiển thị toast */}
+        <ToastContainer />
+        <Modal_addnew show={isShowModalAddNew} handleClose={handleClose} />
+        <Modal_editUser show={isShowModalEdit} handleClose={handleClose} />
       </Container>
     </div>
   );

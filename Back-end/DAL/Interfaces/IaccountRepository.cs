@@ -10,7 +10,7 @@ namespace DAL.Interfaces
 {
     public partial interface IaccountRepository
     {
-        List<account> GetAll(int pageNumber, int pageSize);
+        List<account> GetAll();
         bool Create(account account);
         bool Update(account account);
         bool Delete(int id);

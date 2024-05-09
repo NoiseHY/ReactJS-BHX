@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
 import { putEditUser } from "../services/usersServices";
+import { toast } from "react-toastify";
 
 const Modal_editUser = (props) => {
   const { show, handleClose, userId, userData } = props; // Nhận id và thông tin người dùng từ props
@@ -9,7 +10,6 @@ const Modal_editUser = (props) => {
   const [pasAcc, setPasAcc] = useState("");
   const [email, setEmail] = useState("");
   const [idAuth, setIDAuth] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     if (userData) {
@@ -44,15 +44,12 @@ const Modal_editUser = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await putEditUser({ id,userId, nameAcc, pasAcc, email, idAuth }); // Gửi yêu cầu sửa thông tin người dùng đến API
-      setShowSuccessMessage(true);
-      setTimeout(() => {
-        setShowSuccessMessage(false); 
-        handleClose(); // Đóng modal sau khi sửa người dùng thành công
-        window.location.reload(); // Làm mới trang sau khi sửa người dùng thành công
-      }, 2000);
+      let res = await putEditUser({ id,userId, nameAcc, pasAcc, email, idAuth });
+      if (res){
+        toast.success("Sửa thành công người dùng !")
+      }
     } catch (error) {
-      console.error("Đã xảy ra lỗi khi sửa người dùng:", error);
+      toast.error("Đã xảy ra lỗi khi sửa người dùng:", error);
     }
   };
 
@@ -121,12 +118,7 @@ const Modal_editUser = (props) => {
         </Button>
         <Button variant="primary" onClick={handleSubmit}>Sửa</Button>
       </Modal.Footer>
-      {/* Hiển thị thông báo thành công */}
-      {showSuccessMessage && (
-        <Alert variant="success" onClose={() => setShowSuccessMessage(false)} dismissible>
-          Người dùng đã được sửa thành công!
-        </Alert>
-      )}
+      
     </Modal>
   );
 };
