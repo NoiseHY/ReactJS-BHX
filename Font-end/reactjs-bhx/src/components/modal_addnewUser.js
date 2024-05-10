@@ -32,8 +32,15 @@ const Modal_addnew = (props) => {
       let res = await postCreateUser({ nameAcc, pasAcc, email, idAuth });
       if (res) {
         toast.success("Người dùng đã được tạo thành công!", {
-          onClose: handleClose,
-        });
+          autoClose: 2000, 
+          onClose: () => {
+            handleClose();
+            setTimeout(() => {
+              window.location.reload(); 
+            }, 2000);
+          },
+        });        
+        
       } else {
         toast.error("Đã xảy ra lỗi khi tạo người dùng.");
       }
