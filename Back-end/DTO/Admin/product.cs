@@ -8,12 +8,15 @@ namespace DTO.Admin
 {
     public class product
     {
-        public int MaSP { get; set; }
-        public string TenSP { get; set; } = null!;
-        public string? Mota { get; set; }
-        public int SoLuong { get; set; }
-        public decimal Dongia { get; set; }
-        public int? MaTL { get; set; }
+        public int id { get; set; }
+        public string namePro { get; set; } = null!;
+        public string? desProd { get; set; }
+        public int? num { get; set; }
+        public decimal? up { get; set; }
+        public int? idCat { get; set; }
         public string? Img { get; set; }
+        public DateTime dateBegin { get; set; }
+        public DateTime dateEnd { get; set; }
+
     }
 }

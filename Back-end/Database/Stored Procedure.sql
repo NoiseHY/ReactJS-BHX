@@ -4,33 +4,20 @@ go
 --- bảng sản phẩm ---
 
 -- lấy 10 sản phẩm mới nhất -- 
-CREATE PROCEDURE GetNewestProducts
-    @PageNumber INT,
-    @PageSize INT
+CREATE PROCEDURE GetNewProducts
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
-    
-    SELECT 
-        id, nameProd, desCat, num, up, idCat, img
-    FROM (
-        SELECT 
-            ROW_NUMBER() OVER (ORDER BY dateBegin DESC) AS RowNum,
-            id, nameProd, desCat, num, up, idCat, img
-        FROM 
-            products
-    ) AS RowConstrainedResult
-    WHERE 
-        RowNum > @Offset
-        AND RowNum <= (@Offset + @PageSize)
+    SELECT TOP 10
+        id, nameProd, desProd, num, up, idCat, img
+    FROM 
+        products
     ORDER BY 
-        RowNum;
+        dateBegin DESC;
 END;
 
-
-exec GetNewestProducts 1, 10
+exec GetNewProducts 
 
 --- bảng tài khoản ---
 

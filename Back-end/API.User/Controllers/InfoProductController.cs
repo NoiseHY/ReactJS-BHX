@@ -37,16 +37,12 @@ namespace API.User.Controllers
         }
 
 
-        [Route("GetNewProductsAll")]
+        [Route("GetNewProducts")]
         [HttpGet]
-        public IActionResult GetNewProducts(int pageNumber = 1, int pageSize = 10)
+        public IActionResult GetNewProducts()
         {
-            if (pageNumber < 1 || pageSize < 1)
-            {
-                return BadRequest("Không thể tạo !!");
-            }
 
-            var products = _iproductBusiness.GetNewProducts(pageNumber, pageSize);
+            var products = _iproductBusiness.GetNewProducts();
             return Ok(products);
         }
 

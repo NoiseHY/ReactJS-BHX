@@ -31,7 +31,7 @@ select * from categories
 CREATE TABLE products (
     id INT IDENTITY(1,1) PRIMARY KEY,
     nameProd NVARCHAR(50) not null,
-    desCat NVARCHAR(max) ,
+    desProd NVARCHAR(max) ,
     num INT ,
 	--dongia (unit price)
     up DECIMAL(18, 00) ,
@@ -43,7 +43,7 @@ CREATE TABLE products (
 	Foreign key (idCat) references categories(id) on delete cascade on update cascade
 );
 
-INSERT INTO products (nameProd, desCat, num, up, idCat, img, dateEnd) VALUES 
+INSERT INTO products (nameProd, desProd, num, up, idCat, img, dateEnd) VALUES 
 (N'Bò viên Hoa Doanh 200g', N'Bò viên đông lạnh Hoa Doanh là sản phẩm cá viên, bò viên thơm ngon từ nguyên liệu tự nhiên tuyệt vời, được bày bán ở rất nhiều các tụ điểm bán hàng, đa dạng sản phẩm. Bò viên  đông lạnh Hoa Doanh 200g làm từ thịt bò tươi ngon tự nhiên, chế biến được nhiều món ăn ấn tượng, ngon hoàn hảo.'
 , 100, 36000, 3, null, NULL),
 (N'Xúc xích Mỹ Le Gourmet gói 500g', N'Xúc xích Le Gourmet sử dụng nguồn nguyên liệu thực phẩm tươi sạch, công nghệ an toàn vệ sinh. Mua Xúc xích Mỹ Le Gourmet gói 500g với công thức tẩm ướp đặc biệt, là loại xúc xích dễ dàng chế biến như chiên, hoặc chế biến thành nhiều món ăn.'

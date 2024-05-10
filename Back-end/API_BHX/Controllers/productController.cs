@@ -130,7 +130,7 @@ namespace API_BHX.Controllers
 
             if (isSuccess)
             {
-                return Ok("Sửa sản phẩm mã " + product.MaSP + " thành công !");
+                return Ok("Sửa sản phẩm mã " + product.id + " thành công !");
             }
             else
             {

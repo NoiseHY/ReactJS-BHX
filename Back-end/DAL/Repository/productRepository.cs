@@ -37,14 +37,12 @@ namespace DAL.Repository
             }
         }
 
-        public List<product> GetNewProducts(int pageNumber, int pageSize)
+        public List<product> GetNewProducts()
         {
             string msg = "";
             try
             {
-                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetNewProducts",
-                    "@PageNumber", pageNumber,
-                    "@PageSize", pageSize);
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetNewProducts");
 
                 if (!string.IsNullOrEmpty(msg))
                     throw new Exception(msg);
@@ -122,12 +120,7 @@ namespace DAL.Repository
             try
             {
                 var productId = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
-                    out msg, "AddProduct",
-                    "@TenSP", product.TenSP,
-                    "@Mota", product.Mota,
-                    "@SoLuong", product.SoLuong,
-                    "@Dongia", product.Dongia,
-                    "@MaTL", product.MaTL);
+                    out msg, "AddProduct");
 
                 if (productId != null || !string.IsNullOrEmpty(msg))
                 {
@@ -150,13 +143,8 @@ namespace DAL.Repository
             try
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
-                     out msg, "UpdateProduct",
-                     "@MaSP", product.MaSP,
-                     "@TenSP", product.TenSP,
-                     "@Mota", product.Mota,
-                     "@SoLuong", product.SoLuong,
-                     "@Dongia", product.Dongia,
-                     "@MaTL", product.MaTL); 
+                     out msg, "UpdateProduct")
+                     ; 
 
                 if (result != null || !string.IsNullOrEmpty(msg))
                 {

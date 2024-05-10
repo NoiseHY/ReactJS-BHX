@@ -11,7 +11,7 @@ namespace BLL.Inerfaces
     {
         product GetProductByID(int id);
         List<product> GetAll(int pageNumber, int pageSize);
-        List<product> GetNewProducts(int pageNumber, int pageSize);
+        List<product> GetNewProducts();
         List<product> SearchProductByName(string Name, int pageNumber, int pageSize);
         bool Create(product product);
         bool Update(product product);

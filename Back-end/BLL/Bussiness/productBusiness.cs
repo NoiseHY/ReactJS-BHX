@@ -24,9 +24,9 @@ namespace BLL.Bussiness
         {
             return iproductRepository.GetAll(pageNumber, pageSize);
         }
-        public List<product> GetNewProducts(int pageNumber, int pageSize)
+        public List<product> GetNewProducts()
         {
-            return iproductRepository.GetNewProducts(pageNumber, pageSize);
+            return iproductRepository.GetNewProducts();
         }
         public List<product> SearchProductByName(string Name, int pageNumber, int pageSize)
         {
