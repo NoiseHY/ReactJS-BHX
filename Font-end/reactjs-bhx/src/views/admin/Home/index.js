@@ -9,6 +9,8 @@ import TableUsers from '../../../components/tableUsers';
 import Modal_editUser from '../../../components/modal_editUser';
 import Modal_addnew from '../../../components/modal_addnewUser';
 
+import '../../../App.scss';
+
 import { useState } from 'react';
 
 function Admin() {

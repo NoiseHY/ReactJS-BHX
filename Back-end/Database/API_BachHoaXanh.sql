@@ -27,32 +27,6 @@ INSERT INTO categories (nameCat, dateEnd) VALUES
 
 select * from categories
 
--- Tạo bảng Sản phẩm
-CREATE TABLE products (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    nameProd NVARCHAR(50) not null,
-    desProd NVARCHAR(max) ,
-    num INT ,
-	--dongia (unit price)
-    up DECIMAL(18, 00) ,
-	idCat INT ,
-	img nvarchar (200),
-	dateBegin datetime default getdate(),
-	--ngaysua
-	dateEnd datetime
-	Foreign key (idCat) references categories(id) on delete cascade on update cascade
-);
-
-INSERT INTO products (nameProd, desProd, num, up, idCat, img, dateEnd) VALUES 
-(N'Bò viên Hoa Doanh 200g', N'Bò viên đông lạnh Hoa Doanh là sản phẩm cá viên, bò viên thơm ngon từ nguyên liệu tự nhiên tuyệt vời, được bày bán ở rất nhiều các tụ điểm bán hàng, đa dạng sản phẩm. Bò viên  đông lạnh Hoa Doanh 200g làm từ thịt bò tươi ngon tự nhiên, chế biến được nhiều món ăn ấn tượng, ngon hoàn hảo.'
-, 100, 36000, 3, null, NULL),
-(N'Xúc xích Mỹ Le Gourmet gói 500g', N'Xúc xích Le Gourmet sử dụng nguồn nguyên liệu thực phẩm tươi sạch, công nghệ an toàn vệ sinh. Mua Xúc xích Mỹ Le Gourmet gói 500g với công thức tẩm ướp đặc biệt, là loại xúc xích dễ dàng chế biến như chiên, hoặc chế biến thành nhiều món ăn.'
-, 100, 43000, 2, null, NULL),
-(N'Pizza phô mai Manna 120g', N'Là dòng pizza tự chế biến tại nhà, với lớp phô mai Mozzarella dày, béo ngậy được phủ bên trên. Pizza Manna luôn cố gắng đếm lại những sản phẩm chất lượng, an toàn nhất đến người tiêu dùng. Pizza phô mai Manna hộp 120g - sự lựa chọn của nhanh chóng, tiện lợi.'
-, 100, 28000, 1, null, NULL);
-
-select * from products
-
 --Tạo bảng đơn vị 
 create table units (
 	id int identity(1,1) primary key,
@@ -61,6 +35,51 @@ create table units (
 	--ngaysua
 	dateEnd datetime
 )
+
+insert into units (nameUn, dateEnd)
+values 
+(N'Thùng ', null),
+(N'Hộp', null),
+(N'Lon', null),
+(N'Cái', null),
+(N'Chai', null),
+(N'Hộp', null),
+(N'Gói', null)
+;
+
+select * from units
+
+-- Tạo bảng Sản phẩm
+CREATE TABLE products (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nameProd NVARCHAR(50) not null,
+    desProd NVARCHAR(max) ,
+    num INT ,
+	--dongia (unit price)
+    up DECIMAL(18, 00) ,
+	img nvarchar (200),
+	rating float,
+	viewProd int,
+	idCat INT ,
+	idUnits int,
+	dateBegin datetime default getdate(),
+	--ngaysua
+	dateEnd datetime
+	Foreign key (idCat) references categories(id) on delete cascade on update cascade,
+	foreign key(idUnits) references units(id) on delete cascade on update cascade
+);
+
+--drop table products
+
+INSERT INTO products (nameProd, desProd, num, up, idCat, idUnits,img, rating, viewProd,dateEnd) VALUES 
+(N'Bò viên Hoa Doanh 200g', N'Bò viên đông lạnh Hoa Doanh là sản phẩm cá viên, bò viên thơm ngon từ nguyên liệu tự nhiên tuyệt vời, được bày bán ở rất nhiều các tụ điểm bán hàng, đa dạng sản phẩm. Bò viên  đông lạnh Hoa Doanh 200g làm từ thịt bò tươi ngon tự nhiên, chế biến được nhiều món ăn ấn tượng, ngon hoàn hảo.'
+, 100, 36000, 3, 7, 'gao-co-may-lut-nau-organic-hop-1kg-202106260813001938.jpg', 5, 200,NULL),
+(N'Xúc xích Mỹ Le Gourmet gói 500g', N'Xúc xích Le Gourmet sử dụng nguồn nguyên liệu thực phẩm tươi sạch, công nghệ an toàn vệ sinh. Mua Xúc xích Mỹ Le Gourmet gói 500g với công thức tẩm ướp đặc biệt, là loại xúc xích dễ dàng chế biến như chiên, hoặc chế biến thành nhiều món ăn.'
+, 100, 43000, 2, 7,'gao-co-may-lut-nau-organic-hop-1kg-202106260813001938.jpg', 3.5, 140,NULL),
+(N'Pizza phô mai Manna 120g', N'Là dòng pizza tự chế biến tại nhà, với lớp phô mai Mozzarella dày, béo ngậy được phủ bên trên. Pizza Manna luôn cố gắng đếm lại những sản phẩm chất lượng, an toàn nhất đến người tiêu dùng. Pizza phô mai Manna hộp 120g - sự lựa chọn của nhanh chóng, tiện lợi.'
+, 100, 28000, 1, 7,'gao-co-may-lut-nau-organic-hop-1kg-202106260813001938.jpg', 4, 320,NULL);
+
+select * from products
 
 -- Tạo bảng Nhà cung cấp
 CREATE TABLE sups (

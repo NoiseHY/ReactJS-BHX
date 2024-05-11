@@ -10,12 +10,13 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT TOP 10
-        id, nameProd, desProd, num, up, idCat, img
+        id, nameProd, desProd, num, up , img, rating
     FROM 
         products
     ORDER BY 
         dateBegin DESC;
 END;
+
 
 exec GetNewProducts 
 

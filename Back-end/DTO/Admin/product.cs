@@ -9,12 +9,18 @@ namespace DTO.Admin
     public class product
     {
         public int id { get; set; }
-        public string namePro { get; set; } = null!;
+        public string nameProd { get; set; } = null!;
         public string? desProd { get; set; }
         public int? num { get; set; }
         public decimal? up { get; set; }
         public int? idCat { get; set; }
-        public string? Img { get; set; }
+        public int? idUnits { get; set; }
+
+        public string? img { get; set; }
+
+        public float? rating { get; set; }
+        public float? viewProd { get; set; }
+
         public DateTime dateBegin { get; set; }
         public DateTime dateEnd { get; set; }
 
