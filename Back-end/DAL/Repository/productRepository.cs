@@ -55,6 +55,24 @@ namespace DAL.Repository
             }
         }
 
+        public List<product> GetBestViewProducts()
+        {
+            string msg = "";
+            try
+            {
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetBestViewProducts");
+
+                if (!string.IsNullOrEmpty(msg))
+                    throw new Exception(msg);
+
+                return dt.ConvertTo<product>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public product GetProductByID(int id)
         {
             string msg = "";

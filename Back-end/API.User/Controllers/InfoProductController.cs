@@ -46,6 +46,15 @@ namespace API.User.Controllers
             return Ok(products);
         }
 
+        [Route("GetBestViewProducts")]
+        [HttpGet]
+        public IActionResult GetBestViewProducts()
+        {
+
+            var products = _iproductBusiness.GetBestViewProducts();
+            return Ok(products);
+        }
+
         [Route("GetProductByID")]
         [HttpGet]
         public product GetProductByID(int id)

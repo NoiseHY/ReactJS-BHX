@@ -12,6 +12,8 @@ namespace DAL.Interfaces
         product GetProductByID(int id);
         List<product> GetAll(int pageNumber, int pageSize);
         List<product> GetNewProducts ();
+        List<product> GetBestViewProducts();
+
         List<product> SearchProductByName(string Name, int pageNumber, int pageSize);
         bool Create(product product);
         bool Update(product product);

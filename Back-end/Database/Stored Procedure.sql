@@ -3,7 +3,7 @@ go
 
 --- bảng sản phẩm ---
 
--- lấy 10 sản phẩm mới nhất -- 
+-- lấy 10 sản phẩm mới nhất 
 CREATE PROCEDURE GetNewProducts
 AS
 BEGIN
@@ -19,6 +19,22 @@ END;
 
 
 exec GetNewProducts 
+
+-- lấy sản phẩm được xem nhiều nhất 
+CREATE PROCEDURE GetBestViewProducts
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT TOP 10
+        id, nameProd, desProd, num, up, img, rating, viewProd
+    FROM 
+        products
+    ORDER BY 
+        viewProd DESC, rating DESC;
+END;
+
+exec  GetBestViewProducts
 
 --- bảng tài khoản ---
 

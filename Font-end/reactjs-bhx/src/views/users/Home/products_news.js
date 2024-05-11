@@ -69,7 +69,7 @@ function ProductsNew() {
                         <Card.Footer className="d-flex flex-column justify-content-between h-100">
                           <div>
                             <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.up} đ</Card.Text>
-                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.num}</Card.Text>
+                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>Còn {product.num}</Card.Text>
                             <Card.Text>{renderStars(product.rating)}</Card.Text>
                             <Button variant="primary" onClick={() => console.log('Add to Cart')}>
                               Add to Cart
@@ -81,7 +81,7 @@ function ProductsNew() {
                   </Card>
 
                 </Col>
-
+                
 
               </>
             
@@ -90,6 +90,7 @@ function ProductsNew() {
           })}
 
         </Row>
+        <hr className="mt-4 text-muted" />
       </Container>
     </>
   );
