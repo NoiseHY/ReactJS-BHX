@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { toast } from "react-toastify";
 import './products.scss';
 
@@ -31,9 +31,15 @@ const ProductDetail = () => {
   }, [id]);
 
   const renderStars = (rating) => {
+    const intPart = Math.floor(rating);
+    const decPart = rating - intPart;
+
     const stars = [];
-    for (let i = 0; i < rating; i++) {
+    for (let i = 0; i < intPart; i++) {
       stars.push(<FaStar key={i} style={{ color: "#ffc107" }} />);
+    }
+    if (decPart > 0) {
+      stars.push(<FaStarHalf key={intPart} style={{ color: "#ffc107" }} />);
     }
     return stars;
   };
