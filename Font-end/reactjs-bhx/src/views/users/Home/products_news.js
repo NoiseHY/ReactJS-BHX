@@ -3,6 +3,7 @@ import { fetchProductsNew } from "../../../services/productsServices";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 
+import { Link } from "react-router-dom";
 import '../../../App.scss'
 
 function ProductsNew() {
@@ -57,34 +58,38 @@ function ProductsNew() {
               <>
                 <Col key={index} xs={12} md={4} className="app-container">
                   <Card>
-                    <div className="d-flex flex-wrap">
-                      <div className="img-container" style={{ width: "200px", height: "250px", paddingRight: "10px" }}>
-                        <Card.Img src={imagePath} alt={product.nameProd} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <Link to={`/product/${product.id}`} >
+                      <div className="d-flex flex-wrap">
+                        <div className="img-container" style={{ width: "200px", height: "250px", paddingRight: "10px" }}>
+                          <Card.Img src={imagePath} alt={product.nameProd} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        </div>
+                        <div className="mt-auto" style={{ width: "50%" }}>
+                          <Card.Body>
+                            <Card.Title>{product.nameProd}</Card.Title>
+                            <Card.Text>{product.desProd}</Card.Text>
+                          </Card.Body>
+                          <Card.Footer className="d-flex flex-column justify-content-between h-100">
+                            <div>
+                              <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.up} đ</Card.Text>
+                              <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>Còn {product.num}</Card.Text>
+                              <Card.Text>{renderStars(product.rating)}</Card.Text>
+                              <Button variant="primary" onClick={() => console.log('Add to Cart')}>
+                                Add to Cart
+                              </Button>
+                            </div>
+                          </Card.Footer>
+                        </div>
                       </div>
-                      <div className="mt-auto" style={{ width: "50%" }}>
-                        <Card.Body>
-                          <Card.Title>{product.nameProd}</Card.Title>
-                          <Card.Text>{product.desProd}</Card.Text>
-                        </Card.Body>
-                        <Card.Footer className="d-flex flex-column justify-content-between h-100">
-                          <div>
-                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.up} đ</Card.Text>
-                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>Còn {product.num}</Card.Text>
-                            <Card.Text>{renderStars(product.rating)}</Card.Text>
-                            <Button variant="primary" onClick={() => console.log('Add to Cart')}>
-                              Add to Cart
-                            </Button>
-                          </div>
-                        </Card.Footer>
-                      </div>
-                    </div>
+
+                    </Link>
                   </Card>
 
                 </Col>
-                
+
+
 
               </>
-            
+
 
             );
           })}

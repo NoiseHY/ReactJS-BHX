@@ -9,7 +9,7 @@ namespace DAL.Interfaces
 {
     public partial interface IproductRepository
     {
-        product GetProductByID(int id);
+        detailProduct GetProductByID(int id);
         List<product> GetAll(int pageNumber, int pageSize);
         List<product> GetNewProducts ();
         List<product> GetBestViewProducts();

@@ -1,6 +1,7 @@
 ﻿using DAL.Helper;
 using DAL.Interfaces;
 using DTO.Admin;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace DAL.Repository
             }
         }
 
-        public product GetProductByID(int id)
+        public detailProduct GetProductByID(int id)
         {
             string msg = "";
             try
@@ -82,7 +83,7 @@ namespace DAL.Repository
                      "@ProductId", id);
                 if (!string.IsNullOrEmpty(msg))
                     throw new Exception(msg );
-                return dt.ConvertTo<product>().FirstOrDefault();
+                return dt.ConvertTo<detailProduct>().FirstOrDefault();
 
             }
             catch (Exception ex)

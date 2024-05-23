@@ -57,7 +57,7 @@ namespace API.User.Controllers
 
         [Route("GetProductByID")]
         [HttpGet]
-        public product GetProductByID(int id)
+        public detailProduct GetProductByID(int id)
         {
             return _iproductBusiness.GetProductByID(id);
         }

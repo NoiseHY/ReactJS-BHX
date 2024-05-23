@@ -16,7 +16,7 @@ namespace BLL.Bussiness
         {
             iproductRepository = _iproductRepository;
         }
-        public product GetProductByID(int id)
+        public detailProduct GetProductByID(int id)
         {
             return iproductRepository.GetProductByID(id);
         }

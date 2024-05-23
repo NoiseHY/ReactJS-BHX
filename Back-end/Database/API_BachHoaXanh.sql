@@ -49,6 +49,29 @@ values
 
 select * from units
 
+-- Tạo bảng Nhà cung cấp
+CREATE TABLE sups (
+    id INT IDENTITY(1,1) PRIMARY KEY not null,
+    nameSup NVARCHAR(50) not null,
+    addressSup NVARCHAR(100) ,
+    num NVARCHAR(10),
+	stat int default 1,
+	dateBegin datetime default getdate(),
+	--ngaysua
+	dateEnd datetime
+);
+
+--drop table sups
+
+INSERT INTO sups (nameSup, addressSup, num)
+VALUES
+(N'Công ty TNHH Thực phẩm XYZ', N'123 Đường ABC, Quận XYZ, Thành phố XYZ', '0123456789'),
+(N'Cửa hàng Thực phẩm ABC', N'456 Đường XYZ, Quận ABC, Thành phố ABC', '0987654321'),
+(N'Nhà cung cấp XYZ', N'789 Đường XYZ, Quận XYZ, Thành phố XYZ', '0123456789');
+
+select * from sups
+
+
 -- Tạo bảng Sản phẩm
 CREATE TABLE products (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -62,6 +85,7 @@ CREATE TABLE products (
 	viewProd int,
 	idCat INT ,
 	idUnits int,
+	stat int default 1,
 	dateBegin datetime default getdate(),
 	--ngaysua
 	dateEnd datetime
@@ -81,22 +105,10 @@ INSERT INTO products (nameProd, desProd, num, up, idCat, idUnits,img, rating, vi
 
 select * from products
 
--- Tạo bảng Nhà cung cấp
-CREATE TABLE sups (
-    id INT IDENTITY(1,1) PRIMARY KEY not null,
-    nameSup NVARCHAR(50) not null,
-    addressSup NVARCHAR(100) ,
-    num NVARCHAR(10),
-	dateBegin datetime default getdate(),
-	--ngaysua
-	dateEnd datetime
-);
-
 -- Tạo bảng chi tiết sản phẩm
-create table inProd (
+create table detailProd (
 	id int identity(1,1) primary key,
-	idUn int,
-	--thanhphan
+	--thanhphan(ingredient)
 	ing nvarchar(500) default N'Không có ',
 	--luuy
 	note nvarchar(200) default N'Không có ',
@@ -105,16 +117,29 @@ create table inProd (
 	--nsx (place of production)
 	pop nvarchar(100),
 	--donvi
-	idUnit int default N'Không có ',
+	idUnit int,
 	--thuonghieu
 	idSup int,
+	idProd int,
 	dateBegin datetime default getdate(),
 	--ngaysua
-	dateEnd datetime
-	foreign key (idUnit) references units(id) on delete cascade on update cascade,
-	foreign key (idSup) references sups(id) on delete cascade on update cascade
-
+	dateEnd datetime,
+	foreign key (idUnit) references units(id) ,
+	foreign key (idSup) references sups(id),
+	foreign key (idProd) references products(id) on delete cascade on update cascade 
 )
+
+--drop table inProd
+
+INSERT INTO detailProd (ing, note, stor, pop, idUnit, idSup, idProd)
+VALUES
+(N'123',N'123', N'123', N'Việt Nam', 1, 1, 1),
+(N'123', N'123', N'123', N'Argentina', 2, 2, 2),
+(N'123', N'123', N'123', N'Việt Nam', 3, 3,3 );
+
+select * from detailProd;
+
+
 
 -- Tạo bảng Khách hàng
 CREATE TABLE custs (

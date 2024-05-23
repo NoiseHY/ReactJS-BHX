@@ -36,6 +36,49 @@ END;
 
 exec  GetBestViewProducts
 
+--Lấy chi tiết sản phẩm theo id
+CREATE PROCEDURE GetProductByID
+    @ProductId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        P.id AS idProd,
+        P.nameProd AS nameProd,
+        P.desProd AS desProd,
+        P.num AS num,
+        P.up AS up,
+		P.rating AS rating,
+        P.idCat AS idCat,
+		P.idUnits AS idUnits,
+        P.img AS img,
+        D.ing AS ing,
+        D.note AS note,
+        D.stor AS stor,
+        D.pop AS pop,
+        U.nameUn AS nameUn,
+        S.nameSup AS nameSup,
+        C.nameCat AS nameCat
+    FROM 
+        products P
+    LEFT JOIN 
+        detailProd D ON P.id = D.idProd
+    LEFT JOIN 
+        units U ON D.idUnit = U.id
+    LEFT JOIN 
+        sups S ON D.idSup = S.id
+    LEFT JOIN 
+        categories C ON P.idCat = C.id
+    WHERE 
+        P.id = @ProductId;
+END;
+
+exec GetProductByID 1	
+
+--drop procedure GetProductByID
+
+
 --- bảng tài khoản ---
 
 ---> user

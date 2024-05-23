@@ -20,6 +20,7 @@ namespace DTO.Admin
 
         public float? rating { get; set; }
         public float? viewProd { get; set; }
+        public int? stat { get; set; }
 
         public DateTime dateBegin { get; set; }
         public DateTime dateEnd { get; set; }
