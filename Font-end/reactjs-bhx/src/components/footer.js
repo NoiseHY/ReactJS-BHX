@@ -8,7 +8,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col xs={12} md={6}>
-            <p>&copy; 2024 Your Website</p>
+            <p>&copy; Bách Hóa Xanh _ ReactJS</p>
           </Col>
           <Col xs={12} md={6} className="d-flex justify-content-end align-items-center">
             <a href="https://github.com" className="text-light me-3">

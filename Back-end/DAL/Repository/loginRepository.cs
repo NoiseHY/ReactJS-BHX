@@ -31,44 +31,33 @@ namespace DAL.Repository
             account accountInfo = new account();
             string msg = "";
 
-            //try
-            //{
-            //    var login = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetTaiKhoanInfo",
-            //        "@TenTK", username,
-            //        "@MkTK", password);
+            try
+            {
+                var login = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "LoginAccount",
+                    "@Username", username,
+                    "@Password", password);
 
-            //    if (login != null && login.Rows.Count > 0 && string.IsNullOrEmpty(msg))
-            //    {
-            //        var user = login.Rows[0];
+                var user = login.Rows[0];
 
-            //        accountInfo.MaTK = (int)user["MaTK"];
-            //        accountInfo.TenTK = user["TenTK"].ToString();
-            //        accountInfo.MkTK = user["MkTK"].ToString();
-            //        accountInfo.MaPQ = Convert.ToInt32(user["MaPQ"].ToString());
-            //        if (string.IsNullOrEmpty(user["MaKH"].ToString()))
-            //        {
-            //            // Xử lý khi MaKH rỗng
-            //        }
-            //        else
-            //        {
-            //            accountInfo.MaKH = Convert.ToInt32(user["MaKH"].ToString());
-            //        }
+                if ((int)user["Result"] == 1)
+                {
 
+                    accountInfo.idAuth = Convert.ToInt32(user["idAuth"].ToString());
+                    accountInfo.idCuts = Convert.ToInt32(user["idCuts"].ToString());
 
-            //    }
+                }
 
-            //    else
-            //    {
-                    
-            //        accountInfo = null;
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    // Xử lý ngoại lệ nếu cần
-            //    msg = e.Message;
-            //    accountInfo = null;
-            //}
+                if ((int)user["Result"] == 0)
+                {
+                    accountInfo = null;
+                }
+            }
+            catch (Exception e)
+            {
+                // Xử lý ngoại lệ nếu cần
+                msg = e.Message;
+                
+            }
 
             return accountInfo;
         }

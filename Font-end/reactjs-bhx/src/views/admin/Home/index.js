@@ -5,9 +5,9 @@ import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast styles
 
 import Header from '../../../components/header';
-import TableUsers from '../../../components/tableUsers';
-import Modal_editUser from '../../../components/modal_editUser';
-import Modal_addnew from '../../../components/modal_addnewUser';
+import TableUsers from './tableUsers';
+import Modal_addnew from './modal_addnewUser';
+import Modal_editUser from './modal_editUser';
 
 import '../../../App.scss';
 

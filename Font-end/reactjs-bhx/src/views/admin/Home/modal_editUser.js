@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
-import { putEditUser } from "../services/usersServices";
+import { putEditUser } from "../../../services/usersServices";
 import { toast } from "react-toastify";
 
 const Modal_editUser = (props) => {

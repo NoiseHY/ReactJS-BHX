@@ -257,15 +257,15 @@ CREATE TABLE acc (
 	email NVARCHAR(50) ,
     idAuth INT not null,
     idCuts INT ,
+	timeLogin datetime,
 	dateBegin datetime default getdate(),
 	--ngaysua
 	dateEnd datetime,
+	-- duy nhất 
+	CONSTRAINT UQ_nameAcc UNIQUE (nameAcc),
     FOREIGN KEY (idAuth) REFERENCES auth(id) on delete cascade on update cascade,
     FOREIGN KEY (idCuts) REFERENCES custs(id) on delete cascade on  update cascade
 	);
-
-ALTER TABLE acc
-ADD CONSTRAINT UQ_nameAcc UNIQUE (nameAcc);
 
 
 insert into acc (
@@ -282,6 +282,7 @@ values
 
 select * from acc
 
+--drop table acc 
 
 -- Tạo bảng giỏ hàng
 CREATE TABLE cart (

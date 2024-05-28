@@ -33,51 +33,43 @@ namespace API_BHX.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] account loginRequest)
         {
-            //if (loginRequest == null || string.IsNullOrEmpty(loginRequest.TenTK) || string.IsNullOrEmpty(loginRequest.MkTK))
+            //if (loginRequest == null || string.IsNullOrEmpty(loginRequest.nameAcc) || string.IsNullOrEmpty(loginRequest.pasAcc))
             //{
             //    return BadRequest(new { error = "Vui lòng cung cấp tên đăng nhập và mật khẩu." });
             //}
 
-            //var accountInfo = _loginBusiness.Login(loginRequest.TenTK, loginRequest.MkTK);
+            var accountInfo = _loginBusiness.Login(loginRequest.nameAcc, loginRequest.pasAcc);
 
-            //if (accountInfo != null)
-            //{
-            //    if (accountInfo.MaPQ == 1)
-            //    {
-            //        var token = GenerateJwtToken(accountInfo);
-            //        return Ok(new { MaTK = accountInfo.MaTK, TenTK = accountInfo.TenTK, Token = token, MaPQ = accountInfo.MaPQ  });
-            //    }
-            //    else
-            //    {
-            //        return Ok(new { MaTK = accountInfo.MaTK, TenTK = accountInfo.TenTK ,MaKH = accountInfo.MaKH });
-            //    }
-            //}
-            //else
-            //{
-            //    return BadRequest(new { error = "Tài khoản hoặc mật khẩu không đúng." });
-            //}
-            return BadRequest(loginRequest);
+            if (accountInfo != null)
+            {
+                var token = GenerateJwtToken(accountInfo);
+                return Ok(new { idAuth = accountInfo.idAuth, idCuts = accountInfo.idCuts, Token = token });
+            }
+            else
+            {
+                return BadRequest(new { error = "Tài khoản hoặc mật khẩu không đúng." });
+            }
+            
         }
 
-        //private string GenerateJwtToken(account account)
-        //{
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes(_appSettings.Key);
+        private string GenerateJwtToken(account account)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Key);
 
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //        Subject = new ClaimsIdentity(new Claim[]
-        //        {
-        //            new Claim(ClaimTypes.Name, account.TenTK),
-        //            new Claim(ClaimTypes.Role, account.MaPQ.ToString())
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Role, account.idAuth.ToString())
 
-        //        }),
-        //        Expires = DateTime.UtcNow.AddHours(1),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
+                }),
+                Expires = DateTime.UtcNow.AddHours(3),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
 
-        //    var token = tokenHandler.CreateToken(tokenDescriptor);
-        //    return tokenHandler.WriteToken(token);
-        //}
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
     }
 }

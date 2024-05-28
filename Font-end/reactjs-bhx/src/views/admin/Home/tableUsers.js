@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Modal_editUser from './modal_editUser';
-import { fetchAllUser, delUser } from '../services/usersServices';
+import { fetchAllUser, delUser } from '../../../services/usersServices';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate'; // Import react-paginate
 

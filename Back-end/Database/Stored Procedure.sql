@@ -87,6 +87,49 @@ exec GetProductByID 1
 
 --> admin
 
+-- >>> Login 
+
+CREATE PROCEDURE LoginAccount
+    @Username NVARCHAR(50),
+    @Password NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (
+        SELECT 1 
+        FROM acc 
+        WHERE nameAcc = @Username AND pasAcc = @Password
+    )
+    BEGIN
+        -- Lấy thông tin tài khoản nếu hợp lệ
+        DECLARE @idAuth INT, @idCuts INT;
+
+        SELECT @idAuth = idAuth, @idCuts = idCuts
+        FROM acc 
+        WHERE nameAcc = @Username AND pasAcc = @Password;
+
+        -- Cập nhật thời gian đăng nhập
+        UPDATE acc
+        SET timeLogin = GETDATE()
+        WHERE nameAcc = @Username AND pasAcc = @Password;
+
+        -- Trả về thông tin tài khoản và idAuth, idCuts
+        SELECT 1 AS Result, @idAuth AS idAuth, @idCuts AS idCuts;
+    END
+    ELSE
+    BEGIN
+        -- Tài khoản không hợp lệ
+        SELECT 0 AS Result;
+    END
+END;
+
+--drop procedure LoginAccount;
+
+exec LoginAccount admin, 123; 
+exec LoginAccount nam, 123; 
+
+
 --get all 
 
 CREATE PROCEDURE GetAllAccounts
