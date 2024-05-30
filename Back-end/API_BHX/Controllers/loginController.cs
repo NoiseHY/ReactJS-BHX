@@ -33,23 +33,24 @@ namespace API_BHX.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] account loginRequest)
         {
-            //if (loginRequest == null || string.IsNullOrEmpty(loginRequest.nameAcc) || string.IsNullOrEmpty(loginRequest.pasAcc))
-            //{
-            //    return BadRequest(new { error = "Vui lòng cung cấp tên đăng nhập và mật khẩu." });
-            //}
-
             var accountInfo = _loginBusiness.Login(loginRequest.nameAcc, loginRequest.pasAcc);
 
             if (accountInfo != null)
             {
-                var token = GenerateJwtToken(accountInfo);
-                return Ok(new { idAuth = accountInfo.idAuth, idCuts = accountInfo.idCuts, Token = token });
+                if (accountInfo.idAuth == 1)
+                {
+                    var token = GenerateJwtToken(accountInfo);
+                    return Ok(new { idAuth = accountInfo.idAuth, idCuts = accountInfo.idCuts, Token = token });
+                }
+                else
+                {
+                    return Ok(new { idAuth = accountInfo.idAuth, idCuts = accountInfo.idCuts });
+                }
             }
             else
             {
                 return BadRequest(new { error = "Tài khoản hoặc mật khẩu không đúng." });
             }
-            
         }
 
         private string GenerateJwtToken(account account)

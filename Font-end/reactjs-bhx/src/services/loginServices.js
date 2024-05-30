@@ -6,13 +6,30 @@ const login = async (loginRequest) => {
     const response = await axios.post("api/login/login", loginRequest);
 
     if (response) {
-      toast.success("Đăng nhập thành công ");
-      
-      const { idAuth, idCuts, Token } = response;
-      
-      return { idAuth, idCuts, Token };
-    }
 
+      toast.success("Đăng nhập thành công");  
+
+      const { idAuth, idCuts, Token } = response;
+
+      // Lưu thông tin đăng nhập vào sessionStorage
+      sessionStorage.setItem("idAuth", idAuth);
+      sessionStorage.setItem("idCuts", idCuts);
+      sessionStorage.setItem("Token", Token);
+
+      if (idAuth === 1) {
+        
+        window.location.href = "/admin";
+      } else {
+        window.location.reload();
+      }
+
+      return { idAuth, idCuts, Token };
+      
+    } else {
+      
+      toast.error("Lỗi !");
+      
+    }
   } catch (error) {
     console.log("Đã xảy ra lỗi : " + error.message);
     throw error;
