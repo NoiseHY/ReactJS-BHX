@@ -1,8 +1,15 @@
 ﻿using BLL.Bussiness;
+using BLL.Bussiness.user;
 using BLL.Inerfaces;
+using BLL.Inerfaces.user;
 using DAL.Helper;
 using DAL.Interfaces;
+using DAL.Interfaces.admin;
+using DAL.Interfaces.user;
 using DAL.Repository;
+using DAL.Repository.admin;
+using DAL.Repository.user;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +24,8 @@ builder.Services.AddTransient<IcartRepository, cartRepository>();
 builder.Services.AddTransient<IcartBusiness, cartBusiness>();
 builder.Services.AddTransient<IbillRepository, billRepository>();
 builder.Services.AddTransient<IbillBusiness, billBusiness>();
+builder.Services.AddTransient<IcartDetailsBusiness, cartDetailsBusiness>();
+builder.Services.AddTransient<IcartDetailsRepository, cartDetailsRepository>();
 
 
 

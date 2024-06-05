@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchGetBestViewProducts, fetchProductsNew } from "../../../services/productsServices";
+import { fetchGetBestViewProducts, fetchProductsNew } from "../../../services/admin/productsServices";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 

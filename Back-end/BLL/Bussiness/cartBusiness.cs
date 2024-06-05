@@ -1,5 +1,5 @@
 ﻿using BLL.Inerfaces;
-using DAL.Interfaces;
+using DAL.Interfaces.admin;
 using DTO.User;
 using System;
 using System.Collections.Generic;

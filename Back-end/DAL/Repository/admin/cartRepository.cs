@@ -1,5 +1,5 @@
 ﻿using DAL.Helper;
-using DAL.Interfaces;
+using DAL.Interfaces.admin;
 using DTO.User;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repository
+namespace DAL.Repository.admin
 {
     public partial class cartRepository : IcartRepository
     {
@@ -39,10 +39,10 @@ namespace DAL.Repository
             try
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
-                    out msgError, "AddToCart",
-                    "@CustomerId", cart.MaKH,
-                    "@ProductId", cart.MaSP,
-                    "@UnitPrice", cart.Dongia);
+                    out msgError, "AddProductToCart",
+                    "@CustomerId",
+                    "@ProductId",
+                    "@Quantity");
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {
@@ -63,7 +63,7 @@ namespace DAL.Repository
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
                     out msgError, "UpdateCartItem",
-                    "@CartId", cart.MaGiohang);
+                    "@CartId");
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {
@@ -137,11 +137,11 @@ namespace DAL.Repository
 
                 if (result != null && (bool)result)
                 {
-                    
+
                     return true;
                 }
 
-                
+
                 return false;
             }
             catch (Exception ex)

@@ -1,4 +1,4 @@
-import axios from "./cust_axios_admin";
+import axios from "../cust_axios_admin";
 import { toast } from "react-toastify";
 
 const login = async (loginRequest) => {
@@ -16,7 +16,7 @@ const login = async (loginRequest) => {
       sessionStorage.setItem("idCuts", idCuts);
       sessionStorage.setItem("Token", Token);
 
-      if (idAuth === 1) {
+      if (idAuth === 1) { 
         
         window.location.href = "/admin";
       } else {

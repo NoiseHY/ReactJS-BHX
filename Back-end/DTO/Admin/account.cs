@@ -14,6 +14,7 @@ namespace DTO.Admin
         public string? email { get; set; }
         public int? idAuth { get; set; }
         public int? idCuts { get; set; }
+        public int checkAcc { get; set; }
         public DateTime? timeLogin { get; set; }
         public DateTime dateBegin { get; set; }
         public DateTime? dateEnd { get; set; }

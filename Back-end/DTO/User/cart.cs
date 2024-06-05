@@ -8,13 +8,11 @@ namespace DTO.User
 {
     public class cart
     {
-        public int MaGiohang { get; set; }
-        public int MaKH { get; set; }
-        public int MaSP { get; set; }
-        public decimal Dongia { get; set; }
-        public DateTime Thoidiemtao { get; set; }
-        public string? ProductName { get; set; }
-        public string? ProductImg { get; set; }
+        public int id { get; set; }
+        public int idCust { get; set; }
+        public int dateBegin { get; set; }
+        public decimal dateEnd { get; set; }
+        
 
     }
 }

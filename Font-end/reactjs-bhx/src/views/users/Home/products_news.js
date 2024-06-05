@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { fetchProductsNew } from "../../../services/productsServices";
+import { fetchProductsNew } from "../../../services/admin/productsServices";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaStar, FaStarHalf } from 'react-icons/fa';
-
 import { Link } from "react-router-dom";
 import '../../../App.scss'
+import { createCartDetails } from "../../../services/user/productsServies";
 
 function ProductsNew() {
   const [listProductsNew, setListProducts] = useState([]);
@@ -27,7 +27,6 @@ function ProductsNew() {
   const renderStars = (rating) => {
     const intPart = Math.floor(rating);
     const decPart = rating - intPart;
-
     const stars = [];
     for (let i = 0; i < intPart; i++) {
       stars.push(<FaStar key={i} style={{ color: "#ffc107" }} />);
@@ -38,7 +37,25 @@ function ProductsNew() {
     return stars;
   };
 
+  const addToCart = async (productId, productName, productPrice, productQuantity) => {
+    try {
+      const cartDetailData = {
+        idCart: 1, 
+        idPro: productId, 
+        num: productQuantity 
+      };
 
+      // Thực hiện thêm sản phẩm vào giỏ hàng
+      const result = await createCartDetails(cartDetailData);
+      if (result) {
+        console.log("Thêm sản phẩm vào giỏ hàng thành công");
+        // Hiển thị thông báo hoặc thực hiện các hành động khác nếu cần
+      }
+    } catch (error) {
+      console.log("Lỗi thêm sản phẩm vào giỏ hàng:", error.message);
+      // Xử lý lỗi nếu cần
+    }
+  };
 
   return (
     <>
@@ -48,52 +65,40 @@ function ProductsNew() {
           <span href="#" className="text-secondary">Xem thêm</span>
         </div>
 
-
         <Row>
           {listProductsNew.map((product, index) => {
-
             const imagePath = product.img ? require(`../../../assets/img/${product.img}`) : "";
 
             return (
-              <>
-                <Col key={index} xs={12} md={4} className="app-container">
-                  <Card>
-                    <Link to={`/product/${product.id}`} >
-                      <div className="d-flex flex-wrap">
-                        <div className="img-container" style={{ width: "200px", height: "250px", paddingRight: "10px" }}>
-                          <Card.Img src={imagePath} alt={product.nameProd} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                        </div>
-                        <div className="mt-auto" style={{ width: "50%" }}>
-                          <Card.Body>
-                            <Card.Title>{product.nameProd}</Card.Title>
-                            <Card.Text>{product.desProd}</Card.Text>
-                          </Card.Body>
-                          <Card.Footer className="d-flex flex-column justify-content-between h-100">
-                            <div>
-                              <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.up} đ</Card.Text>
-                              <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>Còn {product.num}</Card.Text>
-                              <Card.Text>{renderStars(product.rating)}</Card.Text>
-                              <Button variant="primary" onClick={() => console.log('Add to Cart')}>
-                                Add to Cart
-                              </Button>
-                            </div>
-                          </Card.Footer>
-                        </div>
+              <Col key={index} xs={12} md={4} className="app-container">
+                <Card>
+                  <Link to={`/product/${product.id}`} >
+                    <div className="d-flex flex-wrap">
+                      <div className="img-container" style={{ width: "200px", height: "250px", paddingRight: "10px" }}>
+                        <Card.Img src={imagePath} alt={product.nameProd} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </div>
-
-                    </Link>
-                  </Card>
-
-                </Col>
-
-
-
-              </>
-
-
+                      <div className="mt-auto" style={{ width: "50%" }}>
+                        <Card.Body>
+                          <Card.Title>{product.nameProd}</Card.Title>
+                          <Card.Text>{product.desProd}</Card.Text>
+                        </Card.Body>
+                        <Card.Footer className="d-flex flex-column justify-content-between h-100">
+                          <div>
+                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.up} đ</Card.Text>
+                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>Còn {product.num}</Card.Text>
+                            <Card.Text>{renderStars(product.rating)}</Card.Text>
+                            <Button variant="primary" onClick={() => addToCart(product.id, product.nameProd, product.up, 1)}>
+                              Add to Cart
+                            </Button>
+                          </div>
+                        </Card.Footer>
+                      </div>
+                    </div>
+                  </Link>
+                </Card>
+              </Col>
             );
           })}
-
         </Row>
         <hr className="mt-4 text-muted" />
       </Container>

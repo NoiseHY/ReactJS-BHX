@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace DAL.Interfaces.admin
 {
     public partial interface IcartRepository
     {
@@ -13,7 +13,7 @@ namespace DAL.Interfaces
         bool Create(cart cart);
         bool Update(cart cart);
         bool Delete(int id);
-        int Count (int id);
-        bool CheckProductInCart (int id, int productId);
+        int Count(int id);
+        bool CheckProductInCart(int id, int productId);
     }
 }

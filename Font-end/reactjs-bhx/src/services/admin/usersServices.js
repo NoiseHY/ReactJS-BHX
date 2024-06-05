@@ -1,4 +1,4 @@
-import axios from "./cust_axios_admin";
+import axios from "../cust_axios_admin";
 import { toast } from 'react-toastify'; // Import toast
 
 const fetchAllUser = async () => {

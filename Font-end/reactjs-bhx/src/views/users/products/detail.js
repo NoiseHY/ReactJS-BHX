@@ -5,7 +5,7 @@ import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { toast } from "react-toastify";
 import './products.scss';
 
-import { getProductByID } from "../../../services/productsServices";
+import { getProductByID } from "../../../services/admin/productsServices";
 
 const ProductDetail = () => {
   const { id } = useParams();

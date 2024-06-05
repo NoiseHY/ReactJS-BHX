@@ -261,12 +261,14 @@ CREATE TABLE acc (
 	dateBegin datetime default getdate(),
 	--ngaysua
 	dateEnd datetime,
+	checkAcc int default '1',
 	-- duy nhất 
 	CONSTRAINT UQ_nameAcc UNIQUE (nameAcc),
     FOREIGN KEY (idAuth) REFERENCES auth(id) on delete cascade on update cascade,
     FOREIGN KEY (idCuts) REFERENCES custs(id) on delete cascade on  update cascade
 	);
 
+--drop table acc 
 
 insert into acc (
     nameAcc ,
@@ -287,15 +289,41 @@ select * from acc
 -- Tạo bảng giỏ hàng
 CREATE TABLE cart (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    idCust INT ,
-    idPro INT ,
-    num int ,
-    dateBegin datetime default getdate(),
-	--ngaysua
-	dateEnd datetime
-    FOREIGN KEY (idCust) REFERENCES custs(id) on delete cascade on  update cascade,
-    FOREIGN KEY (idPro) REFERENCES products(id) on delete cascade on  update cascade
+    idCust INT,  -- Khóa ngoại tham chiếu đến cột "id" trong bảng "custs"
+    dateBegin datetime DEFAULT GETDATE(),
+    dateEnd datetime,
+    FOREIGN KEY (idCust) REFERENCES custs(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO cart (idCust)
+VALUES
+(1);
+
+select * from cart
+
+--drop table cart 
+
+-- Bảng chi tiết giỏ hàng (cartDetails)
+CREATE TABLE cartDetails (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    idCart INT, 
+    idPro INT,  
+    num INT,    
+    dateBegin datetime DEFAULT GETDATE(),
+    dateEnd datetime,
+    FOREIGN KEY (idCart) REFERENCES cart(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (idPro) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+-- Thêm dữ liệu vào bảng chi tiết giỏ hàng (cartDetails)
+INSERT INTO cartDetails (idCart, idPro, num)
+VALUES
+(1, 1, 2),   
+(1, 2, 1);   
+
+select * from cartDetails
+
 -- Tạo bảng bình luận 
 CREATE TABLE cmt (
     id INT IDENTITY(1,1) PRIMARY KEY,

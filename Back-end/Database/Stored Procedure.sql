@@ -138,10 +138,12 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        id, nameAcc, pasAcc, email, idAuth, idCuts, dateBegin, dateEnd
+        id, nameAcc, pasAcc, email, idAuth, idCuts, dateBegin, dateEnd, checkAcc
     FROM 
         acc;
 END;
+
+--drop procedure GetAllAccounts
 
 exec GetAllAccounts
 
@@ -205,4 +207,57 @@ EXEC DeleteAccount @AccountID = 4;
 
 select * from acc
 
+--GIỏ hàng (cart ) 
+
+-- thêm một sản phẩm vào giỏ hàng
+CREATE PROCEDURE AddProductToCart
+    @CustomerId INT,
+    @ProductId INT,
+    @Quantity INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @CartId INT;
+
+    -- Tạo một giỏ hàng mới nếu khách hàng chưa có giỏ hàng
+    IF NOT EXISTS (SELECT 1 FROM cart WHERE idCust = @CustomerId)
+    BEGIN
+        INSERT INTO cart (idCust) VALUES (@CustomerId);
+        SET @CartId = SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        SELECT @CartId = id FROM cart WHERE idCust = @CustomerId;
+    END;
+
+    -- Thêm sản phẩm vào giỏ hàng chi tiết
+    INSERT INTO cartDetails (idCart, idPro, num) VALUES (@CartId, @ProductId, @Quantity);
+
+END;
+
+-- kiểm tra xem một sản phẩm có trong giỏ hàng k
+
+CREATE PROCEDURE CheckProductInCart
+    @UserId INT,
+    @ProductId INT,
+    @IsInCart BIT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Kiểm tra xem sản phẩm có trong giỏ hàng của người dùng không
+    IF EXISTS (
+        SELECT 1 
+        FROM CartItems 
+        WHERE UserId = @UserId AND ProductId = @ProductId
+    )
+    BEGIN
+        SET @IsInCart = 1; -- Sản phẩm có trong giỏ hàng
+    END
+    ELSE
+    BEGIN
+        SET @IsInCart = 0; -- Sản phẩm không có trong giỏ hàng
+    END
+END;
 

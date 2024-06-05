@@ -1,4 +1,4 @@
-import axios from "./cuts_axio_users";
+import axios from "../cuts_axio_users";
 import { toast } from "react-toastify";
 
 const fetchProductsNew = async () => {
