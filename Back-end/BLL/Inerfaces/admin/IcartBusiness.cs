@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Inerfaces
+namespace BLL.Inerfaces.admin
 {
     public partial interface IcartBusiness
     {
-        List<cart> GetAll(int id);
-        bool Create(cart cart);
-        bool Update(cart cart);
+        List<cartDetails> GetAllByID(int id);
+        bool Create(user_cart cart);
+        bool Update(user_cart cart);
         bool Delete(int id);
         int Count(int id);
         bool CheckProductInCart(int id, int productId);

@@ -1,5 +1,6 @@
 ﻿using BLL.Bussiness;
-using BLL.Inerfaces;
+using BLL.Inerfaces.admin;
+using BLL.Inerfaces.user;
 using DTO.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,17 +11,17 @@ namespace API.User.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private IcartBusiness _icartBusiness;
-        public CartController(IcartBusiness icartBusiness)
+        private Iuser_cartBusiness _iuser_CartBusiness;
+        public CartController(Iuser_cartBusiness iuser_CartBusiness)
         {
-            _icartBusiness = icartBusiness;
+            _iuser_CartBusiness = iuser_CartBusiness;
         }
 
-        [Route("GetAll/{id}")]
+        [Route("GetAllByID/{id}")]
         [HttpGet]
-        public List<cart> GetCustomerByID(int id)
+        public List<user_cart> GetCustomerByID(int id)
         {
-            return _icartBusiness.GetAll(id);
+            return _iuser_CartBusiness.GetAllByID(id);
         }
 
         //[Route("Create")]

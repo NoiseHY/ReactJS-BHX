@@ -16,16 +16,17 @@ namespace DAL.Repository.admin
         {
             _excuteProcedure = excuteProcedure;
         }
-        public List<cart> GetAll(int id)
+
+        public List<cartDetails> GetAllByID(int id)
         {
             string msgError = "";
             try
             {
-                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetCartWithProductImgAndNameByCustomerId",
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetCartDetailsByCustomerId",
                      "@CustomerId", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<cart>().ToList();
+                return dt.ConvertTo<cartDetails>().ToList();
 
             }
             catch (Exception ex)
@@ -33,7 +34,8 @@ namespace DAL.Repository.admin
                 throw ex;
             }
         }
-        public bool Create(cart cart)
+
+        public bool Create(user_cart cart)
         {
             string msgError = "";
             try
@@ -56,7 +58,7 @@ namespace DAL.Repository.admin
                 throw ex;
             }
         }
-        public bool Update(cart cart)
+        public bool Update(user_cart cart)
         {
             string msgError = "";
             try

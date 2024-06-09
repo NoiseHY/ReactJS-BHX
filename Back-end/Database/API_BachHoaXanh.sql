@@ -164,6 +164,17 @@ insert into custs (
 values
 	(N'Nguyễn Công Nam', N'Hưng Yên', '0123456789', 'congnamhy1@gmail.com', null)
 
+insert into custs (
+    nameCus ,
+    addressCus ,
+    num ,
+	email ,
+	--ngaysua
+	dateEnd
+)
+values
+	(N'Nguyễn Nam', N'Hưng Yên', '0123456789', 'congnamhy1@gmail.com', null)
+
 select * from custs
 
 -- Tạo bảng Giảm giá (discount)
@@ -289,7 +300,7 @@ select * from acc
 -- Tạo bảng giỏ hàng
 CREATE TABLE cart (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    idCust INT,  -- Khóa ngoại tham chiếu đến cột "id" trong bảng "custs"
+    idCust INT, 
     dateBegin datetime DEFAULT GETDATE(),
     dateEnd datetime,
     FOREIGN KEY (idCust) REFERENCES custs(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -298,6 +309,8 @@ CREATE TABLE cart (
 INSERT INTO cart (idCust)
 VALUES
 (1);
+
+
 
 select * from cart
 

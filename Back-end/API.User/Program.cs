@@ -1,6 +1,8 @@
 ﻿using BLL.Bussiness;
+using BLL.Bussiness.admin;
 using BLL.Bussiness.user;
 using BLL.Inerfaces;
+using BLL.Inerfaces.admin;
 using BLL.Inerfaces.user;
 using DAL.Helper;
 using DAL.Interfaces;
@@ -26,7 +28,8 @@ builder.Services.AddTransient<IbillRepository, billRepository>();
 builder.Services.AddTransient<IbillBusiness, billBusiness>();
 builder.Services.AddTransient<IcartDetailsBusiness, cartDetailsBusiness>();
 builder.Services.AddTransient<IcartDetailsRepository, cartDetailsRepository>();
-
+builder.Services.AddTransient<Iuser_cartBusiness, user_cartBusiness>();
+builder.Services.AddTransient<Iuser_cartRepository, user_cartRepository>();
 
 
 // Add services to the container.

@@ -9,9 +9,9 @@ namespace DAL.Interfaces.admin
 {
     public partial interface IcartRepository
     {
-        List<cart> GetAll(int id);
-        bool Create(cart cart);
-        bool Update(cart cart);
+        List<cartDetails> GetAllByID(int id);
+        bool Create(user_cart cart);
+        bool Update(user_cart cart);
         bool Delete(int id);
         int Count(int id);
         bool CheckProductInCart(int id, int productId);

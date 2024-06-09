@@ -261,3 +261,38 @@ BEGIN
     END
 END;
 
+--lấy chi tiết giỏ hàng theo id
+CREATE PROCEDURE GetCartDetailsByCustomerId
+    @CustomerId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        CD.id AS CartDetailId,
+        CD.idCart AS CartId,
+        P.id AS ProductId,
+        P.nameProd AS ProductName,
+        P.desProd AS ProductDescription,
+        P.up AS UnitPrice,
+		p.img AS Img,
+        CD.num AS Quantity,
+        U.nameUn AS UnitName,
+        S.nameSup AS SupplierName
+    FROM 
+        cart C
+    INNER JOIN 
+        cartDetails CD ON C.id = CD.idCart
+    INNER JOIN 
+        products P ON CD.idPro = P.id
+    LEFT JOIN 
+        units U ON P.idCat = U.id
+    LEFT JOIN 
+        sups S ON P.id = S.id
+    WHERE 
+        C.idCust = @CustomerId;
+END;
+
+--drop procedure GetCartDetailsByCustomerId
+
+exec GetCartDetailsByCustomerId 1

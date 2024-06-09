@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { fetchProductsNew } from "../../../services/admin/productsServices";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { Link } from "react-router-dom";
-import '../../../App.scss'
-import { createCartDetails } from "../../../services/user/productsServies";
+import '../../../App.scss';
+
+import { createCartDetails } from "../../../services/admin/productsServices";
+import { fetchProductsNew } from "../../../services/user/productsServices";
+
 
 function ProductsNew() {
   const [listProductsNew, setListProducts] = useState([]);
