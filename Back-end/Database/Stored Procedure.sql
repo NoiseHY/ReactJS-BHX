@@ -414,7 +414,39 @@ END;
 
 --drop procedure GetInvoiceDetailsByInvoiceId
 
-exec GetInvoiceDetailsByInvoiceId 10 
+exec GetInvoiceDetailsByInvoiceId 10
+
+--stored procedure để lấy tất cả chi tiết hóa đơn bán và tổng tiền
+CREATE PROCEDURE GetInvoiceDetailsByID
+    @InvoiceID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy thông tin tổng tiền của hóa đơn bán từ bảng invs
+    SELECT 
+        invDetails.id AS InvoiceDetailID,
+        invDetails.idPro AS ProductID,
+        products.nameProd AS ProductName,
+        products.img AS Img,
+        invDetails.num AS Quantity,
+        invDetails.up AS UnitPrice,
+        invDetails.countInv AS TotalPrice
+    FROM 
+        invs
+    INNER JOIN 
+        invDetails ON invs.id = invDetails.idInv
+    INNER JOIN 
+        products ON invDetails.idPro = products.id
+    WHERE 
+        invs.id = @InvoiceID;
+END;
+
+
+
+--drop procedure GetInvoiceDetailsByID
+
+exec GetInvoiceDetailsByID 10
 
 --> bảng khách hàng
 

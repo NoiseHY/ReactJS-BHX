@@ -106,7 +106,7 @@ INSERT INTO products (nameProd, desProd, num, up, idCat, idUnits,img, rating, vi
 select * from products
 
 -- Tạo bảng chi tiết sản phẩm
-create table detailProd (
+create table prodDetails (
 	id int identity(1,1) primary key,
 	--thanhphan(ingredient)
 	ing nvarchar(500) default N'Không có ',
@@ -121,6 +121,7 @@ create table detailProd (
 	--thuonghieu
 	idSup int,
 	idProd int,
+	img nvarchar(max),
 	dateBegin datetime default getdate(),
 	--ngaysua
 	dateEnd datetime,
@@ -129,15 +130,15 @@ create table detailProd (
 	foreign key (idProd) references products(id) on delete cascade on update cascade 
 )
 
---drop table inProd
+--drop table prodDetails
 
-INSERT INTO detailProd (ing, note, stor, pop, idUnit, idSup, idProd)
+INSERT INTO prodDetails (ing, note, stor, pop, idUnit, idSup, idProd)
 VALUES
 (N'123',N'123', N'123', N'Việt Nam', 1, 1, 1),
 (N'123', N'123', N'123', N'Argentina', 2, 2, 2),
 (N'123', N'123', N'123', N'Việt Nam', 3, 3,3 );
 
-select * from detailProd;
+select * from prodDetails;
 
 
 

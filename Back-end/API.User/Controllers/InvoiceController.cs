@@ -53,5 +53,12 @@ namespace API.User.Controllers
         {
             return _iuser_InvoiceBusiness.GetCustomerDetailsByID(id);
         }
+
+        [Route("GetInvoiceDetailsByID/{id}")]
+        [HttpGet]
+        public List<user_invoice> GetInvoiceDetailsByID(int id)
+        {
+            return _iuser_InvoiceBusiness.GetInvoiceDetailsByID(id);
+        }
     }
 }

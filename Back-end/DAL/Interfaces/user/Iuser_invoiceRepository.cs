@@ -11,5 +11,8 @@ namespace DAL.Interfaces.user
     {
         bool AddProductsToInvoiceDetails(int customerId, decimal countInv,List<user_invDetails> products);
         List<user_customer> GetCustomerDetailsByID(int id);
+
+        List<user_invoice> GetInvoiceDetailsByID(int id);
+
     }
 }

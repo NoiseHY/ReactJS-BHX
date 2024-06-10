@@ -1,54 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { GetInvoiceDetailsByID } from '../../../services/user/invoiceServices';
 
-import User_userDetailsForm from './user';
+import UserDetailsForm from './user';
 
-function user_detailsForm() {
+function ProdcutsForm() {
+  const [invoiceDetails, setInvoiceDetails] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getInvoiceDetails();
+  }, []);
+
+  const getInvoiceDetails = async () => {
+    try {
+      const res = await GetInvoiceDetailsByID(10);
+      if (res) {
+        setInvoiceDetails(res);
+      }
+    } catch (error) {
+      console.log("Error fetching invoice details:", error);
+      setError("Error fetching invoice details. Please try again later.");
+    }
+  };
+
   return (
     <div className="row">
       <div className="col-md-4 order-md-2 mb-4">
+
         <h4 className="d-flex justify-content-between align-items-center mb-3">
-          <span className="text-muted">Giỏ hàng</span>
-          <span className="badge badge-secondary badge-pill">2</span>
+          <span className="text-muted">Chi tiết hóa đơn</span>
         </h4>
+        {error && <div className="alert alert-danger">{error}</div>}
         <ul className="list-group mb-3">
-          <input type="hidden" name="sanphamgiohang[1][sp_ma]" value="2" />
-          <input type="hidden" name="sanphamgiohang[1][gia]" value="11800000.00" />
-          <input type="hidden" name="sanphamgiohang[1][soluong]" value="2" />
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 className="my-0">Apple Ipad 4 Wifi 16GB</h6>
-              <small className="text-muted">11800000.00 x 2</small>
-            </div>
-            <span className="text-muted">23600000</span>
-          </li>
-          <input type="hidden" name="sanphamgiohang[2][sp_ma]" value="4" />
-          <input type="hidden" name="sanphamgiohang[2][gia]" value="14990000.00" />
-          <input type="hidden" name="sanphamgiohang[2][soluong]" value="8" />
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 className="my-0">Apple iPhone 5 16GB White</h6>
-              <small className="text-muted">14990000.00 x 8</small>
-            </div>
-            <span className="text-muted">119920000</span>
-          </li>
+          {invoiceDetails.map((item) => (
+            <li key={item.invoiceDetailID} className="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 className="my-0">{item.productName}</h6>
+                <small className="text-muted">{item.quantity} x {item.unitPrice.toLocaleString()} đ </small>
+              </div>
+              <span className="text-muted">{!isNaN(item.totalPrice) && item.totalPrice.toLocaleString()} đ</span>
+            </li>
+          ))}
           <li className="list-group-item d-flex justify-content-between">
             <span>Tổng thành tiền</span>
-            <strong>143520000</strong>
-          </li>
+            <strong>{invoiceDetails.reduce((total, item) => total + (isNaN(item.totalPrice) ? 0 : item.totalPrice), 0).toLocaleString()} đ</strong>          </li>
         </ul>
-        <div className="input-group">
-          <input type="text" className="form-control" placeholder="Mã khuyến mãi" />
-          <div className="input-group-append">
-            <button type="submit" className="btn btn-secondary">Xác nhận</button>
-          </div>
-        </div>
+
       </div>
-      
-      <User_userDetailsForm></User_userDetailsForm>
+
+      <UserDetailsForm></UserDetailsForm>
 
     </div>
 
   );
 }
 
-export default user_detailsForm;
+export default ProdcutsForm;
