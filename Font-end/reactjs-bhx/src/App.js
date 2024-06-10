@@ -9,6 +9,7 @@ import Admin from './views/admin/Home';
 import User from './views/users/Home';
 import DetailProduct from './views/users/products';
 import User_cart from './views/users/cart';
+import User_invoice from './views/users/invoice';
 
 import NotFound from './components/error';
 
@@ -24,6 +25,7 @@ function App() {
         <Route exact path='/' element={<User/>} />
         <Route path='/product/:id' element={<DetailProduct/>} />
         <Route path="/cart" element={<User_cart />} />
+        <Route path="/payment" element={<User_invoice />} />
 
 
         <Route component={NotFound} />

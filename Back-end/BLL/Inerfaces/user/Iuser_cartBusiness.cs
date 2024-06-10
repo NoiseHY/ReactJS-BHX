@@ -9,6 +9,7 @@ namespace BLL.Inerfaces.user
 {
     public partial interface Iuser_cartBusiness
     {
-        List<user_cart> GetAllByID(int id);
+        List<user_cart> GetAllDetailsProductsByID(int id);
+        bool AddMultipleProductsToCart(int customerId, List<cartDetails> products);
     }
 }

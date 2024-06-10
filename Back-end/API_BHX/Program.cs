@@ -48,8 +48,6 @@ builder.Services.AddAuthentication(options =>
 
 // Đăng ký các dịch vụ khác trong container DI
 builder.Services.AddTransient<ExcuteProcedure, ConnectToDatabase>();
-builder.Services.AddTransient<IcustomerRepository, customerRepository>();
-builder.Services.AddTransient<IcustomerBusiness, customerBusiness>();
 builder.Services.AddTransient<ILoginRepository, loginRepository>();
 builder.Services.AddTransient<ILoginBusiness, loginBusiness>();
 builder.Services.AddTransient<IproductRepository, productRepository>();

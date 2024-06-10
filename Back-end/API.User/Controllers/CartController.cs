@@ -11,44 +11,46 @@ namespace API.User.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
+        public class CartRequest
+        {
+            public int CustomerId { get; set; }
+            public List<cartDetails> Products { get; set; }
+        }
+
         private Iuser_cartBusiness _iuser_CartBusiness;
         public CartController(Iuser_cartBusiness iuser_CartBusiness)
         {
             _iuser_CartBusiness = iuser_CartBusiness;
         }
 
-        [Route("GetAllByID/{id}")]
+        [Route("GetAllDetailsProductsByID/{id}")]
         [HttpGet]
-        public List<user_cart> GetCustomerByID(int id)
+        public List<user_cart> GetAllDetailsProductsByID(int id)
         {
-            return _iuser_CartBusiness.GetAllByID(id);
+            return _iuser_CartBusiness.GetAllDetailsProductsByID(id);
         }
 
-        //[Route("Create")]
-        //[HttpPost]
-        //public IActionResult Create([FromBody] cart cart)
-        //{
-
-        //    bool isProductInCart = _icartBusiness.CheckProductInCart(cart.MaKH, cart.MaSP);
-
-        //    if (isProductInCart == true)
-        //    {
-        //        return BadRequest("Sản phẩm đã có trong giỏ hàng!");
-        //    }
-        //    else
-        //    {
-        //        bool isSuccess = _icartBusiness.Create(cart);
-
-        //        if (isSuccess)
-        //        {
-        //            return Ok("Thêm sản phẩm vào giỏ hàng thành công !");
-        //        }
-        //        else
-        //        {
-        //            return BadRequest("Đã xảy ra lỗi khi thêm !");
-        //        }
-        //    }
-        //}
+        [Route("AddMultipleProductsToCart")]
+        [HttpPost]
+        public IActionResult AddMultipleProductsToCart([FromBody] CartRequest request)
+        {
+            try
+            {
+                bool result = _iuser_CartBusiness.AddMultipleProductsToCart(request.CustomerId, request.Products);
+                if (result)
+                {
+                    return Ok(new { message = "Thêm sản phẩm vào giỏ hàng thành công" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Lỗi khi thêm sản phẩm vào giỏ hàng" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Đã xảy ra lỗi: " + ex.Message });
+            }
+        }
 
 
         //[Route("Update")]

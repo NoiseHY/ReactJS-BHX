@@ -16,8 +16,6 @@ using DAL.Repository.user;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<ExcuteProcedure, ConnectToDatabase>();
-builder.Services.AddTransient<IcustomerRepository, customerRepository>();
-builder.Services.AddTransient<IcustomerBusiness, customerBusiness>();
 builder.Services.AddTransient<IproductRepository, productRepository>();
 builder.Services.AddTransient<IproductBusiness, productBusiness>();
 builder.Services.AddTransient<IratingRepository, ratingRepository>();
@@ -30,6 +28,8 @@ builder.Services.AddTransient<IcartDetailsBusiness, cartDetailsBusiness>();
 builder.Services.AddTransient<IcartDetailsRepository, cartDetailsRepository>();
 builder.Services.AddTransient<Iuser_cartBusiness, user_cartBusiness>();
 builder.Services.AddTransient<Iuser_cartRepository, user_cartRepository>();
+builder.Services.AddTransient<Iuser_invoiceBusiness, user_invoiceBusiness>();
+builder.Services.AddTransient<Iuser_invoiceRepository, user_invoiceRepository>();
 
 
 // Add services to the container.

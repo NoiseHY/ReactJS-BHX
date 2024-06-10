@@ -9,6 +9,7 @@ namespace DAL.Interfaces.user
 {
     public partial interface Iuser_cartRepository
     {
-        List<user_cart> GetAllByID(int id);
+        List<user_cart> GetAllDetailsProductsByID(int id);
+        bool AddMultipleProductsToCart(int customerId, List<cartDetails> products);
     }
 }

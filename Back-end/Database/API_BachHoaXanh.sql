@@ -198,7 +198,7 @@ CREATE TABLE invs (
     idCus INT ,
 	dateBegin datetime default getdate(),
 	--ngaysua
-	dateEnd datetime
+	dateEnd datetime,
     FOREIGN KEY (idCus) REFERENCES custs(id) on delete cascade on update cascade
 );
 -- Tạo bảng Chi tiết hóa đơn bán

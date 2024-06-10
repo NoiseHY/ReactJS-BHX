@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal, Button } from 'react-bootstrap';
 import { user_cartServices } from '../../../services/user/cartServices';
+import UserModalDetails from './modal_details'; // Ensure the import is correct
 
 function User_CartDetails() {
   const [cartItems, setCartItems] = useState([]);
@@ -76,38 +76,12 @@ function User_CartDetails() {
       <p>Tổng tiền : {totalPrice.toLocaleString()} đ</p>
       <button type="button" className="btn btn-success" onClick={handleConfirm}>Xác nhận !</button>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Sản phẩm đã chọn</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedItems.length > 0 ? (
-            <ul className="list-unstyled">
-              {selectedItems.map((item) => (
-                <li key={item.id} className="d-flex align-items-center mb-2">
-                  <img src={item.img ? require(`../../../assets/img/${item.img}`) : ""} alt="Product" className="img-thumbnail" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
-                  <div>
-                    <p className="mb-1">{item.productName}</p>
-                    <p className="mb-1">Số lượng: {item.quantity} </p>
-                    <p className="mb-0">Đơn giá: {item.unitPrice.toLocaleString()} đ = Tổng: {item.quantity * item.unitPrice}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Không có sản phẩm nào được chọn.</p>
-          )}
-          <p>Tổng tiền: {totalPrice.toLocaleString()} đ</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Đóng
-          </Button>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Xác nhận
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <UserModalDetails
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        selectedItems={selectedItems}
+        totalPrice={totalPrice}
+      />
     </div>
   );
 }
@@ -173,7 +147,6 @@ const ItemComponent = ({ item, onSelectItem, onQuantityChange }) => {
         </div>
       </div>
     </div>
-
   );
 };
 

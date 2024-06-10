@@ -207,7 +207,7 @@ EXEC DeleteAccount @AccountID = 4;
 
 select * from acc
 
---GIỏ hàng (cart ) 
+-- bảng giỏ hàng (cart ) 
 
 -- thêm một sản phẩm vào giỏ hàng
 CREATE PROCEDURE AddProductToCart
@@ -296,3 +296,138 @@ END;
 --drop procedure GetCartDetailsByCustomerId
 
 exec GetCartDetailsByCustomerId 1
+
+--stored procedure để thêm nhiều sản phẩm vào giỏ hàng
+CREATE PROCEDURE AddMultipleProductsToCart
+    @CustomerId INT,
+    @Products NVARCHAR(MAX)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @CartId INT;
+
+    -- Tạo giỏ hàng mới nếu không có
+    IF NOT EXISTS (SELECT 1 FROM cart WHERE idCust = @CustomerId)
+    BEGIN
+        INSERT INTO cart (idCust, dateBegin)
+        VALUES (@CustomerId, GETDATE());
+
+        SET @CartId = SCOPE_IDENTITY();
+    END
+    ELSE
+    BEGIN
+        SELECT @CartId = id FROM cart WHERE idCust = @CustomerId;
+    END
+
+    -- Chuyển đổi danh sách sản phẩm từ JSON sang bảng
+    DECLARE @ProductTable TABLE (
+        ProductId INT,
+        Quantity INT
+    );
+
+    INSERT INTO @ProductTable (ProductId, Quantity)
+    SELECT ProductId, Quantity
+    FROM OPENJSON(@Products)
+    WITH (
+        ProductId INT '$.ProductId',
+        Quantity INT '$.Quantity'
+    );
+
+    -- Thêm sản phẩm vào chi tiết giỏ hàng
+    INSERT INTO cartDetails (idCart, idPro, num, dateBegin)
+    SELECT @CartId, ProductId, Quantity, GETDATE()
+    FROM @ProductTable;
+END;
+
+-- stored procedure để thêm nhiều sản phẩm vào chi tiết hóa đơn
+CREATE PROCEDURE AddMultipleProductsToInvoiceDetails
+    @CustomerId INT,
+    @CountInv DECIMAL,
+    @Products NVARCHAR(MAX)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Tạo hóa đơn mới
+    DECLARE @NewInvoiceId INT;
+    INSERT INTO invs (countInv, idCus, dateBegin)
+    VALUES (@CountInv, @CustomerId, GETDATE());
+    SET @NewInvoiceId = SCOPE_IDENTITY();
+
+    -- Chuyển đổi danh sách sản phẩm từ JSON sang bảng
+    DECLARE @ProductTable TABLE (
+        ProductId INT,
+        Quantity INT
+    );
+
+    INSERT INTO @ProductTable (ProductId, Quantity)
+    SELECT idPro, num
+    FROM OPENJSON(@Products)
+    WITH (
+        idPro INT '$.idPro',
+        num INT '$.num'
+    );
+
+    -- Thêm sản phẩm vào chi tiết hóa đơn
+    INSERT INTO invDetails (idInv, idPro, num, up, countInv)
+    SELECT @NewInvoiceId, PT.ProductId, PT.Quantity, P.up, PT.Quantity * P.up
+    FROM @ProductTable PT
+    INNER JOIN products P ON PT.ProductId = P.id;
+
+    -- Cập nhật tổng tiền trong hóa đơn
+    UPDATE invs
+    SET countInv = (SELECT SUM(countInv) FROM invDetails WHERE idInv = @NewInvoiceId)
+    WHERE id = @NewInvoiceId;
+END;
+
+
+--drop procedure AddMultipleProductsToInvoiceDetails
+
+-- stored procedure để lấy chi tiết hóa đơn bán dựa trên mã hóa đơn bán 
+CREATE PROCEDURE GetInvoiceDetailsByInvoiceId
+    @InvoiceId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        ID.id AS InvoiceDetailId,
+        ID.idInv AS InvoiceId,
+        P.id AS ProductId,
+        P.nameProd AS ProductName,
+        ID.num AS Quantity,
+        ID.up AS UnitPrice,
+        ID.countInv AS TotalPrice,
+        D.nameDsc AS DiscountName,
+        D.note AS DiscountNote
+    FROM 
+        invDetails ID
+    INNER JOIN 
+        products P ON ID.idPro = P.id
+    LEFT JOIN 
+        discs D ON ID.idDisc = D.id
+    WHERE 
+        ID.idInv = @InvoiceId;
+END;
+
+
+--drop procedure GetInvoiceDetailsByInvoiceId
+
+exec GetInvoiceDetailsByInvoiceId 10 
+
+--> bảng khách hàng
+
+-- stored procedure để lấy thông tin của khách hàng
+CREATE PROCEDURE GetCustomerByID
+    @CustomerId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM custs
+    WHERE id = @CustomerId;
+END;
+
+exec GetCustomerByID 1

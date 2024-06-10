@@ -18,9 +18,13 @@ namespace BLL.Bussiness.user
             _iuser_CartRepository = iuser_CartRepository;
         }
 
-        public List<user_cart> GetAllByID(int id)
+        public List<user_cart> GetAllDetailsProductsByID(int id)
         {
-            return _iuser_CartRepository.GetAllByID(id);
+            return _iuser_CartRepository.GetAllDetailsProductsByID(id);
+        }
+        public bool AddMultipleProductsToCart(int customerId, List<cartDetails> products)
+        {
+            return _iuser_CartRepository.AddMultipleProductsToCart(customerId, products);
         }
     }
 }
