@@ -51,40 +51,51 @@ const ProductDetail = () => {
   }
 
   return (
-    
+
     <Container>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6">
             <img src={imagePath} alt="Product Image" className="img-fluid rounded" />
           </div>
-          <div class="col-md-6">
+          <div className="col-md-6">
             <h1 className="product-name">{product.nameProd}</h1>
             <p className="product-category">{product.nameCat}</p>
-            {/* <p className="product-subcategory">Bò viên đông lạnh</p> */}
+            
             <ul className="product-info">
 
               <li>Number of Units: {product.num}</li>
               <li>Unit Price: {product.up}</li>
+
+              <div className="form-group">
+                <label htmlFor="soluong">Số lượng đặt mua:</label>
+                <input type="number" className="form-control" id="soluong" name="soluong" />
+              </div>
+
+              <div className="action">
+                <Button className="add-to-cart btn btn-default" id="btnThemVaoGioHang">Thêm vào giỏ hàng</Button>
+                <a className="like btn btn-default" href="#"><span className="fa fa-heart"></span></a>
+              </div>
+
             </ul>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12">
+        <div className="row">
+          <div className="col-md-12">
             <p className="product-description">{product.desProd}</p>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12">
+        <div className="row">
+          <div className="col-md-12">
             <h2 className="product-ratings">Ratings and Reviews</h2>
             <p className="rating">Rating: {renderStars(product.rating)}</p>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12">
+        <div className="row">
+          <div className="col-md-12">
             <h2 className="product-specifications">Product Specifications</h2>
             <ul className="product-specs">
               <li>Ingredients: {product.ing}</li>
@@ -93,18 +104,15 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12">
+        <div className="row">
+          <div className="col-md-12">
             <h2 className="product-supplier">Supplier Information</h2>
             <p className="supplier-name">{product.nameSup}</p>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12">
-            <button className="btn btn-primary" type="button">Add to Cart</button>
-          </div>
-        </div>
+        
+
       </div>
     </Container>
   );

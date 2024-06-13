@@ -1,50 +1,67 @@
+import React, { useState } from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css'; 
+import Admin_Dashboard from '../dashboard/dashboard';
+import Admin_Account from '../account/index';
 
-import Header from '../../../components/header';
-import TableUsers from './tableUsers';
-import Modal_addnew from './modal_addnewUser';
-import Modal_editUser from './modal_editUser';
+import {
+  AppstoreOutlined,
+  BarChartOutlined,
+  CloudOutlined,
+  ShopOutlined,
+  TeamOutlined,
+  UploadOutlined,
+  DashboardOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Layout, Menu, theme } from 'antd';
 
-import '../../../App.scss';
+const { Sider } = Layout;
 
-import { useState } from 'react';
+const items = [
+  { key: '1', icon: <DashboardOutlined />, label: 'Dashboard', component: <Admin_Dashboard /> },
+  { key: '2', icon: <UserOutlined />, label: 'Tài khoản', component: <Admin_Account /> },
+  { key: '3', icon: <UploadOutlined />, label: 'Uploads' },
+  { key: '4', icon: <BarChartOutlined />, label: 'Charts' },
+  { key: '5', icon: <CloudOutlined />, label: 'Cloud' },
+  { key: '6', icon: <AppstoreOutlined />, label: 'Apps' },
+  { key: '7', icon: <TeamOutlined />, label: 'Teams' },
+  { key: '8', icon: <ShopOutlined />, label: 'Shop' },
+];
 
-function Admin() {
-  const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
-  const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+const Admin_tmp = () => {
+  const [selectedKey, setSelectedKey] = useState('1');
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
-  const handleClose = () => {
-    setIsShowModalAddNew(false);
-    setIsShowModalEdit(false);
+  const handleMenuClick = (key) => {
+    setSelectedKey(key);
   };
 
   return (
-    <>
-      <div className="app-container">
-        <Header />
-        <Container>
-          <div className="my-3 add-new">
-            <h2>Danh sách người dùng :</h2>
-            <button
-              className="btn btn-success"
-              onClick={() => setIsShowModalAddNew(true)}
-            >
-              Thêm
-            </button>
-          </div>
-          <TableUsers />
-          {/* ToastContainer để hiển thị toast */}
-          <ToastContainer />
-          <Modal_addnew show={isShowModalAddNew} handleClose={handleClose} />
-          <Modal_editUser show={isShowModalEdit} handleClose={handleClose} />
-        </Container>
-      </div>
-    </>
+    <Layout hasSider>
+      <Sider
+        style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}
+      >
+        <div className="demo-logo-vertical" />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} selectedKeys={[selectedKey]}>
+          {items.map((item) => (
+            <Menu.Item key={item.key} icon={item.icon} onClick={() => handleMenuClick(item.key)}>
+              {item.label}
+            </Menu.Item>
+          ))}
+        </Menu>
+      </Sider>
+      <Layout style={{ marginLeft: 200 }}>
+        {items.map((item) => {
+          if (item.key === selectedKey) {
+            return <div key={item.key}>{item.component}</div>;
+          }
+          return null;
+        })}
+      </Layout>
+    </Layout>
   );
-}
+};
 
-export default Admin;
+export default Admin_tmp;
