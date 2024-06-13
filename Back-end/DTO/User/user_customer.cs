@@ -13,6 +13,7 @@ namespace DTO.User
         public string addressCus {get; set; }
         public string num { get; set; }
 	    public string email {get; set; }
+        public string? img { get; set; }
 	    public DateTime dateBegin { get; set; }
 	
         public DateTime dateEnd {get; set; }

@@ -154,6 +154,12 @@ CREATE TABLE custs (
 	dateEnd datetime
 );
 
+ALTER TABLE custs
+ADD img NVARCHAR(MAX);
+
+
+--drop table custs
+
 insert into custs (
     nameCus ,
     addressCus ,
@@ -175,6 +181,11 @@ insert into custs (
 )
 values
 	(N'Nguyễn Nam', N'Hưng Yên', '0123456789', 'congnamhy1@gmail.com', null)
+
+UPDATE custs
+SET img = 'istockphoto-1495088043-612x612.jpg'
+WHERE id = 1;
+
 
 select * from custs
 

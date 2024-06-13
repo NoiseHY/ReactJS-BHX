@@ -30,6 +30,8 @@ builder.Services.AddTransient<Iuser_cartBusiness, user_cartBusiness>();
 builder.Services.AddTransient<Iuser_cartRepository, user_cartRepository>();
 builder.Services.AddTransient<Iuser_invoiceBusiness, user_invoiceBusiness>();
 builder.Services.AddTransient<Iuser_invoiceRepository, user_invoiceRepository>();
+builder.Services.AddTransient<Iuser_customerBusiness, user_customerBusiness>();
+builder.Services.AddTransient<Iuser_customerRepository, user_customerRepository>();
 
 
 // Add services to the container.

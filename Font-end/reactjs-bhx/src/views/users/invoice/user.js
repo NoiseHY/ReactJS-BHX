@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { GetCustomerDetailsByID } from '../../../services/user/invoiceServices';
+import { Spin } from 'antd';
 
 function UserDetailsForm() {
   const [customerDetails, setCustomerDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
 
@@ -18,8 +21,12 @@ function UserDetailsForm() {
     fetchData();
   }, []);
 
-  if (!customerDetails) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Spin size="large" />
+      </div>
+    );
   }
 
   return (
