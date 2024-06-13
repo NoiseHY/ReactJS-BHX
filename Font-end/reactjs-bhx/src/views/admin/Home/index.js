@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { Header } from 'antd/es/layout/layout';
 
 import Admin_Dashboard from '../dashboard/dashboard';
 import Admin_Account from '../account/index';
+
+import Admin_Header from '../../../components/header';
 
 import {
   AppstoreOutlined,
@@ -55,7 +58,13 @@ const Admin_tmp = () => {
       <Layout style={{ marginLeft: 200 }}>
         {items.map((item) => {
           if (item.key === selectedKey) {
-            return <div key={item.key}>{item.component}</div>;
+            return (
+              <>
+                <Admin_Header></Admin_Header>
+                <hr className="mt-4" />
+                <div key={item.key}>{item.component}</div>
+              </>
+            );
           }
           return null;
         })}

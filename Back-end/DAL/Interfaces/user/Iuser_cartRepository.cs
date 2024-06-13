@@ -11,5 +11,6 @@ namespace DAL.Interfaces.user
     {
         List<user_cart> GetAllDetailsProductsByID(int id);
         bool AddMultipleProductsToCart(int customerId, List<cartDetails> products);
+        bool AddOneProductToCart(int customerId, int productId, int quantity);
     }
 }

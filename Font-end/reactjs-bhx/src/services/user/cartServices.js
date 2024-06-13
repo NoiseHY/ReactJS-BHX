@@ -19,7 +19,7 @@ const user_cartServices = async () => {
 const AddMultipleProductsToCart = async (request) => {
   try {
     const response = await axios.post("/api/Cart/AddMultipleProductsToCart", request);
-    
+
     if (response) {
       toast.success("Tạo hóa đơn thành công !");
     } else {
@@ -32,7 +32,28 @@ const AddMultipleProductsToCart = async (request) => {
   }
 };
 
+const AddProductToCart = async (request) => {
+  const { idPro, num } = request;
+  const idCuts = sessionStorage.getItem('idCuts');
+  console.log(request);
+  try {
+    const encodedUrl = `/api/Cart/AddProductToCart?customerId=${encodeURIComponent(idCuts)}&productId=${encodeURIComponent(idPro)}&quantity=${encodeURIComponent(num)}`;
+
+    const response = await axios.post(encodedUrl);
+
+    if (response) {
+      toast.success("Thêm thành công !");
+    } else {
+      toast.error("Đã xảy ra lỗi !.");
+    }
+    return response;
+  } catch (error) {
+    toast.error("Đã xảy ra lỗi !");
+    throw error;
+  }
+};
 
 
 
-export {user_cartServices, AddMultipleProductsToCart};
+
+export { user_cartServices, AddProductToCart };

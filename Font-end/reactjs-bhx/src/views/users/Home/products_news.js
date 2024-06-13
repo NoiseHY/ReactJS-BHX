@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { Card, Button, Row, Col } from "antd";
+import { StarFilled, StarTwoTone, ArrowUpOutlined, NumberOutlined } from '@ant-design/icons'; // Import các icon từ Ant Design
 import { Link } from "react-router-dom";
 import '../../../App.scss';
 
-import { createCartDetails } from "../../../services/admin/productsServices";
+import { AddProductToCart } from "../../../services/user/cartServices";
 import { fetchProductsNew } from "../../../services/user/productsServices";
 
+const { Meta } = Card;
 
 function ProductsNew() {
   const [listProductsNew, setListProducts] = useState([]);
@@ -31,79 +32,75 @@ function ProductsNew() {
     const decPart = rating - intPart;
     const stars = [];
     for (let i = 0; i < intPart; i++) {
-      stars.push(<FaStar key={i} style={{ color: "#ffc107" }} />);
+      stars.push(<StarFilled key={i} style={{ color: "#ffc107" }} />);
     }
     if (decPart > 0) {
-      stars.push(<FaStarHalf key={intPart} style={{ color: "#ffc107" }} />);
+      stars.push(<StarTwoTone key={intPart} twoToneColor="#ffc107" />);
     }
     return stars;
   };
 
-  const addToCart = async (productId, productName, productPrice, productQuantity) => {
+  const addToCart = async (productId, productQuantity) => {
     try {
+      const idCuts = sessionStorage.getItem('idCuts');
+
       const cartDetailData = {
-        idCart: 1, 
-        idPro: productId, 
-        num: productQuantity 
+        idCuts: idCuts,
+        idPro: productId,
+        num: productQuantity
       };
 
-      // Thực hiện thêm sản phẩm vào giỏ hàng
-      const result = await createCartDetails(cartDetailData);
+      const result = await AddProductToCart(cartDetailData);
+
       if (result) {
         console.log("Thêm sản phẩm vào giỏ hàng thành công");
-        // Hiển thị thông báo hoặc thực hiện các hành động khác nếu cần
       }
     } catch (error) {
       console.log("Lỗi thêm sản phẩm vào giỏ hàng:", error.message);
-      // Xử lý lỗi nếu cần
     }
   };
 
   return (
     <>
-      <Container>
+      <div className="container">
         <div className="my-3 d-flex justify-content-between">
-          <h2 >Sản phẩm mới</h2>
-          <span href="#" className="text-secondary">Xem thêm</span>
+          <h2>Sản phẩm mới</h2>
+          <span className="text-secondary">Xem thêm</span>
         </div>
 
-        <Row>
+        <Row gutter={16}>
           {listProductsNew.map((product, index) => {
             const imagePath = product.img ? require(`../../../assets/img/${product.img}`) : "";
 
             return (
-              <Col key={index} xs={12} md={4} className="app-container">
-                <Card>
-                  <Link to={`/product/${product.id}`} >
-                    <div className="d-flex flex-wrap">
-                      <div className="img-container" style={{ width: "200px", height: "250px", paddingRight: "10px" }}>
-                        <Card.Img src={imagePath} alt={product.nameProd} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <Col key={index} xs={24} sm={12} md={8} lg={6} xl={6}>
+                <Link className=" link-no-style" to={`/product/${product.id}`}>
+                  <Card
+                    cover={<img alt={product.nameProd} src={imagePath} />}
+                    actions={[
+                      <Button type="primary" onClick={() => addToCart(product.id, 1)}>Thêm vào giỏ hàng</Button>
+                    ]}
+                  >
+                    <Meta title={product.nameProd} description={product.desProd} />
+                    <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                      <div>
+                        <ArrowUpOutlined /> {product.up} đ
                       </div>
-                      <div className="mt-auto" style={{ width: "50%" }}>
-                        <Card.Body>
-                          <Card.Title>{product.nameProd}</Card.Title>
-                          <Card.Text>{product.desProd}</Card.Text>
-                        </Card.Body>
-                        <Card.Footer className="d-flex flex-column justify-content-between h-100">
-                          <div>
-                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>{product.up} đ</Card.Text>
-                            <Card.Text style={{ fontSize: "1.2em", marginBottom: "10px" }}>Còn {product.num}</Card.Text>
-                            <Card.Text>{renderStars(product.rating)}</Card.Text>
-                            <Button variant="primary" onClick={() => addToCart(product.id, product.nameProd, product.up, 1)}>
-                              Add to Cart
-                            </Button>
-                          </div>
-                        </Card.Footer>
+                      <div>
+                        <NumberOutlined /> {product.num} 
                       </div>
                     </div>
-                  </Link>
-                </Card>
+
+                    <div style={{ marginTop: '10px' }}>
+                      {renderStars(product.rating)}
+                    </div>
+                  </Card>
+                </Link>
               </Col>
             );
           })}
         </Row>
-        <hr className="mt-4 text-muted" />
-      </Container>
+      </div>
     </>
   );
 }

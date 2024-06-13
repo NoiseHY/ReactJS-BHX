@@ -9,21 +9,21 @@ const login = async (loginRequest) => {
 
       toast.success("Đăng nhập thành công");  
 
-      const { idAuth, idCuts, Token } = response;
+      const { idAuth, idCuts, token } = response;
 
       // Lưu thông tin đăng nhập vào sessionStorage
       sessionStorage.setItem("idAuth", idAuth);
       sessionStorage.setItem("idCuts", idCuts);
-      sessionStorage.setItem("Token", Token);
+      sessionStorage.setItem("Token", token);
 
-      if (idAuth === 1) { 
+      if (idAuth === 1) {   
         
         window.location.href = "/admin";
       } else {
         window.location.reload();
       }
 
-      return { idAuth, idCuts, Token };
+      return { idAuth, idCuts, token };
       
     } else {
       

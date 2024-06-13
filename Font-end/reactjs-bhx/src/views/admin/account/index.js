@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 
-import Header from '../../../components/header';
+
 import TableUsers from './tableUsers';
 import Modal_addnew from './modal_addnewUser';
 import Modal_editUser from './modal_editUser';
@@ -25,7 +25,7 @@ function Admin_Account() {
   return (
     <>
       <div className="app-container">
-        <Header />
+        
         <Container>
           <div className="my-3 add-new">
             <h2>Danh sách người dùng :</h2>

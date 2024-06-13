@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
+using DTO.Admin;
 
 namespace DAL.Repository.user
 {
@@ -49,6 +50,30 @@ namespace DAL.Repository.user
                     out msgError, "AddMultipleProductsToCart",
                     "@CustomerId", customerId,
                     "@Products", productsJson);
+
+                if (result != null || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool AddOneProductToCart(int customerId, int productId, int quantity)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
+                    out msgError, "AddProductToCart",
+                    "@CustomerId", customerId,
+                    "@ProductId", productId,
+                    "@Quantity", quantity);
 
                 if (result != null || !string.IsNullOrEmpty(msgError))
                 {

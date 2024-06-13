@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { fetchGetBestViewProducts, fetchProductsNew } from "../../../services/user/productsServices";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { fetchGetBestViewProducts } from "../../../services/user/productsServices";
+import { Row, Col, Card, Button } from "antd";
+import { StarFilled, StarTwoTone, ArrowUpOutlined, NumberOutlined } from '@ant-design/icons'; // Import các icon từ Ant Design
 
-import '../../../App.scss'
+import '../../../App.scss';
+
+const { Meta } = Card;
 
 function ProductsHot() {
   const [listProductsNew, setListProducts] = useState([]);
 
   useEffect(() => {
-    GetBestViewProducts();
+    getBestViewProducts();
   }, []);
 
-  const GetBestViewProducts = async () => {
+  const getBestViewProducts = async () => {
     try {
       const res = await fetchGetBestViewProducts();
       if (res) {
@@ -29,59 +31,56 @@ function ProductsHot() {
 
     const stars = [];
     for (let i = 0; i < intPart; i++) {
-      stars.push(<FaStar key={i} style={{ color: "#ffc107" }} />);
+      stars.push(<StarFilled key={i} style={{ color: "#ffc107" }} />);
     }
     if (decPart > 0) {
-      stars.push(<FaStarHalf key={intPart} style={{ color: "#ffc107" }} />);
+      stars.push(<StarTwoTone key={intPart} twoToneColor="#ffc107" />);
     }
     return stars;
   };
 
-
-
   return (
     <>
-      <Container>
+      <div className="container">
         <div className="my-3 d-flex justify-content-between">
-          <h2 >Sản phẩm nhiều lượt xem</h2>
-          <span href="#" className="text-secondary">Xem thêm</span>
+          <h2>Sản phẩm nhiều lượt xem</h2>
+          <span className="text-secondary">Xem thêm</span>
         </div>
 
-
-        <Row>
+        <Row gutter={16}>
           {listProductsNew.map((product, index) => {
-
             const imagePath = product.img ? require(`../../../assets/img/${product.img}`) : "";
 
             return (
-              <>
-                <Col key={index} xs={12} md={4} className="app-container">
-                  <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={imagePath} />
-                    <Card.Body>
-                      <Card.Title>{product.nameProd}</Card.Title>
-                      <Card.Text>
-                        {product.desProd}
-                      </Card.Text>
-                      <div>
-                        <p>Price: <span>{product.up} đ</span></p>
-                        <p>Quantity: <span>{product.num}</span></p>
-                      </div>
-                      <Button variant="primary" className="btn btn-primary">Buy Now</Button>
-                    </Card.Body>
-                  </Card>
-                </Col>
+              <Col key={index} xs={24} sm={12} md={8} lg={6} xl={6}>
+                <Card
+                  cover={<img alt={product.nameProd} src={imagePath} />}
+                  actions={[
+                    <Button type="primary" >Thêm vào giỏ hàng</Button>
+                  ]}
+                >
+                  <Meta
+                    title={product.nameProd}
+                    description={product.desProd}
+                  />
 
-
-
-              </>
-
-
+                  <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                    <div>
+                      <ArrowUpOutlined /> {product.up} đ
+                    </div>
+                    <div>
+                      <NumberOutlined /> {product.num} 
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '10px' }}>
+                    {renderStars(product.rating)}
+                  </div>
+                </Card>
+              </Col>
             );
           })}
-
         </Row>
-      </Container>
+      </div>
     </>
   );
 }

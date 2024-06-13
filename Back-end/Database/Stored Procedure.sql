@@ -88,7 +88,7 @@ exec GetProductByID 1
 
 --> admin
 
--- >>> Login 
+-- >>> Đăng nhập 
 
 CREATE PROCEDURE LoginAccount
     @Username NVARCHAR(50),
@@ -104,19 +104,24 @@ BEGIN
     )
     BEGIN
         -- Lấy thông tin tài khoản nếu hợp lệ
-        DECLARE @idAuth INT, @idCuts INT;
+        DECLARE @idAuth INT, @idCuts INT, @idCart INT;
 
         SELECT @idAuth = idAuth, @idCuts = idCuts
         FROM acc 
         WHERE nameAcc = @Username AND pasAcc = @Password;
+
+        -- Lấy id của giỏ hàng
+        SELECT @idCart = id
+        FROM cart
+        WHERE idCust = @idCuts;
 
         -- Cập nhật thời gian đăng nhập
         UPDATE acc
         SET timeLogin = GETDATE()
         WHERE nameAcc = @Username AND pasAcc = @Password;
 
-        -- Trả về thông tin tài khoản và idAuth, idCuts
-        SELECT 1 AS Result, @idAuth AS idAuth, @idCuts AS idCuts;
+        -- Trả về thông tin tài khoản, idAuth, idCuts và idCart
+        SELECT 1 AS Result, @idAuth AS idAuth, @idCuts AS idCuts, @idCart AS idCart;
     END
     ELSE
     BEGIN
@@ -124,6 +129,7 @@ BEGIN
         SELECT 0 AS Result;
     END
 END;
+
 
 --drop procedure LoginAccount;
 

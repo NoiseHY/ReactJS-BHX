@@ -26,5 +26,10 @@ namespace BLL.Bussiness.user
         {
             return _iuser_CartRepository.AddMultipleProductsToCart(customerId, products);
         }
+
+        public bool AddOneProductToCart(int customerId, int productId, int quantity)
+        {
+            return _iuser_CartRepository.AddOneProductToCart(customerId, productId, quantity);
+        }
     }
 }

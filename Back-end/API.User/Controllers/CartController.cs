@@ -1,9 +1,13 @@
 ﻿using BLL.Bussiness;
+using BLL.Inerfaces;
 using BLL.Inerfaces.admin;
 using BLL.Inerfaces.user;
+using DAL.Helper;
+using DTO.Admin;
 using DTO.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace API.User.Controllers
 {
@@ -52,6 +56,27 @@ namespace API.User.Controllers
             }
         }
 
+        [Route("AddProductToCart")]
+        [HttpPost]
+        public IActionResult AddProductToCart(int customerId, int productId, int quantity)
+        {
+            try
+            {
+                bool result = _iuser_CartBusiness.AddOneProductToCart(customerId, productId, quantity);
+                if (result)
+                {
+                    return Ok(new { message = "Thêm sản phẩm vào giỏ hàng thành công" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Lỗi khi thêm sản phẩm vào giỏ hàng" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Đã xảy ra lỗi: " + ex.Message });
+            }
+        }
 
         //[Route("Update")]
         //[HttpPut]

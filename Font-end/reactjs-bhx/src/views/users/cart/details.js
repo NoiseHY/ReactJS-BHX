@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { user_cartServices } from '../../../services/user/cartServices';
 import UserModalDetails from './modal_details'; // Ensure the import is correct
 
+import { Spin } from 'antd';
+
 function User_CartDetails() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +66,7 @@ function User_CartDetails() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spin />;;
   }
 
   return (
