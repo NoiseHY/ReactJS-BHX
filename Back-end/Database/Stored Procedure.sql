@@ -347,6 +347,8 @@ BEGIN
     FROM @ProductTable;
 END;
 
+--> bảng hóa đơn 
+
 -- stored procedure để thêm nhiều sản phẩm vào chi tiết hóa đơn
 CREATE PROCEDURE AddMultipleProductsToInvoiceDetails
     @CustomerId INT,
@@ -390,6 +392,7 @@ END;
 
 
 --drop procedure AddMultipleProductsToInvoiceDetails
+
 
 -- stored procedure để lấy chi tiết hóa đơn bán dựa trên mã hóa đơn bán 
 CREATE PROCEDURE GetInvoiceDetailsByInvoiceId
@@ -449,11 +452,27 @@ BEGIN
         invs.id = @InvoiceID;
 END;
 
-
-
 --drop procedure GetInvoiceDetailsByID
-
 exec GetInvoiceDetailsByID 10
+
+-- stored procedure để lấy tất cả hóa đơn bán theo mã khách hàng
+CREATE PROCEDURE GetInvoicesByCustomerID
+    @CustomerId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        *
+    FROM 
+        invs
+    WHERE 
+        idCus = @CustomerId;
+END;
+
+--drop procedure GetInvoicesByCustomerID
+
+exec GetInvoicesByCustomerID 1
 
 --> bảng khách hàng
 

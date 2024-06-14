@@ -9,12 +9,12 @@ namespace DTO.User
     public class user_invoice
     {
 
-        public int InvoiceDetailID { get; set; }
-        public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public string Img { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal TotalPrice { get; set; }
+        public int id {  get; set; }
+	 
+        public decimal countInv {  get; set; }
+        public int idCus {  get; set; }
+        public DateTime dateBegin {  get; set; }
+
+        public DateTime dateEnd {  get; set; }
     }
 }

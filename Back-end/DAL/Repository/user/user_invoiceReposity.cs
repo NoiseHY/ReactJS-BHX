@@ -64,13 +64,30 @@ namespace DAL.Repository.user
             }
         }
 
-        public List<user_invoice> GetInvoiceDetailsByID(int id)
+        public List<user_invDetails> GetInvoiceDetailsByID(int id)
         {
             string msgError = "";
             try
             {
                 var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetInvoiceDetailsByID",
                      "@InvoiceID", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<user_invDetails>().ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<user_invoice> GetInvoicesByCustomerID(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetInvoicesByCustomerID",
+                     "@CustomerId", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<user_invoice>().ToList();

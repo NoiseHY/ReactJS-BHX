@@ -50,6 +50,8 @@ const ProductDetail = () => {
     return <div>Loading...</div>;
   }
 
+
+  
   return (
 
     <Container>

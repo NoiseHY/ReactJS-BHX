@@ -3,14 +3,14 @@ import Table from 'react-bootstrap/Table';
 import Modal_editUser from './modal_editUser';
 import { fetchAllUser, delUser } from '../../../services/admin/usersServices';
 import { toast } from 'react-toastify';
-import ReactPaginate from 'react-paginate'; // Import react-paginate
+import ReactPaginate from 'react-paginate'; 
 
 const TableUsers = () => {
   const [listUsers, setListUsers] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [userDataToEdit, setUserDataToEdit] = useState(null);
-  const [pageNumber, setPageNumber] = useState(0); // State for current page number
-  const usersPerPage = 10; // Number of users to display per page
+  const [pageNumber, setPageNumber] = useState(0); 
+  const usersPerPage = 10; 
 
   useEffect(() => {
     getUsers();

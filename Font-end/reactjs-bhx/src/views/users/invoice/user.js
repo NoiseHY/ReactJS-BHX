@@ -6,15 +6,15 @@ function UserDetailsForm() {
   const [customerDetails, setCustomerDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const customerData = await GetCustomerDetailsByID(1);
         setCustomerDetails(customerData[0]);
+        setLoading(false); // Set loading to false when data fetching is complete
       } catch (error) {
         console.error('Error fetching customer details:', error);
+        setLoading(false); // Set loading to false in case of error
       }
     };
 
@@ -49,7 +49,6 @@ function UserDetailsForm() {
           <label >Email</label>
           <input type="text" className="form-control" name="kh_email" id="kh_email" value={customerDetails.email} readOnly />
         </div>
-
       </div><br></br>
 
       <h4 className="mb-3">Hình thức thanh toán</h4>
@@ -66,7 +65,6 @@ function UserDetailsForm() {
           <input id="httt-3" name="httt_ma" type="radio" className="custom-control-input" required value="3" />
           <label className="custom-control-label" htmlFor="httt-3">Ship COD</label>
         </div>
-
       </div>
       <button className="btn btn-primary btn-lg btn-block" type="submit" name="btnDatHang">Đặt hàng</button>
     </div>

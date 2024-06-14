@@ -16,5 +16,13 @@ namespace DTO.User
         public decimal up { get; set; }
         public decimal countInv { get; set; }
         public int idDisc { get; set; }
+
+        public int InvoiceDetailID { get; set; }
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public string Img { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

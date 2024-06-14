@@ -26,10 +26,13 @@ namespace BLL.Bussiness.user
             return _iuser_InvoiceRepository.GetCustomerDetailsByID(id);
         }
 
-        public List<user_invoice> GetInvoiceDetailsByID(int id)
+        public List<user_invDetails> GetInvoiceDetailsByID(int id)
         {
             return _iuser_InvoiceRepository.GetInvoiceDetailsByID(id);
         }
-
+        public List<user_invoice> GetInvoicesByCustomerID(int id)
+        {
+            return _iuser_InvoiceRepository.GetInvoicesByCustomerID(id);
+        }
     }
 }

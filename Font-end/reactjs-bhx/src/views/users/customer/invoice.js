@@ -1,49 +1,40 @@
-import React, { useState } from 'react';
-import { Divider, Radio, Table } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Spin, Button, Space } from 'antd';
+import { GetInvoicesByCustomerID } from '../../../services/user/invoiceServices';
+import UserModalInvDetails from './modal_invDetails';
 
 const { Column } = Table;
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sydney No. 1 Lake Park',
-  },
-];
-
 const User_invDetails = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectionType, setSelectionType] = useState('checkbox');
+  const customerID = sessionStorage.getItem('idCuts');
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null); // State to store the selected record
 
-  const handleSelectionChange = (e) => {
-    setSelectionType(e.target.value);
-  };
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const invoiceData = await GetInvoicesByCustomerID(customerID);
+        setData(invoiceData);
+      } catch (error) {
+        console.error("Error fetching invoice details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInvoices();
+  }, [customerID]);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
+      disabled: record.countInv === 0, 
+      name: record.id,
     }),
   };
 
@@ -51,21 +42,60 @@ const User_invDetails = () => {
     pageSize: 5,
   };
 
+  const handleDetails = (record) => {
+    console.log('Details for:', record);
+    setIsShowModal(true); 
+    setSelectedRecord(record); 
+  };
+
+  const handleDelete = (record) => {
+    console.log('Delete:', record);
+    // Implement the logic for deleting the record here
+  };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
+
   return (
     <div>
-
       <Table
         rowSelection={{
           type: selectionType,
           ...rowSelection,
         }}
-        dataSource={data}
+        dataSource={data.map((item) => ({ ...item, key: item.id }))}
         pagination={pagination}
       >
-        <Column title="Name" dataIndex="name" key="name" render={(text) => <a>{text}</a>} />
-        <Column title="Age" dataIndex="age" key="age" />
-        <Column title="Address" dataIndex="address" key="address" />
+        <Column title="Invoice ID" dataIndex="id" key="id" />
+        <Column title="Count" dataIndex="countInv" key="countInv" />
+        <Column title="Customer ID" dataIndex="idCus" key="idCus" />
+        <Column title="Date Begin" dataIndex="dateBegin" key="dateBegin" />
+        <Column title="Date End" dataIndex="dateEnd" key="dateEnd" />
+        <Column
+          title="Actions"
+          key="actions"
+          render={(text, record) => (
+            <Space size="middle">
+              <Button onClick={() => handleDetails(record)}>Chi tiết</Button>
+              <Button onClick={() => handleDelete(record)} danger>Xóa</Button>
+            </Space>
+          )}
+        />
       </Table>
+
+      {/* Render the modal only if isShowModal is true */}
+      {isShowModal && (
+        <UserModalInvDetails
+          visible={isShowModal}
+          onCancel={() => setIsShowModal(false)}
+          record={selectedRecord}
+        />
+      )}
     </div>
   );
 };

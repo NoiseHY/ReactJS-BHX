@@ -15,7 +15,7 @@ namespace API.User.Controllers
         public class InvoiceRequest
         {
             public int CustomerId { get; set; }
-            public int CountInv {  get; set; }
+            public int CountInv { get; set; }
             public List<user_invDetails> Products { get; set; }
         }
 
@@ -31,7 +31,7 @@ namespace API.User.Controllers
         {
             try
             {
-                bool result = _iuser_InvoiceBusiness.AddProductsToInvoiceDetails(request.CustomerId, request.CountInv,request.Products);
+                bool result = _iuser_InvoiceBusiness.AddProductsToInvoiceDetails(request.CustomerId, request.CountInv, request.Products);
                 if (result)
                 {
                     return Ok(new { message = "Thêm sản phẩm vào hóa đơn thành công !" });
@@ -56,9 +56,16 @@ namespace API.User.Controllers
 
         [Route("GetInvoiceDetailsByID/{id}")]
         [HttpGet]
-        public List<user_invoice> GetInvoiceDetailsByID(int id)
+        public List<user_invDetails> GetInvoiceDetailsByID(int id)
         {
             return _iuser_InvoiceBusiness.GetInvoiceDetailsByID(id);
+        }
+
+        [Route("GetInvoicesByCustomerID/{id}")]
+        [HttpGet]
+        public List<user_invoice> GetInvoicesByCustomerID(int id)
+        {
+            return _iuser_InvoiceBusiness.GetInvoicesByCustomerID(id);
         }
     }
 }

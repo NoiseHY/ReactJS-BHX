@@ -12,7 +12,9 @@ namespace BLL.Inerfaces.user
         bool AddProductsToInvoiceDetails(int customerId, decimal countInv, List<user_invDetails> products);
         List<user_customer> GetCustomerDetailsByID(int id);
 
-        List<user_invoice> GetInvoiceDetailsByID(int id);
+        List<user_invDetails> GetInvoiceDetailsByID(int id);
+
+        List<user_invoice> GetInvoicesByCustomerID(int id);
 
     }
 }
