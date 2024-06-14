@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { user_cartServices } from '../../../services/user/cartServices';
-import UserModalDetails from './modal_details'; // Ensure the import is correct
+import UserModalDetails from './modal_details';
+import { Spin, Button, Checkbox, Image, Input, Card, Typography } from 'antd';
 
-import { Spin } from 'antd';
+const { Title, Text } = Typography;
 
 function User_CartDetails() {
   const [cartItems, setCartItems] = useState([]);
@@ -66,17 +67,25 @@ function User_CartDetails() {
   };
 
   if (loading) {
-    return <Spin />;;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Spin size="large" />
+      </div>
+    );
   }
 
   return (
-    <div>
-      {cartItems.map((item) => (
-        <ItemComponent key={item.id} item={item} onSelectItem={handleSelectItem} onQuantityChange={handleQuantityChange} />
-      ))}
-      <p>Sản phẩm chọn : {selectedItems.map(item => item.productName).join(', ')} </p>
-      <p>Tổng tiền : {totalPrice.toLocaleString()} đ</p>
-      <button type="button" className="btn btn-success" onClick={handleConfirm}>Xác nhận !</button>
+    <div className="container">
+      <div className="row">
+        {cartItems.map((item) => (
+          <ItemComponent key={item.id} item={item} onSelectItem={handleSelectItem} onQuantityChange={handleQuantityChange} />
+        ))}
+      </div>
+      <div className="mt-4">
+        <p>Sản phẩm chọn: {selectedItems.map(item => item.productName).join(', ')}</p>
+        <p>Tổng tiền: {totalPrice.toLocaleString()} đ</p>
+        <Button type="primary" onClick={handleConfirm}>Xác nhận!</Button>
+      </div>
 
       <UserModalDetails
         showModal={showModal}
@@ -102,7 +111,7 @@ const ItemComponent = ({ item, onSelectItem, onQuantityChange }) => {
   };
 
   const handleQuantityChange = (e) => {
-    const newQuantity = parseInt(e.target.value);
+    const newQuantity = parseInt(e.target.value, 10);
     if (!isNaN(newQuantity) && newQuantity >= 0) {
       setQuantity(newQuantity);
       onQuantityChange(item.id, newQuantity);
@@ -114,41 +123,34 @@ const ItemComponent = ({ item, onSelectItem, onQuantityChange }) => {
   };
 
   return (
-    <div className="card mb-3">
-      <div className="card-body">
-        <div className="d-flex align-items-center">
-          <input
-            type="checkbox"
-            checked={selected}
-            onChange={handleItemSelect}
-            style={{ marginRight: '10px' }}
-          />
-          <img src={imagePath} className="img-thumbnail" style={{ width: '70px', height: '70px', marginRight: '20px' }} alt="Product" />
-          <div>
-            <h5 className="card-title mb-2">{item.productName}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{item.supplierName}</h6>
-            <h6 className="card-subtitle mb-2 text-muted">{item.productDescription}</h6>
-            <div className="d-flex align-items-baseline">
-              <span className="text-danger fw-bold">{item.unitPrice.toLocaleString()} đ / </span>
-              <span className="text fw-bold">{item.unitName}</span>
-            </div>
+    <Card className="mb-3 w-100">
+      <div className="d-flex align-items-center">
+        <Checkbox checked={selected} onChange={handleItemSelect} style={{ marginRight: '10px' }} />
+        <Image src={imagePath} width={200} height={100} alt="Product" className="me-3" />
+        <div>
+          <Title level={5} className="mb-2">{item.productName}</Title>
+          <Text type="secondary" className="d-block mb-2">{item.supplierName}</Text>
+          <Text type="secondary" className="d-block mb-2">{item.productDescription}</Text>
+          <div className="d-flex align-items-baseline">
+            <Text type="danger" strong>{item.unitPrice.toLocaleString()} đ</Text>
+            <Text className="ms-1">{item.unitName}</Text>
           </div>
-          <div className="ms-auto">
-            <div className="d-flex align-items-center">
-              <label htmlFor={`quantity-${item.id}`} className="me-2 mb-0">Số lượng:</label>
-              <input
-                id={`quantity-${item.id}`}
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-                style={{ width: '50px' }}
-              />
-              <button onClick={handleDelete} className="btn btn-link text-danger p-0 ms-2">Xóa</button>
-            </div>
+        </div>
+        <div className="ms-auto">
+          <div className="d-flex align-items-center">
+            <label htmlFor={`quantity-${item.id}`} className="me-2 mb-0">Số lượng:</label>
+            <Input
+              id={`quantity-${item.id}`}
+              type="number"
+              value={quantity}
+              onChange={handleQuantityChange}
+              style={{ width: '60px' }}
+            />
+            <Button type="link" danger className="ms-2 p-0" onClick={handleDelete}>Xóa</Button>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

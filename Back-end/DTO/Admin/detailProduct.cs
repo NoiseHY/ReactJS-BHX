@@ -17,7 +17,7 @@ namespace DTO.Admin
         public int idCat { get; set; }
         public int idUnits { get; set; }
         public string? img {  get; set; }
-
+        public string? imgDetails { get; set; }
 
 
         public string ing {  get; set; }

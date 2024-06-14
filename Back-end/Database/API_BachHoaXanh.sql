@@ -132,11 +132,12 @@ create table prodDetails (
 
 --drop table prodDetails
 
-INSERT INTO prodDetails (ing, note, stor, pop, idUnit, idSup, idProd)
+INSERT INTO prodDetails (ing, note, stor, pop, idUnit, idSup, idProd, img)
 VALUES
-(N'123',N'123', N'123', N'Việt Nam', 1, 1, 1),
-(N'123', N'123', N'123', N'Argentina', 2, 2, 2),
-(N'123', N'123', N'123', N'Việt Nam', 3, 3,3 );
+(N'123',N'123', N'123', N'Việt Nam', 1, 1, 1, N'banh-bao-nhan-khoai-mon-cp-270g-202212261129150539.jpg, 
+banh-bao-nhan-khoai-mon-cp-270g-202212261129142314.jpg'),
+(N'123', N'123', N'123', N'Argentina', 2, 2, 2, null),
+(N'123', N'123', N'123', N'Việt Nam', 3, 3,3, null );
 
 select * from prodDetails;
 

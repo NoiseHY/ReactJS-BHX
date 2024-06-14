@@ -57,6 +57,7 @@ BEGIN
         PD.note AS note,
         PD.stor AS stor,
         PD.pop AS pop,
+		PD.img AS imgDetails,
         U.nameUn AS nameUn,
         S.nameSup AS nameSup,
         C.nameCat AS nameCat
