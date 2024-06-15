@@ -9,10 +9,11 @@ using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using Microsoft.AspNetCore.Authorization;
 using DTO.Admin;
+using DTO.User;
 
 namespace API_BHX.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class productController : ControllerBase
@@ -84,17 +85,24 @@ namespace API_BHX.Controllers
 
         [Route("GetAll")]
         [HttpGet]
-        public IActionResult GetAll(int pageNumber = 1, int pageSize = 10)
-        {
-            if (pageNumber < 1 || pageSize < 1)
-            {
-                return BadRequest("Không thể tạo !!");
-            }
-
-            var products = _iproductBusiness.GetAll(pageNumber, pageSize);
-            return Ok(products);
+        public List<product> GetAll()
+        {          
+            return _iproductBusiness.GetAll();
         }
 
+        [Route("GetCategoriesByID/{id}")]
+        [HttpGet]
+        public List<categories> GetCategoriesByID(int id)
+        {
+            return _iproductBusiness.GetCategoriesByID(id);
+        }
+
+        [Route("GetUnitsByID/{id}")]
+        [HttpGet]
+        public List<units> GetUnitsByID(int id)
+        {
+            return _iproductBusiness.GetUnitsByID(id);
+        }
 
         [Route("Create")]
         [HttpPost]

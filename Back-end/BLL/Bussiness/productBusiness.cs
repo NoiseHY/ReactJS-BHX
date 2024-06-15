@@ -20,9 +20,17 @@ namespace BLL.Bussiness
         {
             return iproductRepository.GetProductByID(id);
         }
-        public List<product> GetAll(int pageNumber, int pageSize)
+        public List<units> GetUnitsByID(int id)
         {
-            return iproductRepository.GetAll(pageNumber, pageSize);
+            return iproductRepository.GetUnitsByID(id);
+        }
+        public List<categories> GetCategoriesByID(int id)
+        {
+            return iproductRepository.GetCategoriesByID(id);
+        }
+        public List<product> GetAll()
+        {
+            return iproductRepository.GetAll();
         }
         public List<product> GetNewProducts()
         {

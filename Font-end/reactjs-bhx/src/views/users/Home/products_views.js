@@ -66,7 +66,7 @@ function ProductsHot() {
 
                   <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
                     <div>
-                      <ArrowUpOutlined /> {product.up} đ
+                      <ArrowUpOutlined /> {product.up.toLocaleString()} đ
                     </div>
                     <div>
                       <NumberOutlined /> {product.num} 

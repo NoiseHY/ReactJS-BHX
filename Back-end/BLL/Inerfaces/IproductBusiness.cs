@@ -10,7 +10,9 @@ namespace BLL.Inerfaces
     public partial interface IproductBusiness
     {
         detailProduct GetProductByID(int id);
-        List<product> GetAll(int pageNumber, int pageSize);
+        List<units> GetUnitsByID(int id);
+        List<categories> GetCategoriesByID(int id);
+        List<product> GetAll();
         List<product> GetNewProducts();
         List<product> GetBestViewProducts();
 

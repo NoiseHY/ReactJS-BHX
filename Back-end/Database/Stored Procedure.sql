@@ -80,6 +80,84 @@ exec GetProductByID 1
 
 --drop procedure GetProductByID
 
+---> admin
+-- stored procedure để lấy tất cả các sản phẩm trong bảng sản phẩm 
+CREATE PROCEDURE GetAllProducts
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM 
+        products;
+END;
+
+exec GetAllProducts
+
+--drop procedure GetAllProducts
+
+--stored procedure để thêm một sản phẩm mới
+CREATE PROCEDURE AddProduct
+    @nameProd NVARCHAR(50),
+    @desProd NVARCHAR(MAX),
+    @num INT,
+    @up DECIMAL(18, 0),
+    @img NVARCHAR(200),
+    @rating FLOAT,
+    @viewProd INT,
+    @idCat INT,
+    @idUnits INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO products (nameProd, desProd, num, up, img, rating, viewProd, idCat, idUnits, dateBegin)
+    VALUES (@nameProd, @desProd, @num, @up, @img, @rating, @viewProd, @idCat, @idUnits, GETDATE());
+END;
+
+-- stored procedure để sửa sản phẩm 
+CREATE PROCEDURE UpdateProduct
+    @id INT,
+    @nameProd NVARCHAR(50),
+    @desProd NVARCHAR(MAX),
+    @num INT,
+    @up DECIMAL(18, 0),
+    @img NVARCHAR(200),
+    @rating FLOAT,
+    @viewProd INT,
+    @idCat INT,
+    @idUnits INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE products
+    SET 
+        nameProd = @nameProd,
+        desProd = @desProd,
+        num = @num,
+        up = @up,
+        img = @img,
+        rating = @rating,
+        viewProd = @viewProd,
+        idCat = @idCat,
+        idUnits = @idUnits,
+        dateEnd = GETDATE() -- Cập nhật ngày sửa
+    WHERE 
+        id = @id;
+END;
+
+-- stored procedure để xóa 
+CREATE PROCEDURE DeleteProduct
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM products
+    WHERE id = @id;
+END;
+
 
 --- bảng tài khoản ---
 
@@ -491,3 +569,81 @@ END;
 
 exec GetCustomerByID 1
 
+-- bảng danh mục --
+-- lấy theo id 
+CREATE PROCEDURE GetCatByID
+    @CategoryID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy thông tin của danh mục
+    SELECT 
+        id ,
+        nameCat
+    FROM 
+        categories
+    WHERE 
+        id = @CategoryID;
+END;
+
+--drop procedure GetCatByID
+
+exec GetCatByID 1 
+
+-- lấy tất cả 
+CREATE PROCEDURE GetAllCategories
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy thông tin của tất cả các danh mục
+    SELECT 
+        *
+    FROM 
+        categories;
+END;
+
+--drop procedure GetAllCategories
+
+exec GetAllCategories 
+
+-- bảng đơn vị --
+-- lấy theo id 
+CREATE PROCEDURE GetUnitByID
+    @UnitID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy thông tin của đơn vị
+    SELECT 
+        id ,
+        nameUn
+    FROM 
+        units
+    WHERE 
+        id = @UnitID;
+
+END;
+
+--drop procedure GetUnitByID
+
+exec GetUnitByID 1
+
+-- lấy tất cả 
+CREATE PROCEDURE GetAllUnits
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy thông tin của tất cả các đơn vị
+    SELECT 
+        *
+    FROM 
+        units;
+END;
+
+--drop procedure GetAllUnits
+
+exec GetAllUnits

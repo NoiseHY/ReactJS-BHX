@@ -3,6 +3,7 @@ import { Header } from 'antd/es/layout/layout';
 
 import Admin_Dashboard from '../dashboard/dashboard';
 import Admin_Account from '../account/index';
+import Admin_Prod from '../product';
 
 import Admin_Header from '../../../components/header';
 
@@ -12,7 +13,7 @@ import {
   CloudOutlined,
   ShopOutlined,
   TeamOutlined,
-  UploadOutlined,
+  ProductOutlined,
   DashboardOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -23,7 +24,7 @@ const { Sider } = Layout;
 const items = [
   { key: '1', icon: <DashboardOutlined />, label: 'Dashboard', component: <Admin_Dashboard /> },
   { key: '2', icon: <UserOutlined />, label: 'Tài khoản', component: <Admin_Account /> },
-  { key: '3', icon: <UploadOutlined />, label: 'Uploads' },
+  { key: '3', icon: <ProductOutlined />, label: 'Sản phẩm', component : <Admin_Prod/> },
   { key: '4', icon: <BarChartOutlined />, label: 'Charts' },
   { key: '5', icon: <CloudOutlined />, label: 'Cloud' },
   { key: '6', icon: <AppstoreOutlined />, label: 'Apps' },

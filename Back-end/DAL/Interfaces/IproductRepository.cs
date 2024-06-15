@@ -10,7 +10,10 @@ namespace DAL.Interfaces
     public partial interface IproductRepository
     {
         detailProduct GetProductByID(int id);
-        List<product> GetAll(int pageNumber, int pageSize);
+        List<product> GetAll();
+        List<units> GetUnitsByID(int id);
+        List<categories> GetCategoriesByID(int id);
+
         List<product> GetNewProducts ();
         List<product> GetBestViewProducts();
 
