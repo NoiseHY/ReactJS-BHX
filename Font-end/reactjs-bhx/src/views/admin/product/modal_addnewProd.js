@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
-import { postCreateProd } from '../../../services/admin/productsServices';
 import { toast } from "react-toastify";
+
+import { postCreateProd } from '../../../services/admin/productsServices';
+
 
 const Modal_addnewProd = (props) => {
   const { show, handleClose } = props;

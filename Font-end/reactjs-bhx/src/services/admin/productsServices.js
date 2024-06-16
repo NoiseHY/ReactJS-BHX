@@ -18,9 +18,9 @@ const fetchAllProd = async () => {
 
 const getUnitByID = async (id) => {
   try {
-    const response = await axios.get("/api/product/GetCategoriesByID?id=" + id);
+    const response = await axios.get("/api/product/GetUnitsByID/" + id);
     if (response) {
-      toast.success("Tải thành công!");
+      // toast.success("Tải thành công!");
     } else {
       toast.error("Không có dữ liệu.");
     }
@@ -34,9 +34,9 @@ const getUnitByID = async (id) => {
 
 const getCatByID = async (id) => {
   try {
-    const response = await axios.get("/api/product/GetCatByID?id=" + id);
+    const response = await axios.get("/api/product/GetCategoriesByID/" + id);
     if (response) {
-      toast.success("Tải thành công!");
+      // toast.success("Tải thành công!");
     } else {
       toast.error("Không có dữ liệu ");
     }

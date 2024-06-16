@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Modal_editProd from './modal_editProd';
-import { fetchAllProd, delProd } from '../../../services/admin/productsServices';
+import { fetchAllProd, delProd, getCatByID, getUnitByID } from '../../../services/admin/productsServices';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
 
@@ -20,10 +20,22 @@ const TableProd = () => {
     try {
       const res = await fetchAllProd();
       if (res) {
-        setList(res);
+        const updatedProds = await Promise.all(res.map(async (prod) => {
+          const cat = await getCatByID(prod.idCat);
+          const unit = await getUnitByID(prod.idUnits);
+
+          // console.log(`Product ID: ${prod.id}, Category: ${cat[0].nameCat}, Unit: ${unit[0].nameUn}`);
+
+          return {
+            ...prod,
+            catName: cat[0].nameCat,
+            unitName: unit[0].nameUn
+          };
+        }));
+        setList(updatedProds);
       }
     } catch (error) {
-      console.error('Error fetching ', error);
+      console.error('Error fetching products:', error);
     }
   };
 
@@ -43,13 +55,12 @@ const TableProd = () => {
         toast.success("Sản phẩm đã được xóa thành công!");
         getProd();
       } catch (error) {
-        console.error('Error deleting :', error);
-        toast.error("Đã xảy ra lỗi khi xóa : " + error.message);
+        console.error('Error deleting product:', error);
+        toast.error("Đã xảy ra lỗi khi xóa: " + error.message);
       }
     }
   };
 
-  // Calculate number of pages
   const pageCount = Math.ceil(list.length / ProdPerPage);
 
   const displayProds = list
@@ -63,8 +74,8 @@ const TableProd = () => {
         <td>{item.nameProd}</td>
         <td>{item.desProd}</td>
         <td>{item.up.toLocaleString()}đ</td>
-        <td>{item.idCat}</td>
-        <td>{item.idUnits}</td>
+        <td>{item.catName}</td>
+        <td>{item.unitName}</td>
         <td>{item.rating}</td>
         <td>{item.stat}</td>
         <td>{item.viewProd}</td>
@@ -73,8 +84,6 @@ const TableProd = () => {
       </tr>
     ));
 
-
-  // Function to handle page change
   const handlePageChange = ({ selected }) => {
     setPageNumber(selected);
   };
@@ -89,8 +98,8 @@ const TableProd = () => {
             <th>Tên sản phẩm</th>
             <th>Mô tả</th>
             <th>Đơn giá</th>
-            <th>ID Danh mục</th>
-            <th>ID Đơn vị</th>
+            <th>Danh mục</th>
+            <th>Đơn vị</th>
             <th>Đánh giá</th>
             <th>Trạng thái</th>
             <th>Lượt xem</th>
@@ -102,7 +111,6 @@ const TableProd = () => {
           {displayProds}
         </tbody>
       </Table>
-      {/* Pagination */}
       <div className="pagination-container d-flex justify-content-center">
         <ReactPaginate
           previousLabel={"Previous"}
@@ -118,7 +126,6 @@ const TableProd = () => {
           pageLinkClassName={"page-link"}
         />
       </div>
-      {/* Modal */}
       {showEditModal && (
         <Modal_editProd
           show={showEditModal}
