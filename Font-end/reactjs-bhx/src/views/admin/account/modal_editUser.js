@@ -4,7 +4,7 @@ import { putEditUser } from "../../../services/admin/usersServices";
 import { toast } from "react-toastify";
 
 const Modal_editUser = (props) => {
-  const { show, handleClose, userId, userData } = props; // Nhận id và thông tin người dùng từ props
+  const { show, handleClose, userId, userData } = props; 
   const [id, setId] = useState("");
   const [nameAcc, setNameAcc] = useState("");
   const [pasAcc, setPasAcc] = useState("");

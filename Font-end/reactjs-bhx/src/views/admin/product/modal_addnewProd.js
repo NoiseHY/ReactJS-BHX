@@ -1,56 +1,61 @@
-import { useState } from "react";
-import { Modal, Button, Alert } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Modal, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 import { postCreateProd } from '../../../services/admin/productsServices';
-
+import { fetchAllCats } from "../../../services/admin/catsServices";
+import { fetchAllUnits } from "../../../services/admin/unitsServices";
 
 const Modal_addnewProd = (props) => {
   const { show, handleClose } = props;
-  const [name, setName] = useState("");
-  const [desProd, setdesProd] = useState("");
-  const [num, setNum] = useState("");
-  const [up, setUp] = useState("");
-  const [idCat, setIDCat] = useState("");
-  const [idUnits, setIDUnits] = useState("");
-  const [img, setImg] = useState("");
+  const [formData, setFormData] = useState({
+    nameProd: "",
+    desProd: "",
+    num: 0,
+    up: 0,
+    idCat: 0,
+    idUnits: 0,
+    img: "" 
+  });
+  const [categories, setCategories] = useState([]);
+  const [units, setUnits] = useState([]);
 
-  const handleName = (event) => {
-    setName(event.target.value);
+  useEffect(() => {
+    fetchCategoriesAndUnits();
+  }, []);
+
+  const fetchCategoriesAndUnits = async () => {
+    try {
+      const [catsRes, unitsRes] = await Promise.all([fetchAllCats(), fetchAllUnits()]);
+      setCategories(catsRes);
+      setUnits(unitsRes);
+    } catch (error) {
+      console.error('Error fetching categories and units:', error);
+    }
   };
 
-  const handledesProd = (event) => {
-    setdesProd(event.target.value);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
-  const handleNum = (event) => {
-    setNum(event.target.value);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        img: file.name
+      });
+    }
   };
-
-  const handleUp = (event) => {
-    setUp(event.target.value);
-  };
-
-  const handleIDCat = (event) => {
-    setIDCat(event.target.value);
-  };
-
-  const handleIDUnits = (event) => {
-    setIDUnits(event.target.value);
-  };
-
-  const handleImg = (event) => {
-    setImg(event.target.value);
-  };
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      let res = await postCreateProd({
-        name, desProd,
-        num, up, idCat, idUnits, img
-      });
+      let res = await postCreateProd(formData);
       if (res) {
         toast.success("Sản phẩm đã được tạo thành công!", {
           autoClose: 2000,
@@ -83,83 +88,95 @@ const Modal_addnewProd = (props) => {
             type="text"
             className="form-control"
             id="nameProd"
-            value={name}
-            onChange={handleName}
+            name="nameProd"
+            value={formData.nameProd}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Miêu tả </label>
+          <label className="form-label">Miêu tả</label>
           <input
             type="text"
             className="form-control"
             id="desProd"
-            value={desProd}
-            onChange={handledesProd}
+            name="desProd"
+            value={formData.desProd}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Số lượng </label>
+          <label className="form-label">Số lượng</label>
           <input
             type="number"
             className="form-control"
             id="num"
-            value={num}
-            onChange={handleNum}
+            name="num"
+            value={formData.num}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="idCuts" className="form-label">Giá cả </label>
+          <label className="form-label">Giá cả</label>
           <input
             type="number"
             className="form-control"
             id="up"
-            value={up}
-            onChange={handleNum}
-          />
-        </div>
-
-
-        <div className="mb-3">
-          <label className="form-label"> Danh mục </label>
-          <input
-            type=""
-            className="form-control"
-            id="up"
-            value={up}
-            onChange={handleNum}
+            name="up"
+            value={formData.up}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="idCuts" className="form-label"> Đơn vị </label>
-          <input
-            type=""
+          <label className="form-label">Danh mục</label>
+          <select
             className="form-control"
-            id="up"
-            value={up}
-            onChange={handleNum}
-          />
+            id="idCat"
+            name="idCat"
+            value={formData.idCat}
+            onChange={handleChange}
+          >
+            <option value="">Chọn danh mục</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>{cat.nameCat}</option>
+            ))}
+          </select>
         </div>
         <div className="mb-3">
-          <label htmlFor="idCuts" className="form-label"> Ảnh </label>
-          <input
-            type=""
+          <label className="form-label">Đơn vị</label>
+          <select
             className="form-control"
-            id="up"
-            value={up}
-            onChange={handleNum}
+            id="idUnits"
+            name="idUnits"
+            value={formData.idUnits}
+            onChange={handleChange}
+          >
+            <option value="">Chọn đơn vị</option>
+            {units.map((unit) => (
+              <option key={unit.id} value={unit.id}>{unit.nameUn}</option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Ảnh</label>
+          <input
+            type="file"
+            className="form-control"
+            id="img"
+            name="img"
+            accept="image/*"
+            onChange={handleFileChange}
           />
         </div>
-
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Đóng
         </Button>
-        <Button variant="primary" onClick={handleSubmit}>Tạo </Button>
+        <Button variant="primary" onClick={handleSubmit}>Tạo</Button>
       </Modal.Footer>
-
     </Modal>
   );
 };
 
 export default Modal_addnewProd;
+

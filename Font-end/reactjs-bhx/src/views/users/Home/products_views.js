@@ -49,6 +49,7 @@ function ProductsHot() {
 
         <Row gutter={16}>
           {listProductsNew.map((product, index) => {
+            
             const imagePath = product.img ? require(`../../../assets/img/${product.img}`) : "";
 
             return (

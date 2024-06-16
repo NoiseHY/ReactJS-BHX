@@ -90,6 +90,13 @@ namespace API_BHX.Controllers
             return _iproductBusiness.GetAll();
         }
 
+        [Route("GetProductByID")]
+        [HttpGet]
+        public detailProduct GetProductByID(int id)
+        {
+            return _iproductBusiness.GetProductByID(id);
+        }
+
         [Route("GetCategoriesByID/{id}")]
         [HttpGet]
         public List<categories> GetCategoriesByID(int id)

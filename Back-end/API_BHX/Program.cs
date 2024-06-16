@@ -1,8 +1,12 @@
 ﻿using BLL.Bussiness;
+using BLL.Bussiness.admin;
 using BLL.Inerfaces;
+using BLL.Inerfaces.admin;
 using DAL.Helper;
 using DAL.Interfaces;
+using DAL.Interfaces.admin;
 using DAL.Repository;
+using DAL.Repository.admin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,8 +48,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-
 // Đăng ký các dịch vụ khác trong container DI
 builder.Services.AddTransient<ExcuteProcedure, ConnectToDatabase>();
 builder.Services.AddTransient<ILoginRepository, loginRepository>();
@@ -58,6 +60,13 @@ builder.Services.AddTransient<IaccountBusiness, accountBusiness>();
 builder.Services.AddTransient<IaccountRepository, accountRepository>();
 builder.Services.AddTransient<Iuser_authorizationBusiness, user_authorizationBusiness>();
 builder.Services.AddTransient<Iuser_authorizationRepository, user_authorizationRepository>();
+builder.Services.AddTransient<Iadmin_catsBusiness, admin_catsBusniess>();
+builder.Services.AddTransient<Iadmin_catsRepository, admin_catsRepository>();
+builder.Services.AddTransient<Iadmin_unitsBusiness, admin_unitsBusiness>();
+builder.Services.AddTransient<Iadmin_unitsRepository, admin_unitsRepository>();
+
+
+
 
 builder.Services.AddAuthorization();
 

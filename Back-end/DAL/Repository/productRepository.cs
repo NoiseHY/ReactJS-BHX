@@ -209,6 +209,7 @@ namespace DAL.Repository
             try
             {
                 var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msg, "UpdateProduct",
+                    "@id", product.id,
                     "@nameProd", product.nameProd,
                     "@desProd", product.desProd,
                     "@num", product.num,

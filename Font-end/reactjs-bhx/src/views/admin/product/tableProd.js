@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Modal_editProd from './modal_editProd';
 import { fetchAllProd, delProd, getCatByID, getUnitByID } from '../../../services/admin/productsServices';
@@ -40,11 +40,13 @@ const TableProd = () => {
   };
 
   const handleEditProd = (id) => {
+    
     const Edit = list.find(prod => prod.id === id);
     if (Edit) {
       setDataToEdit(Edit);
       setShowEditModal(true);
     }
+    
   };
 
   const handleDeleteProd = async (id) => {
@@ -128,14 +130,15 @@ const TableProd = () => {
       </div>
       {showEditModal && (
         <Modal_editProd
-          show={showEditModal}
-          handleClose={() => setShowEditModal(false)}
-          Id={DataToEdit.id}
-          Data={DataToEdit}
+        show={showEditModal}
+        handleClose={() => setShowEditModal(false)}
+        Id={DataToEdit.id}
+        productData={DataToEdit}
         />
       )}
-    </>
-  );
-};
-
-export default TableProd;
+      </>
+    );
+  };
+  
+  export default TableProd;
+  
