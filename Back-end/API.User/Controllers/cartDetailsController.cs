@@ -1,4 +1,5 @@
-﻿using BLL.Inerfaces;
+﻿using BLL.Bussiness;
+using BLL.Inerfaces;
 using BLL.Inerfaces.user;
 using DTO.Rating;
 using DTO.User;
@@ -31,6 +32,20 @@ namespace API.User.Controllers
             else
             {
                 return BadRequest("Đã xảy ra lỗi !");
+            }
+        }
+        [Route("Delete/{id}")]
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            bool isSuccess = _icartDetailsBusiness.Delete(id);
+            if (isSuccess)
+            {
+                return Ok("Xóa thành công !");
+            }
+            else
+            {
+                return BadRequest("Đã xảy ra lỗi khi xóa !");
             }
         }
     }

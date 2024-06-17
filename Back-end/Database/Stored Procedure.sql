@@ -158,6 +158,38 @@ BEGIN
     WHERE id = @id;
 END;
 
+--- bảng chi tiết sản phẩm ---
+-- sửa
+CREATE PROCEDURE AddProductDetail
+    @idProd INT,
+    @ing NVARCHAR(500) = N'Không có',
+    @note NVARCHAR(200) = N'Không có',
+    @stor NVARCHAR(200) = N'Không có',
+    @pop NVARCHAR(100),
+    @idUnit INT,
+    @idSup INT,
+    @img NVARCHAR(MAX)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO prodDetails (idProd, ing, note, stor, pop, idUnit, idSup, img, dateBegin)
+    VALUES (@idProd, @ing, @note, @stor, @pop, @idUnit, @idSup, @img, GETDATE());
+    
+END;
+
+-- xóa
+CREATE PROCEDURE DeleteDetails
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM prodDetails
+    WHERE id = @id;
+END;
+
+exec DeleteDetails 4
 
 --- bảng tài khoản ---
 
@@ -462,6 +494,18 @@ BEGIN
     SELECT @CartId, ProductId, Quantity, GETDATE()
     FROM @ProductTable;
 END;
+--
+CREATE PROCEDURE DeleteCartDetails
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM cartDetails
+    WHERE id = @id;
+END;
+
+--drop procedure DeleteCartDetails
 
 --> bảng hóa đơn 
 
@@ -665,6 +709,104 @@ END;
 --drop procedure GetAllCategories
 
 exec GetAllCategories 
+--
+CREATE PROCEDURE AddCat
+    @nameCat NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO cats (nameCat)
+    VALUES (@nameCat);
+
+    -- Trả về ID của danh mục vừa được thêm
+    SELECT SCOPE_IDENTITY() AS NewCatID;
+END;
+--
+CREATE PROCEDURE UpdateCat
+    @id INT,
+    @nameCat NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE cats
+    SET nameCat = @nameCat
+    WHERE id = @id;
+END;
+--
+CREATE PROCEDURE DeleteCat
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM cats
+    WHERE id = @id;
+END;
+
+-- bảng nhà cung cấp --
+-- lấy tất cả 
+CREATE PROCEDURE GetAllSups
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Lấy thông tin của tất cả các đơn vị
+    SELECT 
+        *
+    FROM 
+        sups;
+END;
+
+exec GetAllSups
+--
+
+CREATE PROCEDURE AddSup
+    @nameSup NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO sups (nameSup)
+    VALUES (@nameSup);
+
+END;
+--
+CREATE PROCEDURE AddSup
+    @nameSup NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO sups (nameSup)
+    VALUES (@nameSup);
+
+    -- Trả về ID của nhà cung cấp vừa được thêm
+    SELECT SCOPE_IDENTITY() AS NewSupID;
+END;
+--
+CREATE PROCEDURE UpdateSup
+    @id INT,
+    @nameSup NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE sups
+    SET nameSup = @nameSup
+    WHERE id = @id;
+END;
+--
+CREATE PROCEDURE DeleteSup
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM sups
+    WHERE id = @id;
+END;
 
 -- bảng đơn vị --
 -- lấy theo id 
@@ -705,3 +847,36 @@ END;
 --drop procedure GetAllUnits
 
 exec GetAllUnits
+--
+CREATE PROCEDURE AddUnit
+    @nameUn NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO units (nameUn)
+    VALUES (@nameUn);
+
+END;
+--
+CREATE PROCEDURE UpdateUnit
+    @id INT,
+    @nameUn NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE units
+    SET nameUn = @nameUn
+    WHERE id = @id;
+END;
+--
+CREATE PROCEDURE DeleteUnit
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM units
+    WHERE id = @id;
+END;

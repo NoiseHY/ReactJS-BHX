@@ -20,13 +20,13 @@ const fetchAllUnits = async () => {
   try {
     const response = await axios.get("/api/product/GetAll");
     if (response) {
-      toast.success("Danh sách sản phẩm  đã được tải thành công!");
+      toast.success("Danh sách đã được tải thành công!");
     } else {
-      toast.error("Không có dữ liệu sản phẩm .");
+      toast.error("Không có dữ liệu .");
     }
     return response;
   } catch (error) {
-    toast.error("Đã xảy ra lỗi khi tải danh sách sản phẩm : " + error.message);
+    toast.error("Đã xảy ra lỗi khi tải danh sách : " + error.message);
     throw error;
   }
 };
@@ -36,13 +36,13 @@ const fetchAllCats = async () => {
   try {
     const response = await axios.get("/api/product/GetAll");
     if (response) {
-      toast.success("Danh sách sản phẩm  đã được tải thành công!");
+      toast.success("Danh sách  đã được tải thành công!");
     } else {
-      toast.error("Không có dữ liệu sản phẩm .");
+      toast.error("Không có dữ liệu .");
     }
     return response;
   } catch (error) {
-    toast.error("Đã xảy ra lỗi khi tải danh sách sản phẩm : " + error.message);
+    toast.error("Đã xảy ra lỗi khi tải danh sách : " + error.message);
     throw error;
   }
 };
@@ -116,7 +116,21 @@ const postCreateProd = async (Data) => {
 const putEditProd = async (data) => {
   try {
     const response = await axios.put("/api/product/Update", data);
-    // Kiểm tra dữ liệu và hiển thị toast tương ứng
+    if (response) {
+      toast.success("Thông tin sản phẩm  đã được cập nhật thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi khi cập nhật thông tin sản phẩm .");
+    }
+    return response;
+  } catch (error) {
+    toast.error("Đã xảy ra lỗi khi cập nhật thông tin sản phẩm : " + error.message);
+    throw error;
+  }
+};
+
+const putEditDetailsProd = async (data) => {
+  try {
+    const response = await axios.put("/api/product/AddProductDetail", data);
     if (response) {
       toast.success("Thông tin sản phẩm  đã được cập nhật thành công!");
     } else {
@@ -146,6 +160,6 @@ const delProd = async (id) => {
 };
 
 export {
-  fetchAllProd, postCreateProd, putEditProd, delProd,
+  fetchAllProd, postCreateProd, putEditProd, putEditDetailsProd, delProd,
   getCatByID, getUnitByID, getProductByID,fetchAllCats, fetchAllUnits
 };

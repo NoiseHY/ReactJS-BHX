@@ -10,5 +10,7 @@ namespace DAL.Interfaces.user
     public partial interface IcartDetailsRepository
     {
         bool Create(cartDetails cartDetails);
+        bool Delete(int id);
+
     }
 }

@@ -16,22 +16,24 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const res = await getProductByID(id);
-        if (res) {
-          setProduct(res);
-        } else {
-          toast.error("Không có dữ liệu sản phẩm.");
-        }
-      } catch (error) {
-        toast.error("Đã xảy ra lỗi khi tải chi tiết sản phẩm: " + error.message);
-      } finally {
-        setLoading(false);
+  const fetchProduct = async () => {
+    try {
+      const res = await getProductByID(id);
+      if (res) {
+        setProduct(res);
+      } else {
+        toast.error("Không có dữ liệu sản phẩm.");
       }
-    };
+    } catch (error) {
+      toast.error("Đã xảy ra lỗi khi tải chi tiết sản phẩm: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+
+  useEffect(() => {
+    
     fetchProduct();
   }, [id]);
 

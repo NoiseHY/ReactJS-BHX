@@ -214,6 +214,7 @@ CREATE TABLE invs (
 	dateEnd datetime,
     FOREIGN KEY (idCus) REFERENCES custs(id) on delete cascade on update cascade
 );
+
 -- Tạo bảng Chi tiết hóa đơn bán
 CREATE TABLE invDetails (
     id INT IDENTITY(1,1) PRIMARY KEY not null,

@@ -53,7 +53,21 @@ const AddProductToCart = async (request) => {
   }
 };
 
+const delDetails = async (id) => {
+  try {
+    const response = await axios.delete(`/api/cartDetails/Delete/` + id);
+    // Kiểm tra dữ liệu và hiển thị toast tương ứng
+    if (response) {
+      toast.success("Xóa thành công!");
+    } else {
+      toast.error("Đã xảy ra lỗi khi xóa .");
+    }
+    return response;
+  } catch (error) {
+    toast.error("Đã xảy ra lỗi khi xóa : " + error.message);
+    throw error;
+  }
+};
 
 
-
-export { user_cartServices, AddProductToCart };
+export { user_cartServices, AddProductToCart, delDetails };

@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { user_cartServices } from '../../../services/user/cartServices';
 import UserModalDetails from './modal_details';
 import { Spin, Button, Checkbox, Image, Input, Card, Typography } from 'antd';
+import { delDetails } from '../../../services/user/cartServices';
+import { toast } from 'react-toastify';
 
 const { Title, Text } = Typography;
 
@@ -60,6 +62,20 @@ function User_CartDetails() {
     );
   };
 
+  const handleDelete = async (id) => {
+    const confirmation = window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
+    if (confirmation) {
+      try {
+        await delDetails(id);
+        toast.success("Xóa thành công!");
+        GetAllByID();
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        toast.error("Đã xảy ra lỗi khi xóa người dùng: " + error.message);
+      }
+    }
+  };
+
   const handleConfirm = () => {
     setShowModal(true);
   };
@@ -80,7 +96,7 @@ function User_CartDetails() {
     <div className="container">
       <div className="row">
         {cartItems.map((item) => (
-          <ItemComponent key={item.id} item={item} onSelectItem={handleSelectItem} onQuantityChange={handleQuantityChange} />
+          <ItemComponent key={item.id} item={item} onSelectItem={handleSelectItem} onQuantityChange={handleQuantityChange} handleDelete={handleDelete} />
         ))}
       </div>
       <div className="mt-4">
@@ -99,7 +115,7 @@ function User_CartDetails() {
   );
 }
 
-const ItemComponent = ({ item, onSelectItem, onQuantityChange }) => {
+const ItemComponent = ({ item, onSelectItem, onQuantityChange, handleDelete }) => {
   const [selected, setSelected] = useState(false);
   const [quantity, setQuantity] = useState(item.quantity);
   const imagePath = item.img ? require(`../../../assets/img/${item.img}`) : "";
@@ -118,10 +134,6 @@ const ItemComponent = ({ item, onSelectItem, onQuantityChange }) => {
       setQuantity(newQuantity);
       onQuantityChange(item.id, newQuantity);
     }
-  };
-
-  const handleDelete = () => {
-    // Add delete logic here
   };
 
   return (
@@ -148,7 +160,7 @@ const ItemComponent = ({ item, onSelectItem, onQuantityChange }) => {
               onChange={handleQuantityChange}
               style={{ width: '60px' }}
             />
-            <Button type="link" danger className="ms-2 p-0" onClick={handleDelete}>Xóa</Button>
+            <Button className='btn btn-danger' onClick={() => handleDelete(item.cartDetailId)}>Xóa</Button>
           </div>
         </div>
       </div>

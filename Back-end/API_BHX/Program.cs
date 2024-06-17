@@ -64,7 +64,8 @@ builder.Services.AddTransient<Iadmin_catsBusiness, admin_catsBusniess>();
 builder.Services.AddTransient<Iadmin_catsRepository, admin_catsRepository>();
 builder.Services.AddTransient<Iadmin_unitsBusiness, admin_unitsBusiness>();
 builder.Services.AddTransient<Iadmin_unitsRepository, admin_unitsRepository>();
-
+builder.Services.AddTransient<Iadmin_supsBusiness, admin_supsBusiness>();
+builder.Services.AddTransient<Iadmin_supsRepository, admin_supsRepository>();
 
 
 

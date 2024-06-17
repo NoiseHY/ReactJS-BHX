@@ -1,5 +1,5 @@
-﻿using BLL.Inerfaces;
-using DAL.Interfaces;
+﻿using BLL.Inerfaces.admin;
+using DAL.Interfaces.admin;
 using DTO.Admin;
 using System;
 using System.Collections.Generic;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Bussiness
+namespace BLL.Bussiness.admin
 {
-    public partial class productBusiness :IproductBusiness
+    public partial class productBusiness : IproductBusiness
     {
         private IproductRepository iproductRepository;
         public productBusiness(IproductRepository _iproductRepository)
@@ -47,6 +47,11 @@ namespace BLL.Bussiness
         public bool Create(product product)
         {
             return iproductRepository.Create(product);
+        }
+        public bool CreateProdDetails(productDetails productDetails)
+        {
+            return iproductRepository.CreateProdDetails(productDetails);
+
         }
         public bool Update(product product)
         {

@@ -20,5 +20,9 @@ namespace BLL.Bussiness.user
         {
             return _icartDetailsRepository.Create(cartDetails);
         }
+        public bool Delete(int id)
+        {
+            return _icartDetailsRepository.Delete(id);
+        }
     }
 }

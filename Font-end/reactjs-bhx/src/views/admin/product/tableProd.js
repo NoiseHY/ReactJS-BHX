@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import Modal_editProd from './modal_editProd';
-import { fetchAllProd, delProd, getCatByID, getUnitByID } from '../../../services/admin/productsServices';
+import { fetchAllProd, delProd, getCatByID, getUnitByID, getProductByID } from '../../../services/admin/productsServices';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
+import { CheckCircleOutlined } from '@ant-design/icons';
+import ProductDetailsModal from './modal_detailsProd';
+import Modal_editProd from './modal_editProd';
 
 const TableProd = () => {
   const [list, setList] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false); // New state for details modal
   const [DataToEdit, setDataToEdit] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null); // New state for selected product
   const [pageNumber, setPageNumber] = useState(0);
   const ProdPerPage = 10;
 
@@ -23,9 +27,6 @@ const TableProd = () => {
         const updatedProds = await Promise.all(res.map(async (prod) => {
           const cat = await getCatByID(prod.idCat);
           const unit = await getUnitByID(prod.idUnits);
-
-          // console.log(`Product ID: ${prod.id}, Category: ${cat[0].nameCat}, Unit: ${unit[0].nameUn}`);
-
           return {
             ...prod,
             catName: cat[0].nameCat,
@@ -40,13 +41,11 @@ const TableProd = () => {
   };
 
   const handleEditProd = (id) => {
-    
     const Edit = list.find(prod => prod.id === id);
     if (Edit) {
       setDataToEdit(Edit);
       setShowEditModal(true);
     }
-    
   };
 
   const handleDeleteProd = async (id) => {
@@ -60,6 +59,17 @@ const TableProd = () => {
         console.error('Error deleting product:', error);
         toast.error("Đã xảy ra lỗi khi xóa: " + error.message);
       }
+    }
+  };
+
+  const handleShowDetails = async (id) => {
+    try {
+      const product = await getProductByID(id);
+      setSelectedProduct(product);
+      setShowDetailsModal(true);
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+      toast.error("Đã xảy ra lỗi khi tải chi tiết sản phẩm: " + error.message);
     }
   };
 
@@ -78,9 +88,12 @@ const TableProd = () => {
         <td>{item.up.toLocaleString()}đ</td>
         <td>{item.catName}</td>
         <td>{item.unitName}</td>
-        <td>{item.rating}</td>
-        <td>{item.stat}</td>
-        <td>{item.viewProd}</td>
+        <td>{item.stat === 1 ? <input type="checkbox" checked /> : null}</td>
+        <th>
+          <button className="btn btn-info" onClick={() => handleShowDetails(item.id)}>
+            <CheckCircleOutlined />
+          </button>
+        </th>
         <th><button className='btn btn-warning' onClick={() => handleEditProd(item.id)}>Sửa</button></th>
         <th><button className='btn btn-danger' onClick={() => handleDeleteProd(item.id)}>Xóa</button></th>
       </tr>
@@ -102,10 +115,7 @@ const TableProd = () => {
             <th>Đơn giá</th>
             <th>Danh mục</th>
             <th>Đơn vị</th>
-            <th>Đánh giá</th>
             <th>Trạng thái</th>
-            <th>Lượt xem</th>
-            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -130,15 +140,21 @@ const TableProd = () => {
       </div>
       {showEditModal && (
         <Modal_editProd
-        show={showEditModal}
-        handleClose={() => setShowEditModal(false)}
-        Id={DataToEdit.id}
-        productData={DataToEdit}
+          show={showEditModal}
+          handleClose={() => setShowEditModal(false)}
+          Id={DataToEdit.id}
+          productData={DataToEdit}
         />
       )}
-      </>
-    );
-  };
-  
-  export default TableProd;
-  
+      {showDetailsModal && (
+        <ProductDetailsModal
+          show={showDetailsModal}
+          handleClose={() => setShowDetailsModal(false)}
+          product={selectedProduct}
+        />
+      )}
+    </>
+  );
+};
+
+export default TableProd;

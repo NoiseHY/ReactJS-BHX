@@ -1,4 +1,4 @@
-﻿using BLL.Inerfaces;
+﻿using BLL.Inerfaces.admin;
 using DTO.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

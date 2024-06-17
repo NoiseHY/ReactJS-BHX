@@ -40,6 +40,26 @@ namespace DAL.Repository.user
                 throw ex;
             }
         }
+        public bool Delete(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(out msgError, "DeleteCartDetails",
+                    "@id", id);
+
+                if (result != null || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

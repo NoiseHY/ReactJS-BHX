@@ -10,5 +10,6 @@ namespace BLL.Inerfaces.user
     public partial interface IcartDetailsBusiness
     {
         bool Create(cartDetails cartDetails);
+        public bool Delete(int id);
     }
 }

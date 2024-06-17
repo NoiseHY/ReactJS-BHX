@@ -1,19 +1,20 @@
 ﻿using DAL.Helper;
-using DAL.Interfaces;
+using DAL.Interfaces.admin;
 using DTO.Admin;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repository
+namespace DAL.Repository.admin
 {
     public class productRepository : IproductRepository
     {
         private ExcuteProcedure _excuteProcedure;
-        public productRepository (ExcuteProcedure excuteProcedure)
+        public productRepository(ExcuteProcedure excuteProcedure)
         {
             _excuteProcedure = excuteProcedure;
         }
@@ -82,7 +83,7 @@ namespace DAL.Repository
                 var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "GetProductById",
                      "@ProductId", id);
                 if (!string.IsNullOrEmpty(msg))
-                    throw new Exception(msg );
+                    throw new Exception(msg);
                 return dt.ConvertTo<detailProduct>().FirstOrDefault();
 
             }
@@ -155,7 +156,7 @@ namespace DAL.Repository
             try
             {
                 var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msg, "SearchProductByName",
-                    "@ProductName",Name,
+                    "@ProductName", Name,
                     "@PageNumber", pageNumber,
                     "@PageSize", pageSize);
 
@@ -203,6 +204,39 @@ namespace DAL.Repository
 
         }
 
+        public bool CreateProdDetails(productDetails productDetails)
+        {
+            string msg = "";
+            try
+            {
+                var result = _excuteProcedure.ExecuteScalarSProcedureWithTransaction(
+                out msg, "AddProductDetail",
+                "@idProd", productDetails.idProd, 
+                "@ing", productDetails.ing, 
+                "@note", productDetails.note, 
+                "@stor", productDetails.stor, 
+                "@pop", productDetails.pop,
+                "@idUnit ", productDetails.idUnit,
+                "@idSup ", productDetails.idSup,
+                "@img ", productDetails.img
+                );
+
+                if (result != null || !string.IsNullOrEmpty(msg))
+                {
+                    throw new Exception(Convert.ToString(result) + msg);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+
+
         public bool Update(product product)
         {
             string msg = "";
@@ -247,9 +281,9 @@ namespace DAL.Repository
                     throw new Exception(Convert.ToString(result) + msg);
                 }
 
-                return true;    
+                return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
