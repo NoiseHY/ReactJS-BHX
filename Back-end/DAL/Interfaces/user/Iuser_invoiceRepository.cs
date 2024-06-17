@@ -16,6 +16,9 @@ namespace DAL.Interfaces.user
 
         List<user_invoice> GetInvoicesByCustomerID(int id);
 
+        List<user_invoice> GetLatestInvoiceID();
+
+
 
     }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { user_cartServices } from '../../../services/user/cartServices';
 import UserModalDetails from './modal_details';
@@ -12,10 +13,11 @@ function User_CartDetails() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const { id } = useParams();
 
   const GetAllByID = async () => {
     try {
-      const res = await user_cartServices();
+      const res = await user_cartServices(id);
       if (res) {
         setCartItems(res);
       }

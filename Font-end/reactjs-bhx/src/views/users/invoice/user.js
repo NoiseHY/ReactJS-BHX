@@ -66,7 +66,6 @@ function UserDetailsForm() {
           <label className="custom-control-label" htmlFor="httt-3">Ship COD</label>
         </div>
       </div>
-      <button className="btn btn-primary btn-lg btn-block" type="submit" name="btnDatHang">Đặt hàng</button>
     </div>
   );
 }

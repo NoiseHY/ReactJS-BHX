@@ -98,5 +98,21 @@ namespace DAL.Repository.user
                 throw ex;
             }
         }
+        public List<user_invoice> GetLatestInvoiceID()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetLatestInvoiceID");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<user_invoice>().ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

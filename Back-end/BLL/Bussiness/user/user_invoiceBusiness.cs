@@ -34,5 +34,9 @@ namespace BLL.Bussiness.user
         {
             return _iuser_InvoiceRepository.GetInvoicesByCustomerID(id);
         }
+        public List<user_invoice> GetLatestInvoiceID()
+        {
+            return _iuser_InvoiceRepository.GetLatestInvoiceID();
+        }
     }
 }

@@ -25,9 +25,9 @@ function App() {
 
         <Route exact path='/' element={<User/>} />
         <Route path='/product/:id' element={<DetailProduct/>} />
-        <Route path="/cart" element={<User_cart />} />
-        <Route path="/payment" element={<User_invoice />} />
-        <Route path='/profile' element={<User_profile_tmp/>} />
+        <Route path="/cart/:id" element={<User_cart />} />
+        <Route path="/invoice/:id" element={<User_invoice />} />
+        <Route path='/profile/:id' element={<User_profile_tmp/>} />
 
         <Route component={NotFound} />
         <Route path="*" element={<NotFound />} />

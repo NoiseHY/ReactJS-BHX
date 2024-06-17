@@ -1,6 +1,8 @@
-﻿using BLL.Bussiness.user;
+﻿using BLL.Bussiness;
+using BLL.Bussiness.user;
 using BLL.Inerfaces;
 using BLL.Inerfaces.user;
+using DTO.Admin;
 using DTO.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -66,6 +68,13 @@ namespace API.User.Controllers
         public List<user_invoice> GetInvoicesByCustomerID(int id)
         {
             return _iuser_InvoiceBusiness.GetInvoicesByCustomerID(id);
+        }
+
+        [Route("GetLatestInvoiceID")]
+        [HttpGet]
+        public List<user_invoice> GetLatestInvoiceID()
+        {
+            return _iuser_InvoiceBusiness.GetLatestInvoiceID();
         }
     }
 }

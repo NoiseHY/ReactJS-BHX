@@ -19,5 +19,9 @@ namespace DTO.Admin
         public DateTime dateBegin { get; set; }
         public DateTime? dateEnd { get; set; }
 
+        //
+        public string? img {  get; set; }
+        public int CartProductCount { get; set; }
+
     }
 }

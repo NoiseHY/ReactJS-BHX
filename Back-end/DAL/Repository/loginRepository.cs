@@ -1,6 +1,7 @@
 ﻿using DAL.Helper;
 using DAL.Interfaces;
 using DTO.Admin;
+using DTO.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -60,6 +61,24 @@ namespace DAL.Repository
             }
 
             return accountInfo;
+        }
+
+        public List<account> GetAccountImgAndCartCount(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _excuteProcedure.ExecuteSProcedureReturnDataTable(out msgError, "GetAccountImgAndCartCount",
+                     "@id", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<account>().ToList();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { AiOutlineUser, AiOutlineLock, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
-import login from '../../../services/admin/loginServices';
+import {login} from '../../../services/admin/loginServices';
 
 function Login({ show, handleClose }) {
   const [passwordVisible, setPasswordVisible] = useState(false);

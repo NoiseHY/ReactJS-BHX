@@ -9,6 +9,8 @@ namespace BLL.Inerfaces
 {
     public partial interface ILoginBusiness
     {
-        account Login (string username, string password);
+        account Login(string username, string password);
+        List<account> GetAccountImgAndCartCount(int id);
+
     }
 }

@@ -7,6 +7,7 @@ const AddProductsToInvoiceDetails = async (request) => {
 
     if (response) {
       toast.success("Tạo hóa đơn thành công !");
+      toast.success("Vui lòng kiểm tra thông tin nhận hàng !");
     } else {
       toast.error("Đã xảy ra lỗi !.");
     }
@@ -62,8 +63,22 @@ const GetInvoicesByCustomerID = async (id) => {
   }
 }
 
+const GetLatestInvoiceID = async () => {
+  try {
+    const response = await axios.get("/api/Invoice/GetLatestInvoiceID");
+    if (response) {
+      // toast.success("Tải thành công!");
+    } else {
+      toast.error("Không có dữ liệu .");
+    }
+    return response;
+  } catch (error) {
+    toast.error("Đã xảy ra lỗi khi tải : " + error.message);
+    throw error;
+  }
+}
 
 export {
   AddProductsToInvoiceDetails, GetCustomerDetailsByID,
-  GetInvoiceDetailsByID, GetInvoicesByCustomerID
+  GetInvoiceDetailsByID, GetInvoicesByCustomerID, GetLatestInvoiceID
 }

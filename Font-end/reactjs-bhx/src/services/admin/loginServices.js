@@ -36,4 +36,20 @@ const login = async (loginRequest) => {
   }
 }
 
-export default login;
+const fetchImgAndCount = async () => {
+  const id= sessionStorage.getItem('idCuts');
+  try {
+    const response = await axios.get("/api/login/GetAccountImgAndCartCount/" +id);
+    if (response) {
+      // toast.success("OK");
+    } else {
+      // toast.error("Không có dữ liệu .");
+    }
+    return response;
+  } catch (error) {
+    console.log("Chưa đăng nhập : " + error.message);
+    throw error;
+  }
+};
+
+export {login, fetchImgAndCount};

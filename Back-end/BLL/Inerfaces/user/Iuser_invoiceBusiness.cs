@@ -15,6 +15,8 @@ namespace BLL.Inerfaces.user
         List<user_invDetails> GetInvoiceDetailsByID(int id);
 
         List<user_invoice> GetInvoicesByCustomerID(int id);
+        List<user_invoice> GetLatestInvoiceID();
+
 
     }
 }

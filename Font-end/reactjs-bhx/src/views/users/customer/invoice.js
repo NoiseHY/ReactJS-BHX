@@ -33,7 +33,7 @@ const User_invDetails = () => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: (record) => ({
-      disabled: record.countInv === 0, 
+      disabled: record.countInv === 0,
       name: record.id,
     }),
   };
@@ -44,8 +44,8 @@ const User_invDetails = () => {
 
   const handleDetails = (record) => {
     console.log('Details for:', record);
-    setIsShowModal(true); 
-    setSelectedRecord(record); 
+    setIsShowModal(true);
+    setSelectedRecord(record);
   };
 
   const handleDelete = (record) => {
@@ -82,6 +82,7 @@ const User_invDetails = () => {
           render={(text, record) => (
             <Space size="middle">
               <Button onClick={() => handleDetails(record)}>Chi tiết</Button>
+              <Button className='link-no-style' href={`/invoice/${record.id}`}>Lịch sử</Button>
               <Button onClick={() => handleDelete(record)} danger>Xóa</Button>
             </Space>
           )}

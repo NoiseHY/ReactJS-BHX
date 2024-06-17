@@ -48,4 +48,19 @@ const getProductByID = async (id) => {
 }
 
 
-export { fetchProductsNew, fetchGetBestViewProducts, getProductByID };
+const user_fetchAllProd = async () => {
+  try {
+    const response = await axios.get("/api/InfoProduct/GetAllProduct");
+    if (response) {
+      toast.success("Tìm kiếm sản phẩm thành công!");
+    } else {
+      toast.error("Không có dữ liệu sản phẩm .");
+    }
+    return response;
+  } catch (error) {
+    toast.error("Đã xảy ra lỗi khi tải danh sách sản phẩm : " + error.message);
+    throw error;
+  }
+};
+
+export { fetchProductsNew, fetchGetBestViewProducts, getProductByID, user_fetchAllProd };

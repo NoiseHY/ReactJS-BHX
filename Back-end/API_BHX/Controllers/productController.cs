@@ -26,62 +26,62 @@ namespace API_BHX.Controllers
         }
 
 
-        [Route("uploadImage")]
-        [HttpPost]
-        public async Task<IActionResult> UploadImage(int productID, IFormFile file)
-        {
-            try
-            {
-                if (file == null || file.Length <= 0)
-                {
-                    return BadRequest("File không hợp lệ.");
-                }
+        //[Route("uploadImage")]
+        //[HttpPost]
+        //public async Task<IActionResult> UploadImage(int productID, IFormFile file)
+        //{
+        //    try
+        //    {
+        //        if (file == null || file.Length <= 0)
+        //        {
+        //            return BadRequest("File không hợp lệ.");
+        //        }
 
-                // Đọc dữ liệu từ file thành mảng byte
-                using (var ms = new MemoryStream())
-                {
-                    await file.CopyToAsync(ms);
-                    byte[] imageBytes = ms.ToArray();
+        //        // Đọc dữ liệu từ file thành mảng byte
+        //        using (var ms = new MemoryStream())
+        //        {
+        //            await file.CopyToAsync(ms);
+        //            byte[] imageBytes = ms.ToArray();
 
-                    // Nén hình ảnh trước khi chuyển đổi thành base64
-                    byte[] compressedImageBytes;
-                    using (Image image = Image.Load(imageBytes))
-                    {
-                        var encoder = new JpegEncoder(); 
-                        image.Mutate(x => x.Resize(200, 200)); 
-                        using (var compressedStream = new MemoryStream())
-                        {
-                            image.Save(compressedStream, encoder);
-                            compressedImageBytes = compressedStream.ToArray();
-                        }
-                    }
+        //            // Nén hình ảnh trước khi chuyển đổi thành base64
+        //            byte[] compressedImageBytes;
+        //            using (Image image = Image.Load(imageBytes))
+        //            {
+        //                var encoder = new JpegEncoder(); 
+        //                image.Mutate(x => x.Resize(200, 200)); 
+        //                using (var compressedStream = new MemoryStream())
+        //                {
+        //                    image.Save(compressedStream, encoder);
+        //                    compressedImageBytes = compressedStream.ToArray();
+        //                }
+        //            }
 
-                    // Chuyển đổi mảng byte đã nén thành chuỗi base64
-                    string base64String = Convert.ToBase64String(compressedImageBytes);
+        //            // Chuyển đổi mảng byte đã nén thành chuỗi base64
+        //            string base64String = Convert.ToBase64String(compressedImageBytes);
 
-                    if (productID == 0)
-                    {
-                        return BadRequest("Mã sản phẩm = 0");
-                    }
+        //            if (productID == 0)
+        //            {
+        //                return BadRequest("Mã sản phẩm = 0");
+        //            }
 
-                    // Lưu trữ chuỗi base64 vào cơ sở dữ liệu
-                    bool success = _iproductBusiness.UpdateImageFilePath(productID, base64String);
+        //            // Lưu trữ chuỗi base64 vào cơ sở dữ liệu
+        //            bool success = _iproductBusiness.UpdateImageFilePath(productID, base64String);
 
-                    if (success)
-                    {
-                        return Ok("Thêm hình ảnh thành công!");
-                    }
-                    else
-                    {
-                        return BadRequest("Đã xảy ra lỗi khi cập nhật base64 vào cơ sở dữ liệu.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Lỗi: {ex.Message}");
-            }
-        }
+        //            if (success)
+        //            {
+        //                return Ok("Thêm hình ảnh thành công!");
+        //            }
+        //            else
+        //            {
+        //                return BadRequest("Đã xảy ra lỗi khi cập nhật base64 vào cơ sở dữ liệu.");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Lỗi: {ex.Message}");
+        //    }
+        //}
 
         [Route("GetAll")]
         [HttpGet]

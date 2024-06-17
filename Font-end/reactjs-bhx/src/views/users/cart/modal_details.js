@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-
+import { toast } from 'react-toastify';
 import { AddProductsToInvoiceDetails } from '../../../services/user/invoiceServices';
-
-import { toast } from 'react-toastify'; // Import toast for notifications
+import { GetLatestInvoiceID } from '../../../services/user/invoiceServices';
 
 const UserModalDetails = ({ showModal, handleCloseModal, selectedItems, totalPrice }) => {
-  
+  const [lastInvoiceId, setLastInvoiceId] = useState(null);
+
+  useEffect(() => {
+    GetLast();
+  }, []);
+
+  const GetLast = async () => {
+    try {
+      const last = await GetLatestInvoiceID();
+      setLastInvoiceId(last);
+    } catch (error) {
+      console.error("Error getting latest invoice ID:", error);
+    }
+  };
+
   const handleConfirm = async () => {
     const customerId = sessionStorage.getItem('idCuts');
 
@@ -25,16 +38,23 @@ const UserModalDetails = ({ showModal, handleCloseModal, selectedItems, totalPri
 
     const request = {
       customerId: parseInt(customerId, 10),
-      countInv: totalInv, 
-      products: products,  
+      countInv: totalInv,
+      products: products,
     };
-    
 
     console.log("Request data:", request);
 
     try {
       const response = await AddProductsToInvoiceDetails(request);
       console.log("Response:", response);
+      console.log(lastInvoiceId);
+      if (response) {
+        const invoiceUrl = `/invoice/${lastInvoiceId[0].id}`;
+        window.location.href = invoiceUrl;
+      } else {
+        console.error("Không thể lấy được invoiceId từ phản hồi API.");
+      }
+
       handleCloseModal();
     } catch (error) {
       console.error("Error adding products to cart", error);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import { Layout, Card, Button, Row, Col, Typography, Image, Spin, Menu } from 'antd';
 import { user_getCusServices } from '../../../services/user/cusServices';
 import User_invDetails from '../../users/customer/invoice';
@@ -10,20 +11,23 @@ const User_profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showInvoice, setShowInvoice] = useState(false);
-  const imagePath = userData && userData.img ? require(`../../../assets/img/users/${userData.img}`) : "";
+  const { id } = useParams();
+  const imagePath = userData && userData.img ? require(`../../../assets/img/${userData.img}`) : "";
+
+  const fetchUserData = async () => {
+    try {
+      const customerData = await user_getCusServices(id);
+      setUserData(customerData[0]);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const customerData = await user_getCusServices();
-        setUserData(customerData[0]);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    
     fetchUserData();
   }, []);
 

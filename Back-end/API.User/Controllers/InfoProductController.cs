@@ -61,5 +61,11 @@ namespace API.User.Controllers
         {
             return _iproductBusiness.GetProductByID(id);
         }
+        [Route("GetAllProduct")]
+        [HttpGet]
+        public List<product> GetAll()
+        {
+            return _iproductBusiness.GetAll();
+        }
     }
 }

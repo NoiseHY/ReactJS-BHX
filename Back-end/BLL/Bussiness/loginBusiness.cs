@@ -20,5 +20,8 @@ namespace BLL.Bussiness
         {
             return _loginRepository.Login(username, password);
         }
+        public List<account> GetAccountImgAndCartCount(int id){
+            return _loginRepository.GetAccountImgAndCartCount(id);
+        }
     }
 }

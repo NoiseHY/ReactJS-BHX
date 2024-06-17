@@ -4,6 +4,7 @@ using BLL.Inerfaces;
 using DAL.Helper;
 using DAL.Interfaces;
 using DTO.Admin;
+using DTO.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -72,5 +73,13 @@ namespace API_BHX.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        [Route("GetAccountImgAndCartCount/{id}")]
+        [HttpGet]
+        public List<account> GetAccountImgAndCartCount(int id)
+        {
+            return _loginBusiness.GetAccountImgAndCartCount(id);
+        }
+
     }
 }

@@ -215,6 +215,43 @@ END;
 exec LoginAccount admin, 123; 
 exec LoginAccount nam, 123; 
 
+--stored procedure SQL Server để lấy img
+
+CREATE PROCEDURE GetAccountImgAndCartCount
+    @id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @img NVARCHAR(MAX);
+    DECLARE @CartProductCount INT;
+
+    -- Lấy img của tài khoản theo id
+    SELECT 
+        @img = img 
+    FROM 
+        custs 
+    WHERE 
+        id = @id;
+
+    -- Lấy số lượng sản phẩm có trong giỏ hàng theo idCust
+    SELECT 
+        @CartProductCount = COUNT(*)
+    FROM 
+        cartDetails 
+    WHERE 
+        idCart = (SELECT id FROM cart WHERE idCust = @id);
+
+    -- Trả về kết quả cuối cùng
+    SELECT 
+        @img AS img,
+        @CartProductCount AS CartProductCount;
+END;
+
+
+--drop procedure GetAccountImgAndCartCount
+
+exec GetAccountImgAndCartCount 1
 
 --get all 
 
@@ -552,6 +589,27 @@ END;
 --drop procedure GetInvoicesByCustomerID
 
 exec GetInvoicesByCustomerID 1
+
+-- stored procedure để lấy ID của hóa đơn bán mới nhất
+CREATE PROCEDURE GetLatestInvoiceID
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @LatestInvoiceID INT;
+
+    -- Lấy ID của hóa đơn bán mới nhất
+    SELECT TOP 1 @LatestInvoiceID = id
+    FROM invs
+    ORDER BY dateBegin DESC;
+
+    -- Trả về ID của hóa đơn bán mới nhất
+    SELECT @LatestInvoiceID AS id;
+END;
+
+--drop procedure GetLatestInvoiceID
+
+exec GetLatestInvoiceID
 
 --> bảng khách hàng
 

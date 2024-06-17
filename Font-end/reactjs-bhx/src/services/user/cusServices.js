@@ -1,9 +1,9 @@
 import axios from "../cuts_axio_users";
 import { toast } from 'react-toastify';
 
-const user_getCusServices = async () => {
+const user_getCusServices = async (id) => {
   try {
-    const response = await axios.get("/api/Customer/GetCustomerByID/1");
+    const response = await axios.get("/api/Customer/GetCustomerByID/" + id);
     if (response) {
       toast.success("Danh sách đã được tải thành công!");
     } else {

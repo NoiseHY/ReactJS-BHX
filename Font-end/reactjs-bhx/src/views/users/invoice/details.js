@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { GetInvoiceDetailsByID } from '../../../services/user/invoiceServices';
+import { useParams } from "react-router-dom";
 
 import UserDetailsForm from './user';
 
 function ProdcutsForm() {
   const [invoiceDetails, setInvoiceDetails] = useState([]);
   const [error, setError] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
     getInvoiceDetails();
@@ -13,7 +15,7 @@ function ProdcutsForm() {
 
   const getInvoiceDetails = async () => {
     try {
-      const res = await GetInvoiceDetailsByID(10);
+      const res = await GetInvoiceDetailsByID(id);
       if (res) {
         setInvoiceDetails(res);
       }
